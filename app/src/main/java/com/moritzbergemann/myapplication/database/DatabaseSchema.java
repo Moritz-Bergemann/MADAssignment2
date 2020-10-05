@@ -2,18 +2,18 @@ package com.moritzbergemann.myapplication.database;
 
 public class DatabaseSchema {
     public static class SettingsTable {
-        public static final String name = "settings";
+        public static final String NAME = "settings";
 
         public static class Cols {
             public static final String ID = "setting_id";
-            public static final String GAME = "game";
+            public static final String GAME = "game"; //FIXME FKs not implemented, see if you need them later
             public static final String MAP_WIDTH = "map_width";
             public static final String MAP_HEIGHT = "map_height";
         }
     }
 
     public static class GamesTable {
-        public static final String name = "games";
+        public static final String NAME = "games";
 
         public static class Cols {
             public static final String ID = "game_id";
@@ -24,10 +24,11 @@ public class DatabaseSchema {
     }
 
     public static class StructuresTable {
-        public static final String name = "structures";
+        public static final String NAME = "structures";
 
         public static class Cols {
             public static final String ID = "structure_ID";
+            public static final String GAME = "game_id"; //FIXME FKs not implemented, see if you need them later
             public static final String TYPE = "type";
             public static final String ROW = "row";
             public static final String COLUMN = "column";
