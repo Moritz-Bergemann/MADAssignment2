@@ -23,15 +23,18 @@ public class DatabaseSchema {
         }
     }
 
-    public static class StructuresTable {
-        public static final String NAME = "structures";
+    public static class MapElementTable {
+        public static final String NAME = "map_elements";
 
         public static class Cols {
             public static final String ID = "structure_ID";
-            public static final String GAME = "game_id"; //FIXME FKs not implemented, see if you need them later
+//            public static final String GAME = "game_id"; //FIXME FKs not implemented, see if you need them later
             public static final String TYPE = "type";
-            public static final String ROW = "row";
-            public static final String COLUMN = "column";
+            public static final String STRUCTURE_RESOURCE_ID = "resource_ID";
+            public static final String OWNER_NAME = "owner_name";
+            public static final String IMAGE_BITMAP = "image_bitmap";
+            public static final String ROW = "element_row";
+            public static final String COLUMN = "element_column";
         }
     }
 }

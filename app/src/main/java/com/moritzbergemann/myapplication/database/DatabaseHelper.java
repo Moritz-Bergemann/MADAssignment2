@@ -27,13 +27,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Structures table
         db.execSQL("CREATE TABLE " + SettingsTable.NAME + "(" +
-                StructuresTable.Cols.ID + " INTEGER, " +
-                StructuresTable.Cols.TYPE + " TEXT, " +
-                StructuresTable.Cols.ROW + " INTEGER, " +
-                StructuresTable.Cols.COLUMN + " INTEGER)");
+                MapElementTable.Cols.ID + " INTEGER, " +
+                MapElementTable.Cols.TYPE + " TEXT, " +
+                MapElementTable.Cols.STRUCTURE_RESOURCE_ID + " TEXT, " +
+                MapElementTable.Cols.IMAGE_BITMAP + " IMAGE, " + //FIXME this probs not right
+                MapElementTable.Cols.ROW + " INTEGER, " +
+                MapElementTable.Cols.COLUMN + " INTEGER)");
 
         //Settings table
-        db.execSQL("CREATE TABLE " + StructuresTable.NAME + "(" +
+        db.execSQL("CREATE TABLE " + MapElementTable.NAME + "(" +
                 SettingsTable.Cols.ID + " INTEGER, " +
                 SettingsTable.Cols.MAP_HEIGHT + " INTEGER, " +
                 SettingsTable.Cols.MAP_WIDTH+ " INTEGER)");

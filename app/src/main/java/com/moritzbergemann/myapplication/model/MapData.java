@@ -26,10 +26,14 @@ public class MapData {
     private MapData() {
         Settings settings = GameData.get().getSettings();
 
-        map = new MapElement[settings.getMapWidth()][settings.getMapHeight()];
+        map = new MapElement[settings.getMapHeight()][settings.getMapWidth()];
         residentialList = new LinkedList<>();
         commercialList = new LinkedList<>();
         roadList = new LinkedList<>();
+    }
+
+    public MapElement getMapElement(int row, int col) {
+        return map[row][col];
     }
 
     public void addStructure(Structure structure, int row, int col) {
@@ -67,6 +71,14 @@ public class MapData {
             default:
                 throw new IllegalArgumentException("Unexpected structure type");
         }
+    }
+
+    public int getMapHeight() {
+        return map.length;
+    }
+
+    public int getMapWidth() {
+        return map[0].length;
     }
 
     // ACCESSORS FOR DIFFERENT STRUCTURES FIXME are these even necessary?
