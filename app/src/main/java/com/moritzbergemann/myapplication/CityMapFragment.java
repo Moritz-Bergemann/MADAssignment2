@@ -9,11 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 
 import com.moritzbergemann.myapplication.model.MapData;
@@ -59,7 +58,7 @@ public class CityMapFragment extends Fragment {
         //Setting up recycler view
         mMapRecyclerView = view.findViewById(R.id.mapRecyclerView);
         mMapRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),
-                MapData.get().getMapHeight(), MapData.get().getMapWidth(), false));
+                MapData.get().getMapHeight(), RecyclerView.HORIZONTAL, false));
 
 
         CityMapAdapter cityMapAdapter = new CityMapAdapter(MapData.get(), getActivity());
@@ -88,7 +87,7 @@ public class CityMapFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MapElementViewHolder holder, int position) {
-            holder.bind(mMapData.getMapElement(position % mMapData.getMapWidth(), position / mMapData.getMapHeight()));
+            holder.bind(mMapData.getMapElement(position % mMapData.getMapHeight(), position / mMapData.getMapHeight()));
         }
 
         @Override
@@ -99,7 +98,7 @@ public class CityMapFragment extends Fragment {
         private class MapElementViewHolder extends RecyclerView.ViewHolder {
             ImageView mNorthWestImage;
             ImageView mSouthWestImage;
-            ImageView mNorthEastImage;
+            ImageView mBackgroundImageResource;
             ImageView mSouthEastImage;
             ImageView mStructureImage;
 
@@ -109,11 +108,8 @@ public class CityMapFragment extends Fragment {
                 super(li.inflate(R.layout.map_element, parent, false));
 
                 //Caching
-                mNorthEastImage = itemView.findViewById(R.id.northEast);
-                mNorthWestImage = itemView.findViewById(R.id.northWest);
-                mSouthEastImage = itemView.findViewById(R.id.southEast);
-                mSouthWestImage = itemView.findViewById(R.id.southWest);
-                mStructureImage = itemView.findViewById(R.id.topImageView);
+                mBackgroundImageResource = itemView.findViewById(R.id.background);
+                mStructureImage = itemView.findViewById(R.id.topImage);
 
                 mMapElement = null;
 
@@ -125,66 +121,67 @@ public class CityMapFragment extends Fragment {
             }
 
             public void bind(MapElement mapElement) {
-                mNorthEastImage.setImageResource(mapElement.getBackgroundImage());
+                mBackgroundImageResource.setImageResource(mapElement.getBackgroundImageResource());
                 Structure elementStructure = mapElement.getStructure();
                 if (elementStructure != null) {
                     mStructureImage.setVisibility(View.VISIBLE);
-                    mStructureImage.setImageResource(elementStructure.getDrawableId());
+                    mStructureImage.setImageResource(elementStructure.getImageId());
                 } else {
                     mStructureImage.setVisibility(View.INVISIBLE);
                 }
 
                 mMapElement = mapElement;
 
-                //Setting onClick to auto-build the current selected structure
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Structure structureToSet = AppData.get().getSelectedStructure();
-                        //Add the currently selected structure (if there is one) to this ViewHolder's
-                        // map element (updates MAP_DATA_TODO as well via pass-by-reference)
-                        if (structureToSet != null) {
-                            Log.v(TAG, "Setting block structure");
+//                //Setting onClick to auto-build the current selected structure
+//                itemView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Structure structureToSet = AppData.get().getSelectedStructure();
+//                        //Add the currently selected structure (if there is one) to this ViewHolder's
+//                        // map element (updates MAP_DATA_TODO as well via pass-by-reference)
+//                        if (structureToSet != null) {
+//                            Log.v(TAG, "Setting block structure");
+//
+//                            //Set this element to have this structure for future references
+//                            mMapElement.setStructure(structureToSet);
+//
+//                            //Let the adapter know stuff's changed
+//                            CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
+//                        }
+//                    }
+//                });
 
-                            //Set this element to have this structure for future references
-                            mMapElement.setStructure(structureToSet);
-
-                            //Let the adapter know stuff's changed
-                            CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
-                        }
-                    }
-                });
-
-                //Responding to manual drag of structure
-                itemView.setOnDragListener(new View.OnDragListener() {
-                    @Override
-                    public boolean onDrag(View view, DragEvent dragEvent) {
-                        boolean responded = false;
-
-                        switch (dragEvent.getAction()) {
-                            case DragEvent.ACTION_DRAG_STARTED: //Must return true to 'drag started' when the drag appears in this fragment to keep getting updates on it
-                                responded = true;
-                                break;
-                            case DragEvent.ACTION_DROP: //If the user dragged a structure here
-                                if (view == itemView) { //Making sure it was dropped onto THIS ItemView
-                                    Object thingDragged = dragEvent.getLocalState();
-
-                                    if (thingDragged instanceof Structure) {
-                                        //Set this element to have this structure
-                                        mMapElement.setStructure((Structure)thingDragged);
-
-                                        //Let the adapter know stuff's changed
-                                        CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
-
-                                        responded = true;
-                                    }
-                                }
-                                break;
-                        }
-
-                        return responded;
-                    }
-                }); //PERSONAL NOTE: I'm pretty sure the drag/drop listener system works on a ViewGroup level (i.e. here on the RecyclerView) rather than an individual view level - hence the situation where only listening to on 'ACTION_DRAG_ENDED' caused the action to be performed on every cell in the grid.
+                // TODO decide whether to bother implementing this
+//                //Responding to manual drag of structure
+//                itemView.setOnDragListener(new View.OnDragListener() {
+//                    @Override
+//                    public boolean onDrag(View view, DragEvent dragEvent) {
+//                        boolean responded = false;
+//
+//                        switch (dragEvent.getAction()) {
+//                            case DragEvent.ACTION_DRAG_STARTED: //Must return true to 'drag started' when the drag appears in this fragment to keep getting updates on it
+//                                responded = true;
+//                                break;
+//                            case DragEvent.ACTION_DROP: //If the user dragged a structure here
+//                                if (view == itemView) { //Making sure it was dropped onto THIS ItemView
+//                                    Object thingDragged = dragEvent.getLocalState();
+//
+//                                    if (thingDragged instanceof Structure) {
+//                                        //Set this element to have this structure
+//                                        mMapElement.setStructure((Structure)thingDragged);
+//
+//                                        //Let the adapter know stuff's changed
+//                                        CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
+//
+//                                        responded = true;
+//                                    }
+//                                }
+//                                break;
+//                        }
+//
+//                        return responded;
+//                    }
+//                }); //PERSONAL NOTE: I'm pretty sure the drag/drop listener system works on a ViewGroup level (i.e. here on the RecyclerView) rather than an individual view level - hence the situation where only listening to on 'ACTION_DRAG_ENDED' caused the action to be performed on every cell in the grid.
             }
         }
     }

@@ -6,63 +6,16 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/northWest"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/southWest"
-        app:layout_constraintEnd_toStartOf="@+id/northEast"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5" />
-
-    <ImageView
-        android:id="@+id/northEast"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/southEast"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/northWest"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5" />
-
-    <ImageView
-        android:id="@+id/southWest"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/southEast"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/northWest"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5" />
-
-    <ImageView
-        android:id="@+id/southEast"
+        android:id="@+id/background"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/southWest"
-        app:layout_constraintTop_toBottomOf="@+id/northEast"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/topImageView"
+        android:id="@+id/topImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="invisible"

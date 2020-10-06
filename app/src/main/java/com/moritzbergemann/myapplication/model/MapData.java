@@ -26,7 +26,7 @@ public class MapData {
     private MapData() {
         Settings settings = GameData.get().getSettings();
 
-        map = new MapElement[settings.getMapHeight()][settings.getMapWidth()];
+        map = initialiseMap(settings.getMapHeight(), settings.getMapWidth());
         residentialList = new LinkedList<>();
         commercialList = new LinkedList<>();
         roadList = new LinkedList<>();
@@ -37,25 +37,28 @@ public class MapData {
     }
 
     public void addStructure(Structure structure, int row, int col) {
-        //Try to add the submission to the database (will throw exception if there's already
-        // something there)
-        MapElement mapElement = new MapElement(structure, null, OWNER_NAME);
-        addMapElement(mapElement, row, col);
+        //Throw exception if there is already a structure in the place structure is to be added
+        if (map[row][col].getStructure() != null) {
+            throw new IllegalArgumentException("Structure already exists here!");
+        }
+
+        map[row][col].setStructure(structure);
 
         // Add structure to the list of its given type
         trackStructure(structure);
+        //TODO notify the recyclerview?
+        //TODO add shizzle to the database
     }
 
-    private void addMapElement(MapElement mapElement, int row, int col) {
+//    FIXME likely unnecessary and stupid
+/*    private void addMapElement(MapElement mapElement, int row, int col) {
         //Throw exception if there is already a structure in the place structure is to be added
         if (map[row][col] != null) {
             throw new IllegalArgumentException("Structure already exists here!");
         }
 
         map[row][col] = mapElement;
-
-        //TODO add shizzle to the database
-    }
+    }*/
 
     private void trackStructure(Structure structure) {
         switch (structure.getType()) {
@@ -92,6 +95,20 @@ public class MapData {
 
     public List<Structure> getRoadList() {
         return roadList;
+    }
+
+    /** Initialises all components of the map to be empty background elements
+     */
+    private static MapElement[][] initialiseMap(int height, int width) {
+        MapElement[][] newMap = new MapElement[height][width];
+
+        for (int row = 0; row < newMap.length; row++) {
+            for (int col = 0; col < newMap[row].length; col++) {
+                newMap[row][col] = new MapElement();
+            }
+        }
+
+        return newMap;
     }
 
     //  TODO remove this - old way of doing structures
