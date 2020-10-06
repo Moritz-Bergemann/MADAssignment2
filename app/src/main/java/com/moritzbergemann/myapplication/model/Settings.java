@@ -31,4 +31,16 @@ public class Settings {
     public int getInitialMoney() {
         return initialMoney;
     }
+
+    public int getHouseBuildingCost() {
+        return houseBuildingCost;
+    }
+
+    public int getCommercialBuildingCost() {
+        return commercialBuildingCost;
+    }
+
+    public int getRoadBuildingCost() {
+        return roadBuildingCost;
+    }
 }

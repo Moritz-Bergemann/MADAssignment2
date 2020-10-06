@@ -19,6 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.moritzbergemann.myapplication.model.GameData;
+import com.moritzbergemann.myapplication.model.MapData;
+import com.moritzbergemann.myapplication.model.Structure;
+import com.moritzbergemann.myapplication.model.StructureData;
+
+import java.util.List;
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SelectorFragment#newInstance} factory method to
@@ -64,7 +72,7 @@ public class SelectorFragment extends Fragment {
         mSelectorRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false));
 
-        StructureAdapter adapter = new StructureAdapter(StructureData.get(), getActivity());
+        StructureAdapter adapter = new StructureAdapter(StructureData.get().getStructureTypes(), getActivity());
 
         mSelectorRecyclerView.setAdapter(adapter);
     }
@@ -74,12 +82,12 @@ public class SelectorFragment extends Fragment {
      *  as needed
      */
     private class StructureAdapter extends RecyclerView.Adapter<StructureViewHolder> {
-        private StructureData mStructureData;
+        private List<Structure> mStructures;
         private Activity mActivity;
 
-        public StructureAdapter(StructureData structures, Activity activity) { //FIXME should this just call getInstance() straight up?
+        public StructureAdapter(List<Structure> structures, Activity activity) { //FIXME should this just call getInstance() straight up?
             super();
-            mStructureData = structures;
+            mStructures = structures;
             mActivity = activity;
         }
 
@@ -97,12 +105,12 @@ public class SelectorFragment extends Fragment {
         public void onBindViewHolder(@NonNull StructureViewHolder holder, int position) {
             Log.v(TAG, String.format("ViewHolder '%s' bound with element at position '%d'", holder.toString(), position));
 
-            holder.bind(mStructureData.get(position));
+            holder.bind(mStructures.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return mStructureData.size();
+            return mStructures.size();
         }
     }
 
@@ -111,14 +119,16 @@ public class SelectorFragment extends Fragment {
      */
     private class StructureViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImage;
-        private TextView mLabel;
+        private TextView mType;
+        private TextView mCost;
 
         public StructureViewHolder(LayoutInflater li, ViewGroup parent) {
-            super(li.inflate(R.layout.list_selection, parent, false));
+            super(li.inflate(R.layout.structure_icon, parent, false));
 
             //Caching components of itemView for quick access (since these need to be modified)
             mImage = itemView.findViewById(R.id.image);
-            mLabel = itemView.findViewById(R.id.label);
+            mType = itemView.findViewById(R.id.type);
+            mCost = itemView.findViewById(R.id.costValue);
         }
 
         /**
@@ -126,35 +136,51 @@ public class SelectorFragment extends Fragment {
          */
         public void bind(final Structure structure) {
             //Updating image itself and label
-            mImage.setImageResource(structure.getDrawableId());
-            mLabel.setText(structure.getLabel());
+            mImage.setImageResource(structure.getImageId());
+            switch (structure.getType()) {
+                case RESIDENTIAL:
+                    mType.setText("Residential");
+                    break;
+                case COMMERCIAL:
+                    mType.setText("Commercial");
+                    break;
+                case ROAD:
+                    mType.setText("Road");
+                    break;
+                default:
+                    throw new IllegalArgumentException("Bad type");
+            }
+
+            mCost.setText(String.format(Locale.US, "$%d", structure.getCost()));
 
             //Making click select this structure as the structure to auto-paste
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //Setting selected structure as structure to build on map tiles
-                    AppData.get().setSelectedStructure(structure);
+                    MapData.get().setSelectedStructure(structure);
 
-                    Toast.makeText(getContext(), String.format("You pressed on '%s'!", structure.getLabel()), Toast.LENGTH_SHORT).show();
+                    Log.v(TAG, String.format("User selected %s structure with resource ID '%d'",
+                            structure.getType(), structure.getImageId()));
                 }
             });
 
-            //Making long click select this structure for drag and drop
-            itemView.setLongClickable(true);
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.N)
-                @Override
-                public boolean onLongClick(View view) {
-                    //Setting image to drag with
-                    View.DragShadowBuilder builder = new View.DragShadowBuilder(mImage);
-
-                    //Starting drag and drop
-                    itemView.startDragAndDrop(null, builder, structure, 0);
-
-                    return true;
-                }
-            });
+            //TODO
+//            //Making long click select this structure for drag and drop
+//            itemView.setLongClickable(true);
+//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @RequiresApi(api = Build.VERSION_CODES.N)
+//                @Override
+//                public boolean onLongClick(View view) {
+//                    //Setting image to drag with
+//                    View.DragShadowBuilder builder = new View.DragShadowBuilder(mImage);
+//
+//                    //Starting drag and drop
+//                    itemView.startDragAndDrop(null, builder, structure, 0);
+//
+//                    return true;
+//                }
+//            });
         }
     }
 }

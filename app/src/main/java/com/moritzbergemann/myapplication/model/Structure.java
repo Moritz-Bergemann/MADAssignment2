@@ -14,10 +14,12 @@ public class Structure {
 
     private int imageId;
     private Type type;
+    private int cost;
 
-    public Structure(int imageId, Type type) {
+    public Structure(int imageId, Type type, int cost) {
         this.imageId = imageId;
         this.type = type;
+        this.cost = cost;
     }
 
     public int getImageId() {
@@ -26,5 +28,9 @@ public class Structure {
 
     public Type getType() {
         return type;
+    }
+
+    public int getCost() {
+        return cost;
     }
 }

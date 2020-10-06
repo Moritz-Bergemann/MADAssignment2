@@ -18,5 +18,12 @@ public class CityActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.mapContainer,
                     CityMapFragment.newInstance()).commit();
         }
+
+        //Selector fragment
+        FrameLayout selectorContainer = findViewById(R.id.selectorContainer);
+        if (getSupportFragmentManager().findFragmentById(R.id.selectorContainer) == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.selectorContainer,
+                    SelectorFragment.newInstance()).commit();
+        }
     }
 }

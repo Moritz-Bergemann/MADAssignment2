@@ -23,6 +23,8 @@ public class MapData {
     private List<Structure> commercialList;
     private List<Structure> roadList;
 
+    private Structure selectedStructure;
+
     private MapData() {
         Settings settings = GameData.get().getSettings();
 
@@ -50,6 +52,15 @@ public class MapData {
         //TODO add shizzle to the database
     }
 
+
+    public Structure getSelectedStructure() {
+        return selectedStructure;
+    }
+
+    public void setSelectedStructure(Structure selectedStructure) {
+        this.selectedStructure = selectedStructure;
+    }
+
 //    FIXME likely unnecessary and stupid
 /*    private void addMapElement(MapElement mapElement, int row, int col) {
         //Throw exception if there is already a structure in the place structure is to be added
@@ -60,6 +71,7 @@ public class MapData {
         map[row][col] = mapElement;
     }*/
 
+    //FIXME also possibly unecessary (or change to eliminate lists and only make counter for each type)
     private void trackStructure(Structure structure) {
         switch (structure.getType()) {
             case RESIDENTIAL:
