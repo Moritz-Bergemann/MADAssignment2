@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 
-import com.moritzbergemann.myapplication.model.MapData;
+import com.moritzbergemann.myapplication.model.GameData;
+import com.moritzbergemann.myapplication.model.GameMap;
 import com.moritzbergemann.myapplication.model.MapElement;
 import com.moritzbergemann.myapplication.model.Structure;
 
@@ -58,23 +58,23 @@ public class CityMapFragment extends Fragment {
         //Setting up recycler view
         mMapRecyclerView = view.findViewById(R.id.mapRecyclerView);
         mMapRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),
-                MapData.get().getMapHeight(), RecyclerView.HORIZONTAL, false));
+                GameData.get().getMap().getMapHeight(), RecyclerView.HORIZONTAL, false));
 
 
-        CityMapAdapter cityMapAdapter = new CityMapAdapter(MapData.get(), getActivity());
+        CityMapAdapter cityMapAdapter = new CityMapAdapter(GameData.get().getMap(), getActivity());
         mMapRecyclerView.setAdapter(cityMapAdapter);
     }
 
     private class CityMapAdapter extends RecyclerView.Adapter<CityMapAdapter.MapElementViewHolder> {
-        private MapData mMapData;
+        private GameMap mGameMap;
         private Activity activity;
 
         /**
          * Default constructor - takes in information on data to represent (here the map elements)
          *  and the calling activity for context awareness
          */
-        public CityMapAdapter(MapData mapData, Activity activity) {
-            this.mMapData = mapData;
+        public CityMapAdapter(GameMap mapData, Activity activity) {
+            this.mGameMap = mapData;
             this.activity = activity;
         }
 
@@ -87,19 +87,16 @@ public class CityMapFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MapElementViewHolder holder, int position) {
-            holder.bind(mMapData.getMapElement(position % mMapData.getMapHeight(), position / mMapData.getMapHeight()));
+            holder.bind(mGameMap.getMapElement(position % mGameMap.getMapHeight(), position / mGameMap.getMapHeight()));
         }
 
         @Override
         public int getItemCount() {
-            return mMapData.getMapWidth() * mMapData.getMapHeight();
+            return mGameMap.getMapWidth() * mGameMap.getMapHeight();
         }
 
         private class MapElementViewHolder extends RecyclerView.ViewHolder {
-            ImageView mNorthWestImage;
-            ImageView mSouthWestImage;
-            ImageView mBackgroundImageResource;
-            ImageView mSouthEastImage;
+            ImageView mBackgroundImage;
             ImageView mStructureImage;
 
             MapElement mMapElement;
@@ -108,20 +105,20 @@ public class CityMapFragment extends Fragment {
                 super(li.inflate(R.layout.map_element, parent, false));
 
                 //Caching
-                mBackgroundImageResource = itemView.findViewById(R.id.background);
+                mBackgroundImage = itemView.findViewById(R.id.background);
                 mStructureImage = itemView.findViewById(R.id.topImage);
 
                 mMapElement = null;
 
                 //Setting held View's size to be square of correct size
-                int size = parent.getMeasuredHeight() / mMapData.getMapHeight() + 1;
+                int size = parent.getMeasuredHeight() / mGameMap.getMapHeight() + 1;
                 ViewGroup.LayoutParams lp = itemView.getLayoutParams();
                 lp.width = size;
                 lp.height = size;
             }
 
             public void bind(MapElement mapElement) {
-                mBackgroundImageResource.setImageResource(mapElement.getBackgroundImageResource());
+                mBackgroundImage.setImageResource(mapElement.getBackgroundImageResource());
                 Structure elementStructure = mapElement.getStructure();
                 if (elementStructure != null) {
                     mStructureImage.setVisibility(View.VISIBLE);
@@ -132,6 +129,7 @@ public class CityMapFragment extends Fragment {
 
                 mMapElement = mapElement;
 
+                // TODO
 //                //Setting onClick to auto-build the current selected structure
 //                itemView.setOnClickListener(new View.OnClickListener() {
 //                    @Override

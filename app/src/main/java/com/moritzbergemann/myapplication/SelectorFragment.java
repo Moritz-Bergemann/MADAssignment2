@@ -17,10 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.moritzbergemann.myapplication.model.GameData;
-import com.moritzbergemann.myapplication.model.MapData;
 import com.moritzbergemann.myapplication.model.Structure;
 import com.moritzbergemann.myapplication.model.StructureData;
 
@@ -158,7 +156,7 @@ public class SelectorFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     //Setting selected structure as structure to build on map tiles
-                    MapData.get().setSelectedStructure(structure);
+                    GameData.get().getMap().setSelectedStructure(structure);
 
                     Log.v(TAG, String.format("User selected %s structure with resource ID '%d'",
                             structure.getType(), structure.getImageId()));

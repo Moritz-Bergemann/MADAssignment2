@@ -15,11 +15,13 @@ public class GameData {
     private Settings settings;
     private int money;
     private int gameTime;
+    private GameMap map;
 
     private GameData() {
         settings = new Settings();
         money = settings.getInitialMoney();
         gameTime = 0;
+        map = new GameMap(settings.getMapHeight(), settings.getMapWidth());
     }
 
     public int getGameTime() {
@@ -32,6 +34,10 @@ public class GameData {
 
     public Settings getSettings() {
         return settings;
+    }
+
+    public GameMap getMap() {
+        return map;
     }
 
     public int getMoney() {
