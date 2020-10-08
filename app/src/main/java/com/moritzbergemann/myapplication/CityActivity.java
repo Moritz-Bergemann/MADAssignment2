@@ -12,6 +12,13 @@ public class CityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city);
 
+        //Setting up header bar
+        FrameLayout headerBarContainer = findViewById(R.id.headerBarContainer);
+        if (getSupportFragmentManager().findFragmentById(R.id.headerBarContainer) == null) {
+            getSupportFragmentManager().beginTransaction().add(R.id.headerBarContainer,
+                    HeaderBarFragment.newInstance()).commit();
+        }
+
         //Setting up city map fragment
         FrameLayout cityMapContainer = findViewById(R.id.mapContainer);
         if (getSupportFragmentManager().findFragmentById(R.id.mapContainer) == null) {

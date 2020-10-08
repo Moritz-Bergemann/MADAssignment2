@@ -15,13 +15,17 @@ public class GameData {
     private Settings settings;
     private int money;
     private int gameTime;
+
     private GameMap map;
+    private Structure selectedStructure;
+
 
     private GameData() {
         settings = new Settings();
         money = settings.getInitialMoney();
         gameTime = 0;
         map = new GameMap(settings.getMapHeight(), settings.getMapWidth());
+        selectedStructure = null;
     }
 
     public int getGameTime() {
@@ -43,4 +47,14 @@ public class GameData {
     public int getMoney() {
         return money;
     }
+
+    public Structure getSelectedStructure() {
+        return selectedStructure;
+    }
+
+    public void setSelectedStructure(Structure selectedStructure) {
+        this.selectedStructure = selectedStructure;
+    }
+
+
 }

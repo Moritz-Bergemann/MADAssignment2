@@ -79,7 +79,7 @@ public class SelectorFragment extends Fragment {
      * RecyclerView adapter class for structures scrollbar. Stores a bunch of structures and updates
      *  as needed
      */
-    private class StructureAdapter extends RecyclerView.Adapter<StructureViewHolder> {
+    private class StructureAdapter extends RecyclerView.Adapter<StructureAdapter.StructureViewHolder> {
         private List<Structure> mStructures;
         private Activity mActivity;
 
@@ -110,60 +110,62 @@ public class SelectorFragment extends Fragment {
         public int getItemCount() {
             return mStructures.size();
         }
-    }
 
-    /**
-     * ViewHolder for structures scrollbar. Caches image and label components and adds click listener.
-     */
-    private class StructureViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mImage;
-        private TextView mType;
-        private TextView mCost;
-
-        public StructureViewHolder(LayoutInflater li, ViewGroup parent) {
-            super(li.inflate(R.layout.structure_icon, parent, false));
-
-            //Caching components of itemView for quick access (since these need to be modified)
-            mImage = itemView.findViewById(R.id.image);
-            mType = itemView.findViewById(R.id.type);
-            mCost = itemView.findViewById(R.id.costValue);
-        }
 
         /**
-         * Adds a new Structure to the ViewHolder for it to display.
+         * ViewHolder for structures scrollbar. Caches image and label components and adds click listener.
          */
-        public void bind(final Structure structure) {
-            //Updating image itself and label
-            mImage.setImageResource(structure.getImageId());
-            switch (structure.getType()) {
-                case RESIDENTIAL:
-                    mType.setText("Residential");
-                    break;
-                case COMMERCIAL:
-                    mType.setText("Commercial");
-                    break;
-                case ROAD:
-                    mType.setText("Road");
-                    break;
-                default:
-                    throw new IllegalArgumentException("Bad type");
+        private class StructureViewHolder extends RecyclerView.ViewHolder {
+            private ImageView mImage;
+            private TextView mType;
+            private TextView mCost;
+
+            public StructureViewHolder(LayoutInflater li, ViewGroup parent) {
+                super(li.inflate(R.layout.structure_icon, parent, false));
+
+                //Caching components of itemView for quick access (since these need to be modified)
+                mImage = itemView.findViewById(R.id.image);
+                mType = itemView.findViewById(R.id.type);
+                mCost = itemView.findViewById(R.id.costValue);
             }
 
-            mCost.setText(String.format(Locale.US, "$%d", structure.getCost()));
-
-            //Making click select this structure as the structure to auto-paste
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Setting selected structure as structure to build on map tiles
-                    GameData.get().getMap().setSelectedStructure(structure);
-
-                    Log.v(TAG, String.format("User selected %s structure with resource ID '%d'",
-                            structure.getType(), structure.getImageId()));
+            /**
+             * Adds a new Structure to the ViewHolder for it to display.
+             */
+            public void bind(final Structure structure) {
+                //Updating image itself and label
+                mImage.setImageResource(structure.getImageId());
+                switch (structure.getType()) {
+                    case RESIDENTIAL:
+                        mType.setText("Residential");
+                        break;
+                    case COMMERCIAL:
+                        mType.setText("Commercial");
+                        break;
+                    case ROAD:
+                        mType.setText("Road");
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Bad type");
                 }
-            });
 
-            //TODO
+                mCost.setText(String.format(Locale.US, "$%d", structure.getCost()));
+
+                //Making click select this structure as the structure to auto-paste
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //Setting selected structure as structure to build on map tiles
+                        GameData.get().setSelectedStructure(structure);
+
+                        Log.v(TAG, String.format("User selected %s structure with resource ID '%d'",
+                                structure.getType(), structure.getImageId()));
+
+                        StructureAdapter.this.notifyItemChanged(getAdapterPosition());
+                    }
+                });
+
+                //TODO
 //            //Making long click select this structure for drag and drop
 //            itemView.setLongClickable(true);
 //            itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -179,6 +181,7 @@ public class SelectorFragment extends Fragment {
 //                    return true;
 //                }
 //            });
+            }
         }
     }
 }

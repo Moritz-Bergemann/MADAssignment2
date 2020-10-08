@@ -13,7 +13,6 @@ public class GameMap {
     private List<Structure> commercialList;
     private List<Structure> roadList;
 
-    private Structure selectedStructure;
 
     public GameMap(int height, int width) {
         map = initialiseMap(height, width);
@@ -26,10 +25,10 @@ public class GameMap {
         return map[row][col];
     }
 
-    public void addStructure(Structure structure, int row, int col) {
+    public void addStructure(Structure structure, int row, int col) throws MapException {
         //Throw exception if there is already a structure in the place structure is to be added
         if (map[row][col].getStructure() != null) {
-            throw new IllegalArgumentException("Structure already exists here!");
+            throw new MapException("Structure already exists here!");
         }
 
         map[row][col].setStructure(structure);
@@ -40,14 +39,6 @@ public class GameMap {
         //TODO add shizzle to the database
     }
 
-
-    public Structure getSelectedStructure() {
-        return selectedStructure;
-    }
-
-    public void setSelectedStructure(Structure selectedStructure) {
-        this.selectedStructure = selectedStructure;
-    }
 
 //    FIXME likely unnecessary and stupid
 /*    private void addMapElement(MapElement mapElement, int row, int col) {
@@ -105,7 +96,7 @@ public class GameMap {
 
         for (int row = 0; row < newMap.length; row++) {
             for (int col = 0; col < newMap[row].length; col++) {
-                newMap[row][col] = new MapElement();
+                newMap[row][col] = new MapElement(row, col);
             }
         }
 

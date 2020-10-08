@@ -22,6 +22,16 @@ public class Structure {
         this.cost = cost;
     }
 
+    public Structure(Structure structure) {
+        this.imageId = structure.imageId;
+        this.type = structure.type;
+        this.cost = structure.cost;
+    }
+
+    public Structure clone() {
+        return new Structure(this);
+    }
+
     public int getImageId() {
         return imageId;
     }

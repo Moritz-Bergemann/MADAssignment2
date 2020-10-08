@@ -13,10 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.GameMap;
 import com.moritzbergemann.myapplication.model.MapElement;
+import com.moritzbergemann.myapplication.model.MapException;
 import com.moritzbergemann.myapplication.model.Structure;
 
 public class CityMapFragment extends Fragment {
@@ -128,6 +130,24 @@ public class CityMapFragment extends Fragment {
                 }
 
                 mMapElement = mapElement;
+
+                itemView.setOnClickListener(clickedElement -> {
+                    Structure structureToSet = GameData.get().getSelectedStructure();
+                    if (structureToSet != null) {
+                        Structure newStructure = structureToSet.clone();
+
+                        //Try to add the structure - if something goes wrong, throw exception
+                        try {
+                            //Add structure within map 'controller' (position passed instead of
+                            // MapElement to convey information on surrounding spaces)
+                            GameData.get().getMap().addStructure(newStructure, mapElement.getRowPos(), mapElement.getColPos());
+
+                            CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
+                        } catch (MapException m) {
+                            Toast.makeText(activity, m.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
 
                 // TODO
 //                //Setting onClick to auto-build the current selected structure

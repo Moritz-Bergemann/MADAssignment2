@@ -11,8 +11,12 @@ public class MapElement {
     private Bitmap specialImage;
     private String ownerName;
     private int backgroundImageResource;
+    private int rowPos;
+    private int colPos;
 
-    public MapElement() {
+    public MapElement(int rowPos, int colPos) {
+        this.rowPos = rowPos;
+        this.colPos = colPos;
         this.structure = null;
         this.specialImage = null;
         this.ownerName = "Nature";
@@ -33,5 +37,13 @@ public class MapElement {
 
     public int getBackgroundImageResource() {
         return backgroundImageResource;
+    }
+
+    public int getRowPos() {
+        return rowPos;
+    }
+
+    public int getColPos() {
+        return colPos;
     }
 }
