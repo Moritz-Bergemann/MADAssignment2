@@ -34,6 +34,7 @@ public class GameData {
 
     public void timeStep() {
         gameTime++;
+        money += getMoneyPerTurn();
     }
 
     public Settings getSettings() {
@@ -56,5 +57,20 @@ public class GameData {
         this.selectedStructure = selectedStructure;
     }
 
+    // Game statistics stuff
 
+    public int getPopulation() {
+        return settings.getFamilySize() * map.getStructureAmount(Structure.Type.RESIDENTIAL);
+    }
+
+    public double getEmploymentRate() {
+        return Math.min(1.0, map.getStructureAmount(Structure.Type.COMMERCIAL) *
+                settings.getShopSize() / (float)getPopulation());
+    }
+
+    public int getMoneyPerTurn() {
+        return getPopulation() *
+                ((int)(getEmploymentRate() * settings.getSalary() * settings.getTaxRate())
+                - settings.getServiceCost());
+    }
 }

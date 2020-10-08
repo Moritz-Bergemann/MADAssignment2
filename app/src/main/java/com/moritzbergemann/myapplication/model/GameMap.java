@@ -9,16 +9,12 @@ public class GameMap {
 
     // Fields
     private MapElement[][] map;
-    private List<Structure> residentialList;
-    private List<Structure> commercialList;
-    private List<Structure> roadList;
+    private List<Structure> structureList;
 
 
     public GameMap(int height, int width) {
         map = initialiseMap(height, width);
-        residentialList = new LinkedList<>();
-        commercialList = new LinkedList<>();
-        roadList = new LinkedList<>();
+        structureList = new LinkedList<>();
     }
 
     public MapElement getMapElement(int row, int col) {
@@ -52,19 +48,7 @@ public class GameMap {
 
     //FIXME also possibly unecessary (or change to eliminate lists and only make counter for each type)
     private void trackStructure(Structure structure) {
-        switch (structure.getType()) {
-            case RESIDENTIAL:
-                residentialList.add(structure);
-                break;
-            case COMMERCIAL:
-                commercialList.add(structure);
-                break;
-            case ROAD:
-                roadList.add(structure);
-                break;
-            default:
-                throw new IllegalArgumentException("Unexpected structure type");
-        }
+        structureList.add(structure);
     }
 
     public int getMapHeight() {
@@ -73,19 +57,6 @@ public class GameMap {
 
     public int getMapWidth() {
         return map[0].length;
-    }
-
-    // ACCESSORS FOR DIFFERENT STRUCTURES FIXME are these even necessary?
-    public List<Structure> getResidentialList() {
-        return residentialList;
-    }
-
-    public List<Structure> getCommercialList() {
-        return commercialList;
-    }
-
-    public List<Structure> getRoadList() {
-        return roadList;
     }
 
     /**
@@ -101,6 +72,17 @@ public class GameMap {
         }
 
         return newMap;
+    }
+
+    public int getStructureAmount(Structure.Type type) {
+        int numStructures = 0;
+
+        for (Structure structure : structureList) {
+            if (structure.getType() == type) {
+                numStructures++;
+            }
+        }
+        return numStructures;
     }
 }
 

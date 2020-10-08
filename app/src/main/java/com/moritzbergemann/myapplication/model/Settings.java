@@ -43,4 +43,24 @@ public class Settings {
     public int getRoadBuildingCost() {
         return roadBuildingCost;
     }
+
+    public int getFamilySize() {
+        return familySize;
+    }
+
+    public int getShopSize() {
+        return shopSize;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public double getTaxRate() {
+        return taxRate;
+    }
+
+    public int getServiceCost() {
+        return serviceCost;
+    }
 }
