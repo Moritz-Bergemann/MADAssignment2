@@ -1,6 +1,15 @@
 package com.moritzbergemann.myapplication.model;
 
+import android.util.Log;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Observer;
+
 public class GameData {
+    private static final String TAG = "GameData";
+
     private static GameData instance = null;
 
     public static GameData get() {
@@ -15,6 +24,7 @@ public class GameData {
     private Settings settings;
     private int money;
     private int gameTime;
+    List<UIUpdateObserver> uiUpdateObservers;
 
     private GameMap map;
 
@@ -23,6 +33,17 @@ public class GameData {
         money = settings.getInitialMoney();
         gameTime = 0;
         map = new GameMap(settings.getMapHeight(), settings.getMapWidth());
+        uiUpdateObservers = new LinkedList<>();
+    }
+
+    public void spendMoney(int cost) throws MoneyException {
+        int newMoney = money - cost;
+        if (newMoney < 0) {
+            throw new MoneyException("Insufficient money!");
+        } else {
+            money = newMoney;
+        }
+
     }
 
     public int getGameTime() {
@@ -34,6 +55,8 @@ public class GameData {
         money += getMoneyPerTurn();
 
         //TODO loss condition check
+
+        notifyUIUpdate();
     }
 
     public Settings getSettings() {
@@ -54,13 +77,27 @@ public class GameData {
     }
 
     public double getEmploymentRate() {
-        return Math.min(1.0, map.getStructureAmount(Structure.Type.COMMERCIAL) *
-                settings.getShopSize() / (float)getPopulation());
+        return Math.min(1.0, (float) map.getStructureAmount(Structure.Type.COMMERCIAL) *
+                settings.getShopSize() / (float) getPopulation());
     }
 
     public int getMoneyPerTurn() {
+        Log.v(TAG, String.format(Locale.US, "Getting money per turn: Employment " +
+                "Rate %f, Salary %d, Tax Rate %f, Service Cost %d", getEmploymentRate(),
+                settings.getSalary(), settings.getTaxRate(), settings.getServiceCost()));
+
         return getPopulation() *
-                ((int)(getEmploymentRate() * settings.getSalary() * settings.getTaxRate())
-                - settings.getServiceCost());
+                ((int) (getEmploymentRate() * settings.getSalary() * settings.getTaxRate())
+                        - settings.getServiceCost());
+    }
+
+    public void addUIUpdateObserver(UIUpdateObserver observer) {
+        uiUpdateObservers.add(observer);
+    }
+
+    public void notifyUIUpdate() {
+        for (UIUpdateObserver observer : uiUpdateObservers) {
+            observer.updateUI();
+        }
     }
 }

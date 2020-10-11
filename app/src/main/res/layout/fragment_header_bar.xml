@@ -10,6 +10,7 @@
         android:id="@+id/cityNamePreface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="City Of"
         app:layout_constraintBottom_toTopOf="@+id/cityName"
         app:layout_constraintEnd_toEndOf="@+id/cityName"
@@ -86,5 +87,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cityName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/moneyValue" />
+        app:layout_constraintTop_toBottomOf="@id/moneyPerTurnValue" />
+
+    <TextView
+        android:id="@+id/moneyPerTurnValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@+id/moneyValue"
+        app:layout_constraintTop_toBottomOf="@+id/moneyValue"
+        tools:text="MONEY PER TURN" />
+
+    <TextView
+        android:id="@+id/moneyPerTurnPreface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="+$"
+        app:layout_constraintEnd_toStartOf="@+id/moneyPerTurnValue"
+        app:layout_constraintTop_toBottomOf="@+id/moneyPreface" />
 </androidx.constraintlayout.widget.ConstraintLayout>

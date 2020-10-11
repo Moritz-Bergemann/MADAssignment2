@@ -1,16 +1,19 @@
 package com.moritzbergemann.myapplication.model;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameMap {
     // Fields
     private MapElement[][] map;
-    private List<Structure> structureList; //FIXME also possibly unecessary (or change to eliminate lists and only make counter for each type)
+    private Map<Structure.Type, Integer> structureAmounts;
 
     public GameMap(int height, int width) {
         map = initialiseMap(height, width);
-        structureList = new LinkedList<>();
+        structureAmounts = new HashMap<>();
+        structureAmounts.put(Structure.Type.RESIDENTIAL, 0);
+        structureAmounts.put(Structure.Type.COMMERCIAL, 0);
+        structureAmounts.put(Structure.Type.ROAD, 0);
     }
 
     public MapElement getMapElement(int row, int col) {
@@ -31,17 +34,23 @@ public class GameMap {
         //Add structure to the map
         map[row][col].setStructure(structure);
 
-        // Add structure to the list of its given type
-        structureList.add(structure);;
+        // Count structure
+        structureAmounts.put(structure.getType(), structureAmounts.get(structure.getType()) + 1);
 
         //TODO add shizzle to the database
     }
 
     public void demolishStructure(int row, int col) throws MapException {
+        Structure structure = map[row][col].getStructure();
+
         //If there is a structure at the specified position
-        if (getMapElement(row, col).getStructure() != null) {
-            map[row][col].removeStructure();
+        if (structure != null) {
             //TODO don't allow demolishing of a road if it would cause adjacent buildings to be road-less
+
+            map[row][col].removeStructure();
+
+            //Remove 1 from structure count
+            structureAmounts.put(structure.getType(), structureAmounts.get(structure.getType()) - 1);
         }
     }
 
@@ -107,13 +116,6 @@ public class GameMap {
     }
 
     public int getStructureAmount(Structure.Type type) {
-        int numStructures = 0;
-
-        for (Structure structure : structureList) {
-            if (structure.getType() == type) {
-                numStructures++;
-            }
-        }
-        return numStructures;
+        return structureAmounts.get(type);
     }
 }

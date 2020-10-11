@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/headerBarContainer"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="124dp"
         app:layout_constraintBottom_toTopOf="@+id/mapContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

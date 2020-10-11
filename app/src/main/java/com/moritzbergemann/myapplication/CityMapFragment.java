@@ -148,23 +148,9 @@ public class CityMapFragment extends Fragment {
                         //Notify the adapter something might have changed
                         CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
 
+                        //Notify the rest of the UI something might have changed
+                        GameData.get().notifyUIUpdate();
                     }
-
-//                    Structure structureToSet = GameData.get().getSelectedStructure();
-//                    if (structureToSet != null) {
-//                        Structure newStructure = structureToSet.clone();
-//
-//                        //Try to add the structure - if something goes wrong, throw exception
-//                        try {
-//                            //Add structure within map 'controller' (position passed instead of
-//                            // MapElement to convey information on surrounding spaces)
-//                            GameData.get().getMap().addStructure(newStructure, mapElement.getRowPos(), mapElement.getColPos());
-//
-//                            CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
-//                        } catch (MapException m) {
-//                            Toast.makeText(activity, m.getMessage(), Toast.LENGTH_LONG).show();
-//                        }
-//                    }
                 });
             }
         }

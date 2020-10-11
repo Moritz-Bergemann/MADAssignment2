@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.MapElement;
 import com.moritzbergemann.myapplication.model.Structure;
 
@@ -35,7 +36,6 @@ public class DetailsFragment extends Fragment {
     /**
      * @return A new instance of fragment DetailsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static DetailsFragment newInstance() {
         return new DetailsFragment();
     }

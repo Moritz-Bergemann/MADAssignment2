@@ -9,6 +9,7 @@ public class Settings {
     private int mapHeight = 10;
 
     //Game Settings
+    private String cityName = "Perth";
     private int initialMoney = 1000;
     private int familySize = 4;
     private int shopSize = 6;
@@ -65,5 +66,9 @@ public class Settings {
 
     public int getServiceCost() {
         return serviceCost;
+    }
+
+    public String getCityName() {
+        return cityName;
     }
 }
