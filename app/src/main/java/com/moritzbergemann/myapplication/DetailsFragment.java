@@ -69,7 +69,12 @@ public class DetailsFragment extends Fragment {
         EditText structureName = view.findViewById(R.id.structureName);
         if (mapElement.getOwnerName() != null) {
             structureName.setText(mapElement.getOwnerName());
+        } else {
+            //Set name to structure type by default
+            structureName.setText(Structure.getTypeName(mapElement.getStructure().getType()));
         }
+
+        //Listen to changes to text to change building name
         structureName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) { }
