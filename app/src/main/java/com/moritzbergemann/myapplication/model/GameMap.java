@@ -4,9 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class GameMap {
-    //TODO make the city not a dictatorship
-    private static final String OWNER_NAME = "God-Emperor Moritz";
-
     // Fields
     private MapElement[][] map;
     private List<Structure> structureList;
@@ -21,20 +18,29 @@ public class GameMap {
         return map[row][col];
     }
 
-    public void addStructure(Structure structure, int row, int col) throws MapException {
+    public void addStructure(Structure structure, int row, int col) throws BuildingException {
         //Throw exception if there is already a structure in the place structure is to be added
         if (map[row][col].getStructure() != null) {
-            throw new MapException("Structure already exists here!");
+            throw new BuildingException("Structure already exists here!");
         }
 
+        //Throw exception if structure is not in a valid position
+        if (!validateStructurePosition(structure, row, col)) {
+            throw new BuildingException("This building cannot be built here!");
+        }
+
+        //Add structure to the map
         map[row][col].setStructure(structure);
 
         // Add structure to the list of its given type
         trackStructure(structure);
-        //TODO notify the recyclerview?
+
         //TODO add shizzle to the database
     }
 
+    public void demolishStructure() {
+        //TODO
+    }
 
 //    FIXME likely unnecessary and stupid
 /*    private void addMapElement(MapElement mapElement, int row, int col) {
@@ -49,6 +55,44 @@ public class GameMap {
     //FIXME also possibly unecessary (or change to eliminate lists and only make counter for each type)
     private void trackStructure(Structure structure) {
         structureList.add(structure);
+    }
+
+    private boolean validateStructurePosition(Structure structure, int row, int col) {
+        boolean validPosition = true;   //Position is valid by default (unless some rule invalidates
+                                        // it)
+
+        //Assert row and column called are within map boundaries
+        if (!(row < map.length && row > 0) || !(col < map[0].length && col > 0)) {
+            throw new IndexOutOfBoundsException("Element not within map bounds");
+        }
+
+        //** RULE FORCING RESIDENTIAL & COMMERCIAL TO BE NEXT TO ROAD **
+        if (structure.getType() == Structure.Type.RESIDENTIAL ||
+                structure.getType() == Structure.Type.COMMERCIAL) {
+            validPosition = false;
+
+            //Check if at least one of surrounding map elements contains a road-type structure
+            int[] rowValues = new int[]{row + 1, row - 1, row, row};
+            int[] colValues = new int[]{col, col, col + 1, col - 1};
+
+            for (int ii = 0; ii < 4; ii++) {
+                try {
+                    MapElement checkElement = getMapElement(rowValues[ii], colValues[ii]);
+                    Structure checkStructure = checkElement.getStructure();
+
+                    if (checkStructure != null) {
+                        if (checkElement.getStructure().getType() == Structure.Type.ROAD) {
+                            validPosition = true;
+                            break;
+                        }
+                    }
+                } catch (IndexOutOfBoundsException i) {
+                    // Do nothing (just don't check the map element that doesn't exist)
+                }
+            }
+        }
+
+        return validPosition;
     }
 
     public int getMapHeight() {

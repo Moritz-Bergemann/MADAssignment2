@@ -149,7 +149,8 @@ public class SelectorFragment extends Fragment {
                         throw new IllegalArgumentException("Bad type");
                 }
 
-                mCost.setText(String.format(Locale.US, "$%d", structure.getCost()));
+                mCost.setText(String.format(Locale.US, "$%d",
+                        GameData.get().getSettings().getStructureCost(structure.getType())));
 
                 //Making click select this structure as the structure to auto-paste
                 itemView.setOnClickListener(new View.OnClickListener() {

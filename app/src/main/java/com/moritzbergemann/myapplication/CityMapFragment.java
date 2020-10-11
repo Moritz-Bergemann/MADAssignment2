@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.GameMap;
 import com.moritzbergemann.myapplication.model.MapElement;
-import com.moritzbergemann.myapplication.model.MapException;
+import com.moritzbergemann.myapplication.model.BuildingException;
 import com.moritzbergemann.myapplication.model.Structure;
 
 public class CityMapFragment extends Fragment {
@@ -143,7 +143,7 @@ public class CityMapFragment extends Fragment {
                             GameData.get().getMap().addStructure(newStructure, mapElement.getRowPos(), mapElement.getColPos());
 
                             CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
-                        } catch (MapException m) {
+                        } catch (BuildingException m) {
                             Toast.makeText(activity, m.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }

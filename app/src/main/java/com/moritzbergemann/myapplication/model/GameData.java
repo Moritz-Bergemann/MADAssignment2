@@ -35,6 +35,8 @@ public class GameData {
     public void timeStep() {
         gameTime++;
         money += getMoneyPerTurn();
+
+        //TODO loss condition check
     }
 
     public Settings getSettings() {
@@ -57,8 +59,7 @@ public class GameData {
         this.selectedStructure = selectedStructure;
     }
 
-    // Game statistics stuff
-
+    //**Game statistics stuff**
     public int getPopulation() {
         return settings.getFamilySize() * map.getStructureAmount(Structure.Type.RESIDENTIAL);
     }

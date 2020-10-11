@@ -1,5 +1,8 @@
 package com.moritzbergemann.myapplication.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Settings {
     //Map Settings
     private int mapWidth = 50;
@@ -14,11 +17,14 @@ public class Settings {
     private int serviceCost = 2;
 
     //Building Costs
-    private int houseBuildingCost = 100;
-    private int commercialBuildingCost = 500;
-    private int roadBuildingCost = 20;
+    private Map<Structure.Type, Integer> structureCosts;
 
-    public Settings() { }
+    public Settings() {
+        structureCosts = new HashMap<>();
+        structureCosts.put(Structure.Type.RESIDENTIAL, 100);
+        structureCosts.put(Structure.Type.COMMERCIAL, 500);
+        structureCosts.put(Structure.Type.ROAD, 20);
+    }
 
     public int getMapWidth() {
         return mapWidth;
@@ -32,16 +38,13 @@ public class Settings {
         return initialMoney;
     }
 
-    public int getHouseBuildingCost() {
-        return houseBuildingCost;
-    }
+    public int getStructureCost(Structure.Type type) {
+        Integer structureCost = structureCosts.get(type);
+        if (structureCost == null) {
+            throw new IllegalArgumentException("Structure type not found");
+        }
 
-    public int getCommercialBuildingCost() {
-        return commercialBuildingCost;
-    }
-
-    public int getRoadBuildingCost() {
-        return roadBuildingCost;
+        return structureCost;
     }
 
     public int getFamilySize() {

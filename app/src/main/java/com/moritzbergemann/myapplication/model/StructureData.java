@@ -31,29 +31,29 @@ public class StructureData {
 
         Settings settings = GameData.get().getSettings();
 
-        list.add(new Structure(R.drawable.ic_residential1, Structure.Type.RESIDENTIAL, settings.getHouseBuildingCost()));
-        list.add(new Structure(R.drawable.ic_residential2, Structure.Type.RESIDENTIAL, settings.getHouseBuildingCost()));
-        list.add(new Structure(R.drawable.ic_residential3, Structure.Type.RESIDENTIAL, settings.getHouseBuildingCost()));
-        list.add(new Structure(R.drawable.ic_residential4, Structure.Type.RESIDENTIAL, settings.getHouseBuildingCost()));
-        list.add(new Structure(R.drawable.ic_industrial1, Structure.Type.COMMERCIAL, settings.getCommercialBuildingCost()));
-        list.add(new Structure(R.drawable.ic_industrial2, Structure.Type.COMMERCIAL, settings.getCommercialBuildingCost()));
-        list.add(new Structure(R.drawable.ic_industrial3, Structure.Type.COMMERCIAL, settings.getCommercialBuildingCost()));
-        list.add(new Structure(R.drawable.ic_industrial4, Structure.Type.COMMERCIAL, settings.getCommercialBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_e, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_ew, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_n, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_ne, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_new, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_ns, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_nse, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_nsew, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_nsw, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_nw, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_s, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_se, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_sew, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_sw, Structure.Type.ROAD, settings.getRoadBuildingCost()));
-        list.add(new Structure(R.drawable.ic_road_w, Structure.Type.ROAD, settings.getRoadBuildingCost()));
+        list.add(new Structure(R.drawable.ic_residential1, Structure.Type.RESIDENTIAL));
+        list.add(new Structure(R.drawable.ic_residential2, Structure.Type.RESIDENTIAL));
+        list.add(new Structure(R.drawable.ic_residential3, Structure.Type.RESIDENTIAL));
+        list.add(new Structure(R.drawable.ic_residential4, Structure.Type.RESIDENTIAL));
+        list.add(new Structure(R.drawable.ic_industrial1, Structure.Type.COMMERCIAL));
+        list.add(new Structure(R.drawable.ic_industrial2, Structure.Type.COMMERCIAL));
+        list.add(new Structure(R.drawable.ic_industrial3, Structure.Type.COMMERCIAL));
+        list.add(new Structure(R.drawable.ic_industrial4, Structure.Type.COMMERCIAL));
+        list.add(new Structure(R.drawable.ic_road_e, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_ew, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_n, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_ne, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_new, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_ns, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_nse, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_nsew, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_nsw, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_nw, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_s, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_se, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_sew, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_sw, Structure.Type.ROAD));
+        list.add(new Structure(R.drawable.ic_road_w, Structure.Type.ROAD));
 
         return list;
     }

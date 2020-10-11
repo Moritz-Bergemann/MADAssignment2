@@ -14,18 +14,15 @@ public class Structure {
 
     private int imageId;
     private Type type;
-    private int cost;
 
-    public Structure(int imageId, Type type, int cost) {
+    public Structure(int imageId, Type type) {
         this.imageId = imageId;
         this.type = type;
-        this.cost = cost;
     }
 
     public Structure(Structure structure) {
         this.imageId = structure.imageId;
         this.type = structure.type;
-        this.cost = structure.cost;
     }
 
     public Structure clone() {
@@ -38,9 +35,5 @@ public class Structure {
 
     public Type getType() {
         return type;
-    }
-
-    public int getCost() {
-        return cost;
     }
 }
