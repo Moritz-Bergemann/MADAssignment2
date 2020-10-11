@@ -18,8 +18,8 @@ public class MapElement {
         this.rowPos = rowPos;
         this.colPos = colPos;
         this.structure = null;
-        this.specialImage = null;
-        this.ownerName = "Nature";
+        this.specialImage = null; //Special image set for this structure by user
+        this.ownerName = null; //Unique name given to this structure by user
         this.backgroundImageResource = DEFAULT_BACKGROUND_IMAGE_RESOURCE;
     }
 
@@ -45,5 +45,24 @@ public class MapElement {
 
     public int getColPos() {
         return colPos;
+    }
+
+    /**
+     * Remove the structure currently here from this map element
+     */
+    public void removeStructure() {
+        if (structure != null) {
+            structure = null;
+            specialImage = null;
+            ownerName = null;
+        }
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 }

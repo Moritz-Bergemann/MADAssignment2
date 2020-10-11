@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,15 +17,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.moritzbergemann.myapplication.mapactions.SelectableMapAction;
 import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.GameMap;
 import com.moritzbergemann.myapplication.model.MapElement;
-import com.moritzbergemann.myapplication.model.BuildingException;
+import com.moritzbergemann.myapplication.model.MapException;
 import com.moritzbergemann.myapplication.model.Structure;
 
 public class CityMapFragment extends Fragment {
     private static final String TAG = "CityMapFragment";
-
 
     private RecyclerView mMapRecyclerView;
 
@@ -132,74 +134,38 @@ public class CityMapFragment extends Fragment {
                 mMapElement = mapElement;
 
                 itemView.setOnClickListener(clickedElement -> {
-                    Structure structureToSet = GameData.get().getSelectedStructure();
-                    if (structureToSet != null) {
-                        Structure newStructure = structureToSet.clone();
+                    CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);
+                    SelectableMapAction mapAction = viewModel.getMapAction();
 
-                        //Try to add the structure - if something goes wrong, throw exception
+                    if (mapAction != null) {
                         try {
-                            //Add structure within map 'controller' (position passed instead of
-                            // MapElement to convey information on surrounding spaces)
-                            GameData.get().getMap().addStructure(newStructure, mapElement.getRowPos(), mapElement.getColPos());
-
-                            CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
-                        } catch (BuildingException m) {
+                            //Perform the currently selected action at this position on the map
+                            mapAction.performAction(mapElement.getRowPos(), mapElement.getColPos());
+                        } catch (MapException m) {
                             Toast.makeText(activity, m.getMessage(), Toast.LENGTH_LONG).show();
                         }
+
+                        //Notify the adapter something might have changed
+                        CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
+
                     }
-                });
 
-                // TODO
-//                //Setting onClick to auto-build the current selected structure
-//                itemView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Structure structureToSet = AppData.get().getSelectedStructure();
-//                        //Add the currently selected structure (if there is one) to this ViewHolder's
-//                        // map element (updates MAP_DATA_TODO as well via pass-by-reference)
-//                        if (structureToSet != null) {
-//                            Log.v(TAG, "Setting block structure");
+//                    Structure structureToSet = GameData.get().getSelectedStructure();
+//                    if (structureToSet != null) {
+//                        Structure newStructure = structureToSet.clone();
 //
-//                            //Set this element to have this structure for future references
-//                            mMapElement.setStructure(structureToSet);
+//                        //Try to add the structure - if something goes wrong, throw exception
+//                        try {
+//                            //Add structure within map 'controller' (position passed instead of
+//                            // MapElement to convey information on surrounding spaces)
+//                            GameData.get().getMap().addStructure(newStructure, mapElement.getRowPos(), mapElement.getColPos());
 //
-//                            //Let the adapter know stuff's changed
 //                            CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
+//                        } catch (MapException m) {
+//                            Toast.makeText(activity, m.getMessage(), Toast.LENGTH_LONG).show();
 //                        }
 //                    }
-//                });
-
-                // TODO decide whether to bother implementing this
-//                //Responding to manual drag of structure
-//                itemView.setOnDragListener(new View.OnDragListener() {
-//                    @Override
-//                    public boolean onDrag(View view, DragEvent dragEvent) {
-//                        boolean responded = false;
-//
-//                        switch (dragEvent.getAction()) {
-//                            case DragEvent.ACTION_DRAG_STARTED: //Must return true to 'drag started' when the drag appears in this fragment to keep getting updates on it
-//                                responded = true;
-//                                break;
-//                            case DragEvent.ACTION_DROP: //If the user dragged a structure here
-//                                if (view == itemView) { //Making sure it was dropped onto THIS ItemView
-//                                    Object thingDragged = dragEvent.getLocalState();
-//
-//                                    if (thingDragged instanceof Structure) {
-//                                        //Set this element to have this structure
-//                                        mMapElement.setStructure((Structure)thingDragged);
-//
-//                                        //Let the adapter know stuff's changed
-//                                        CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
-//
-//                                        responded = true;
-//                                    }
-//                                }
-//                                break;
-//                        }
-//
-//                        return responded;
-//                    }
-//                }); //PERSONAL NOTE: I'm pretty sure the drag/drop listener system works on a ViewGroup level (i.e. here on the RecyclerView) rather than an individual view level - hence the situation where only listening to on 'ACTION_DRAG_ENDED' caused the action to be performed on every cell in the grid.
+                });
             }
         }
     }

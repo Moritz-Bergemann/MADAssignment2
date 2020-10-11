@@ -1,13 +1,13 @@
 package com.moritzbergemann.myapplication;
 
 import android.app.Activity;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.moritzbergemann.myapplication.mapactions.BuildStructure;
+import com.moritzbergemann.myapplication.mapactions.DemolishStructure;
+import com.moritzbergemann.myapplication.mapactions.GetDetails;
 import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.Structure;
 import com.moritzbergemann.myapplication.model.StructureData;
@@ -40,12 +43,8 @@ public class SelectorFragment extends Fragment {
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
      * @return A new instance of fragment SelectorFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SelectorFragment newInstance() {
         return new SelectorFragment();
     }
@@ -66,6 +65,7 @@ public class SelectorFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //Setting up RecyclerView
         mSelectorRecyclerView = view.findViewById(R.id.recyclerView);
         mSelectorRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false));
@@ -73,6 +73,23 @@ public class SelectorFragment extends Fragment {
         StructureAdapter adapter = new StructureAdapter(StructureData.get().getStructureTypes(), getActivity());
 
         mSelectorRecyclerView.setAdapter(adapter);
+
+        //Demolish button
+        ConstraintLayout demolishButton = view.findViewById(R.id.demolishButton);
+        demolishButton.setOnClickListener(clickedDemolishButton -> {
+            CityViewModel viewModel = new ViewModelProvider(requireActivity()).get(CityViewModel.class);
+            viewModel.setMapAction(new DemolishStructure());
+        });
+
+        //Inspect building button
+        ConstraintLayout infoButton = view.findViewById(R.id.infoButton);
+        infoButton.setOnClickListener(clickedInfoButton -> {
+            if (requireActivity() instanceof CityActivity) {
+                CityActivity activity = (CityActivity) requireActivity();
+                CityViewModel viewModel = new ViewModelProvider(requireActivity()).get(CityViewModel.class);
+                viewModel.setMapAction(new GetDetails(activity));
+            }
+        });
     }
 
     /**
@@ -153,35 +170,14 @@ public class SelectorFragment extends Fragment {
                         GameData.get().getSettings().getStructureCost(structure.getType())));
 
                 //Making click select this structure as the structure to auto-paste
-                itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //Setting selected structure as structure to build on map tiles
-                        GameData.get().setSelectedStructure(structure);
+                itemView.setOnClickListener(view -> {
+                    //Setting selected structure as structure to build on map tiles
+                    CityViewModel viewModel = new ViewModelProvider(requireActivity()).get(CityViewModel.class);
+                    viewModel.setMapAction(new BuildStructure(structure));
 
-                        Log.v(TAG, String.format("User selected %s structure with resource ID '%d'",
-                                structure.getType(), structure.getImageId()));
-
-                        StructureAdapter.this.notifyItemChanged(getAdapterPosition());
-                    }
+                    Log.v(TAG, String.format("User selected %s structure with resource ID '%d'",
+                            structure.getType(), structure.getImageId()));
                 });
-
-                //TODO
-//            //Making long click select this structure for drag and drop
-//            itemView.setLongClickable(true);
-//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @RequiresApi(api = Build.VERSION_CODES.N)
-//                @Override
-//                public boolean onLongClick(View view) {
-//                    //Setting image to drag with
-//                    View.DragShadowBuilder builder = new View.DragShadowBuilder(mImage);
-//
-//                    //Starting drag and drop
-//                    itemView.startDragAndDrop(null, builder, structure, 0);
-//
-//                    return true;
-//                }
-//            });
             }
         }
     }
