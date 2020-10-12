@@ -82,6 +82,14 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         });
 
+        //Show the game over message if the game has been lost
+        GameData.get().getGameLost().observe(getViewLifecycleOwner(), ganeLostUpdate -> {
+            if (ganeLostUpdate) {
+                TextView gameLostMessage = view.findViewById(R.id.gameLostMessage);
+                gameLostMessage.setVisibility(View.VISIBLE);
+            }
+        });
+
         //Start listening for UI updates
         GameData.get().addUIUpdateObserver(this);
     }
