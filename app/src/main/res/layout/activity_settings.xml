@@ -4,6 +4,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="24dp"
     tools:context=".SettingsActivity">
+
+    <TextView
+        android:id="@+id/initalMoneyLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Initial Money:"
+        app:layout_constraintEnd_toEndOf="@+id/mapHeightLabel"
+        app:layout_constraintTop_toBottomOf="@+id/mapHeightLabel" />
+
+    <EditText
+        android:id="@+id/initialMoneyValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MONEY"
+        app:layout_constraintBottom_toBottomOf="@+id/initalMoneyLabel"
+        app:layout_constraintStart_toStartOf="@+id/mapHeightValue"
+        app:layout_constraintTop_toTopOf="@+id/initalMoneyLabel" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mapWidthLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Map Width:"
+        app:layout_constraintEnd_toStartOf="@+id/mapWidthValue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <EditText
+        android:id="@+id/mapWidthValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WIDTH"
+        app:layout_constraintBottom_toBottomOf="@+id/mapWidthLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mapWidthLabel"
+        app:layout_constraintTop_toTopOf="@+id/mapWidthLabel" />
+
+    <TextView
+        android:id="@+id/mapHeightLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Map Height:"
+        app:layout_constraintEnd_toEndOf="@+id/mapWidthLabel"
+        app:layout_constraintTop_toBottomOf="@+id/mapWidthLabel" />
+
+    <EditText
+        android:id="@+id/mapHeightValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HEIGHT"
+        app:layout_constraintBottom_toBottomOf="@+id/mapHeightLabel"
+        app:layout_constraintStart_toStartOf="@+id/mapWidthValue"
+        app:layout_constraintTop_toTopOf="@+id/mapHeightLabel" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/initialMoneyValue"
+        app:layout_constraintEnd_toStartOf="@+id/initialMoneyValue"
+        app:layout_constraintTop_toTopOf="@+id/initialMoneyValue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
