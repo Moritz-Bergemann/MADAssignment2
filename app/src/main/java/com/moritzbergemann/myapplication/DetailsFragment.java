@@ -1,5 +1,8 @@
 package com.moritzbergemann.myapplication;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -28,6 +32,9 @@ import java.util.Locale;
  * create an instance of this fragment.
  */
 public class DetailsFragment extends Fragment {
+    private static final int REQUEST_THUMBNAIL = 1;
+
+    private MapElement mMapElement = null;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -58,20 +65,20 @@ public class DetailsFragment extends Fragment {
 
         //Get map element to show the details of (set by caller)
         CityViewModel viewModel = new ViewModelProvider(requireActivity()).get(CityViewModel.class);
-        MapElement mapElement = viewModel.getMapElementForDetails();
+        mMapElement = viewModel.getMapElementForDetails();
 
-        if (mapElement == null) {
+        if (mMapElement == null) {
             throw new IllegalArgumentException("Inspect menu unduly called - no map element exists");
-        } else if (mapElement.getStructure() == null) {
+        } else if (mMapElement.getStructure() == null) {
             throw new IllegalArgumentException("Inspect menu unduly called - no structure in map element");
         }
 
         EditText structureName = view.findViewById(R.id.structureName);
-        if (mapElement.getOwnerName() != null) {
-            structureName.setText(mapElement.getOwnerName());
+        if (mMapElement.getOwnerName() != null) {
+            structureName.setText(mMapElement.getOwnerName());
         } else {
             //Set name to structure type by default
-            structureName.setText(Structure.getTypeName(mapElement.getStructure().getType()));
+            structureName.setText(Structure.getTypeName(mMapElement.getStructure().getType()));
         }
 
         //Listen to changes to text to change building name
@@ -84,23 +91,40 @@ public class DetailsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mapElement.setOwnerName(editable.toString());
+                mMapElement.setOwnerName(editable.toString());
                 //TODO DB stuff
             }
         });
 
         TextView structureType = view.findViewById(R.id.structureType);
-        structureType.setText(Structure.getTypeName(mapElement.getStructure().getType()));
+        structureType.setText(Structure.getTypeName(mMapElement.getStructure().getType()));
 
         TextView rowText = view.findViewById(R.id.rowValue);
-        rowText.setText(String.format(Locale.US, "%d", mapElement.getRowPos()));
+        rowText.setText(String.format(Locale.US, "%d", mMapElement.getRowPos()));
 
         TextView colText = view.findViewById(R.id.columnValue);
-        colText.setText(String.format(Locale.US, "%d", mapElement.getColPos()));
+        colText.setText(String.format(Locale.US, "%d", mMapElement.getColPos()));
 
         Button chooseImageButton = view.findViewById(R.id.chooseImageButton);
-        //TODO thumbnail image selection
+        chooseImageButton.setOnClickListener(clickedChooseImageButton -> {
+            Intent thumbnailPhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(thumbnailPhotoIntent, REQUEST_THUMBNAIL);
+        });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_THUMBNAIL) { //When thumbnail photo taken
+                Bitmap thumbnailPhoto = (Bitmap) data.getExtras().get("data");
+                mMapElement.setSpecialImage(thumbnailPhoto);
+
+                //Let everything that cares know this map element has had a new image added to it
+                CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);
+                viewModel.setMapElementWithImageUpdated(mMapElement);
+            }
+        }
+    }
 }

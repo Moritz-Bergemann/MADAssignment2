@@ -1,11 +1,13 @@
 package com.moritzbergemann.myapplication;
 
 import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -66,6 +68,11 @@ public class CityMapFragment extends Fragment {
 
         CityMapAdapter cityMapAdapter = new CityMapAdapter(GameData.get().getMap(), getActivity());
         mMapRecyclerView.setAdapter(cityMapAdapter);
+
+        CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);
+        viewModel.getMapElementWithImageUpdated().observe(getViewLifecycleOwner(), mapElement -> {
+//            mMapRecyclerView.getAdapter().notifyItemChanged();
+        });
     }
 
     private class CityMapAdapter extends RecyclerView.Adapter<CityMapAdapter.MapElementViewHolder> {
@@ -124,8 +131,14 @@ public class CityMapFragment extends Fragment {
                 mBackgroundImage.setImageResource(mapElement.getBackgroundImageResource());
                 Structure elementStructure = mapElement.getStructure();
                 if (elementStructure != null) {
-                    mStructureImage.setVisibility(View.VISIBLE);
-                    mStructureImage.setImageResource(elementStructure.getImageId());
+                    if (mapElement.getSpecialImage() != null) { //If there is a special image to show
+                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), mapElement.getSpecialImage());
+                        mStructureImage.setImageDrawable(bitmapDrawable);
+                    } else {
+                        //Just show the regular image
+                        mStructureImage.setVisibility(View.VISIBLE);
+                        mStructureImage.setImageResource(elementStructure.getImageId());
+                    }
                 } else {
                     mStructureImage.setVisibility(View.INVISIBLE);
                 }
@@ -154,5 +167,4 @@ public class CityMapFragment extends Fragment {
             }
         }
     }
-
 }

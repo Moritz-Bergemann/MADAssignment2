@@ -65,4 +65,8 @@ public class MapElement {
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
+
+    public Bitmap getSpecialImage() {
+        return specialImage;
+    }
 }

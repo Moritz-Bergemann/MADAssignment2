@@ -55,7 +55,6 @@ public class CityActivity extends AppCompatActivity {
     }
 
     public void inspectBuilding(int row, int col) {
-        //TODO
         CityViewModel viewModel = new ViewModelProvider(this).get(CityViewModel.class);
         viewModel.setMapElementForDetails(GameData.get().getMap().getMapElement(row, col));
 
