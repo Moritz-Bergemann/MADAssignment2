@@ -4,9 +4,11 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
         tools:context=".CityInfoFragment"
         tools:layout_editor_absoluteX="-9dp"
         tools:layout_editor_absoluteY="50dp">
@@ -39,7 +41,7 @@
             app:layout_constraintTop_toBottomOf="@+id/latestIncomeLabel" />
 
         <TextView
-            android:id="@+id/moneyValue3"
+            android:id="@+id/temperatureValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -48,7 +50,7 @@
             tools:text="TEMP" />
 
         <TextView
-            android:id="@+id/currentTemperature"
+            android:id="@+id/temperatureLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -109,7 +111,7 @@
             android:id="@+id/cityNameValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="32dp"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

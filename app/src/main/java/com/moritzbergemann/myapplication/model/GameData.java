@@ -26,6 +26,7 @@ public class GameData {
     // FIELDS
     private Settings settings;
     private int money;
+    private int latestIncome;
     private int gameTime;
     List<UIUpdateObserver> uiUpdateObservers;
     private MutableLiveData<Boolean> gameLost;
@@ -34,6 +35,7 @@ public class GameData {
     private GameData() {
         settings = new Settings();
         money = settings.getInitialMoney();
+        latestIncome = 0;
         gameTime = 0;
         map = new GameMap(settings.getMapHeight(), settings.getMapWidth());
         uiUpdateObservers = new LinkedList<>();
@@ -47,7 +49,6 @@ public class GameData {
         } else {
             money = newMoney;
         }
-
     }
 
     public int getGameTime() {
@@ -55,6 +56,8 @@ public class GameData {
     }
 
     public void timeStep() {
+        latestIncome = getMoneyPerTurn();
+
         gameTime++;
         money += getMoneyPerTurn();
 
@@ -110,5 +113,9 @@ public class GameData {
         for (UIUpdateObserver observer : uiUpdateObservers) {
             observer.updateUI();
         }
+    }
+
+    public int getLatestIncome() {
+        return latestIncome;
     }
 }

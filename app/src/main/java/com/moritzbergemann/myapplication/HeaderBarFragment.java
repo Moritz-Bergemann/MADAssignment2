@@ -79,7 +79,8 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
 
         Button cityInfoButton = view.findViewById(R.id.cityInfobutton);
         cityInfoButton.setOnClickListener(view1 -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            CityInfoFragment cityInfoFragment = CityInfoFragment.newInstance();
+            cityInfoFragment.show(getParentFragmentManager().beginTransaction(), "cityInfoDialog");
         });
 
         //Show the game over message if the game has been lost

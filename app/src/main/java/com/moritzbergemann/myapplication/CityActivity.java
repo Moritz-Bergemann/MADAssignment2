@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 import android.widget.Toast;
@@ -79,5 +81,10 @@ public class CityActivity extends AppCompatActivity {
         viewModel.setMapElementForDetails(null);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.mapContainer, CityMapFragment.newInstance()).commit();
+    }
+
+    public static Intent makeIntent(Activity callingActivity) {
+        Intent intent = new Intent(callingActivity, CityActivity.class);
+        return intent;
     }
 }
