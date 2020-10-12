@@ -1,6 +1,8 @@
 package com.moritzbergemann.myapplication;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -38,6 +40,18 @@ public class CityActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().add(R.id.selectorContainer,
                     SelectorFragment.newInstance()).commit();
         }
+
+        //Setup listener for game loss (to show sad boy loss screen)
+        GameData.get().getGameLost().observe(this, gameLostValue -> {
+            if (gameLostValue) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Game Over!")
+                        .setMessage("You have run out of money and lost the game! You can keep " +
+                                "seeing your city running if you'd like.")
+                        .setNeutralButton("This is so sad", null)
+                        .show();
+            }
+        });
     }
 
     public void inspectBuilding(int row, int col) {
@@ -47,8 +61,6 @@ public class CityActivity extends AppCompatActivity {
 
         //Replace city map with details TODO make this a show/hide deal
         getSupportFragmentManager().beginTransaction().replace(R.id.mapContainer, DetailsFragment.newInstance()).commit();
-
-//        Toast.makeText(this, "Inspecting Building :)", Toast.LENGTH_SHORT).show();
     }
 
     @Override

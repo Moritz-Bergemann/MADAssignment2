@@ -2,6 +2,9 @@ package com.moritzbergemann.myapplication.model;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -25,7 +28,7 @@ public class GameData {
     private int money;
     private int gameTime;
     List<UIUpdateObserver> uiUpdateObservers;
-
+    private MutableLiveData<Boolean> gameLost;
     private GameMap map;
 
     private GameData() {
@@ -34,6 +37,7 @@ public class GameData {
         gameTime = 0;
         map = new GameMap(settings.getMapHeight(), settings.getMapWidth());
         uiUpdateObservers = new LinkedList<>();
+        gameLost = new MutableLiveData<>(false);
     }
 
     public void spendMoney(int cost) throws MoneyException {
@@ -54,7 +58,10 @@ public class GameData {
         gameTime++;
         money += getMoneyPerTurn();
 
-        //TODO loss condition check
+        //Loss condition check
+        if (money < 0) {
+            gameLost.postValue(true);
+        }
 
         notifyUIUpdate();
     }
@@ -89,6 +96,10 @@ public class GameData {
         return getPopulation() *
                 ((int) (getEmploymentRate() * settings.getSalary() * settings.getTaxRate())
                         - settings.getServiceCost());
+    }
+
+    public LiveData<Boolean> getGameLost() {
+        return gameLost;
     }
 
     public void addUIUpdateObserver(UIUpdateObserver observer) {

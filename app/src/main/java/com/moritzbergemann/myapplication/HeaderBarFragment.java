@@ -1,5 +1,6 @@
 package com.moritzbergemann.myapplication;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -74,6 +75,11 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
         Button timeStepButton = view.findViewById(R.id.timeStepButton);
         timeStepButton.setOnClickListener(clickedTimeStepButton -> {
             GameData.get().timeStep();
+        });
+
+        Button cityInfoButton = view.findViewById(R.id.cityInfobutton);
+        cityInfoButton.setOnClickListener(view1 -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         });
 
         //Start listening for UI updates
