@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.moritzbergemann.myapplication.model.GameData;
+import com.moritzbergemann.myapplication.model.IntegerTextValidator;
 import com.moritzbergemann.myapplication.model.Settings;
 
 import java.util.Locale;
@@ -27,25 +28,16 @@ public class SettingsActivity extends AppCompatActivity {
         if (settings.getMapWidth() != -1) {
             mapWidthValue.setText(String.format(Locale.US, "%d", settings.getMapWidth()));
         }
-        mapWidthValue.addTextChangedListener(new TextWatcher() {
+        mapWidthValue.addTextChangedListener(new IntegerTextValidator(Settings.MIN_MAP_WIDTH, Settings.MAX_MAP_WIDTH) {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void setNewValue(int newValue) {
+                settings.setMapWidth(newValue);
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public int getOriginalValue() {
+                return settings.getMapWidth();
             }
-
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                try {
-//                    Integer.valueOf(editable.toString());
-//                } catch (IllegalArgumentException) {
-//
-//                }
-//            } //TODO undo if naughty
         });
 
         //**MAP HEIGHT AND WIDTH (NOT ADJUSTABLE AFTER GAME START)**
@@ -54,10 +46,35 @@ public class SettingsActivity extends AppCompatActivity {
             mapHeightValue.setText(String.format(Locale.US, "%d", settings.getMapHeight()));
         }
 
+        mapHeightValue.addTextChangedListener(new IntegerTextValidator(Settings.MIN_MAP_HEIGHT, Settings.MAX_MAP_HEIGHT) {
+            @Override
+            public void setNewValue(int newValue) {
+                settings.setMapHeight(newValue);
+            }
+
+            @Override
+            public int getOriginalValue() {
+                return settings.getMapHeight();
+            }
+        });
+
+
         EditText initialMoneyValue = findViewById(R.id.initialMoneyValue);
         if (settings.getInitialMoney() != -1) {
             initialMoneyValue.setText(String.format(Locale.US, "%d", settings.getInitialMoney()));
         }
+
+        initialMoneyValue.addTextChangedListener(new IntegerTextValidator(Settings.MIN_INITIAL_MONEY, Settings.MAX_INITIAL_MONEY) {
+            @Override
+            public void setNewValue(int newValue) {
+                settings.setInitialMoney(newValue);
+            }
+
+            @Override
+            public int getOriginalValue() {
+                return settings.getInitialMoney();
+            }
+        });
     }
 
     public static Intent makeIntent(Activity callingActivity) {
@@ -65,5 +82,5 @@ public class SettingsActivity extends AppCompatActivity {
         return intent;
     }
 
-    //TODO settings have to be adjusted before starting the game
+    //TODO settings have to be adjusted before starting the game (and/or NOT be adjustable once the game has started, maybe move that into settings object?)
 }

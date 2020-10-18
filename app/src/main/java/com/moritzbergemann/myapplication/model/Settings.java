@@ -4,6 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Settings {
+    //GLOBAL CONSTANTS
+    public static final int MIN_MAP_WIDTH = 1;
+    public static final int MAX_MAP_WIDTH = 500;
+    public static final int MIN_MAP_HEIGHT = 1;
+    public static final int MAX_MAP_HEIGHT = 25;
+    public static final int MIN_INITIAL_MONEY = 620;
+    public static final int MAX_INITIAL_MONEY = 99999999;
+
     //Map Settings
     private int mapWidth = 50;
     private int mapHeight = 10;
@@ -70,5 +78,17 @@ public class Settings {
 
     public String getCityName() {
         return cityName;
+    }
+
+    public void setMapWidth(int mapWidth) {
+        this.mapWidth = mapWidth;
+    }
+
+    public void setMapHeight(int mapHeight) {
+        this.mapHeight = mapHeight;
+    }
+
+    public void setInitialMoney(int initialMoney) {
+        this.initialMoney = initialMoney;
     }
 }
