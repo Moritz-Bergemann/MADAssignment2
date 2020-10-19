@@ -1,9 +1,15 @@
 package com.moritzbergemann.myapplication.model;
 
+import android.content.Context;
+import android.database.CursorWrapper;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.moritzbergemann.myapplication.database.DatabaseHelper;
+import com.moritzbergemann.myapplication.database.DatabaseSchema;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +38,8 @@ public class GameData {
     private MutableLiveData<Boolean> gameLost;
     private GameMap map;
 
+    private SQLiteDatabase db;
+
     private GameData() {
         settings = new Settings();
         money = -1;
@@ -41,6 +49,46 @@ public class GameData {
         uiUpdateObservers = new LinkedList<>();
         gameStarted = false;
         gameLost = new MutableLiveData<>(false);
+
+        db = null;
+    }
+
+    /**
+     * Attempts to load game from database - overwrites settings and map if game to load found
+     */
+    public static void loadGame(Context context) {
+        SQLiteDatabase db = new DatabaseHelper(context.getApplicationContext()).getWritableDatabase();
+
+        //Load game information into GameData if it exists
+        CursorWrapper gameDataCursor = new CursorWrapper(db.query(DatabaseSchema.GamesTable.NAME,
+                null, null, null, null, null,
+                null, null));
+
+        boolean loadingFromDatabase = false;
+
+        // Set up instance (if not already done)
+        get();
+
+        instance.db = db;
+
+        try {
+            if (gameDataCursor.moveToFirst()) { //If entry in cursor exists
+                loadingFromDatabase = true;
+
+                instance = new GameData();
+
+                instance.gameTime = gameDataCursor.getInt(
+                        gameDataCursor.getColumnIndex(DatabaseSchema.GamesTable.Cols.TIME));
+                instance.money = gameDataCursor.getInt(gameDataCursor.getColumnIndex(
+                        DatabaseSchema.GamesTable.Cols.MONEY));
+            }
+        } finally {
+            gameDataCursor.close();
+        }
+
+        //Load in settings & map from database
+        instance.settings = Settings.loadFromDatabase(db);
+        instance.map = GameMap.loadFromDatabase(db);
     }
 
     public void spendMoney(int cost) throws MoneyException {

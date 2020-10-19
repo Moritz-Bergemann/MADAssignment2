@@ -9,6 +9,7 @@ public class DatabaseSchema {
             public static final String GAME = "game"; //FIXME FKs not implemented, see if you need them later
             public static final String MAP_WIDTH = "map_width";
             public static final String MAP_HEIGHT = "map_height";
+            public static final String CITY_NAME = "city_name";
         }
     }
 
@@ -17,7 +18,6 @@ public class DatabaseSchema {
 
         public static class Cols {
             public static final String ID = "game_id";
-            public static final String CITY_NAME = "city_name";
             public static final String MONEY = "money";
             public static final String TIME = "time";
         }

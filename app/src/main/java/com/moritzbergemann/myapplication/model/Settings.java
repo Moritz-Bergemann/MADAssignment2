@@ -1,5 +1,10 @@
 package com.moritzbergemann.myapplication.model;
 
+import android.database.CursorWrapper;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.moritzbergemann.myapplication.database.DatabaseSchema;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +38,30 @@ public class Settings {
         structureCosts.put(Structure.Type.RESIDENTIAL, 100);
         structureCosts.put(Structure.Type.COMMERCIAL, 500);
         structureCosts.put(Structure.Type.ROAD, 20);
+    }
+
+    public static Settings loadFromDatabase(SQLiteDatabase db) {
+        Settings settings = new Settings();
+
+        CursorWrapper settingsCursor = new CursorWrapper(db.query(DatabaseSchema.SettingsTable.NAME,
+                null, null, null, null, null,
+                null, null));
+
+        try {
+            if (settingsCursor.moveToFirst()) {
+                settings.mapWidth = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_WIDTH));
+                settings.mapHeight = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT));
+                settings.cityName = settingsCursor.getString(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.CITY_NAME));
+            }
+        } finally {
+            settingsCursor.close();
+        }
+
+        return settings;
+    }
+
+    public void load(SQLiteDatabase db) {
+
     }
 
     public int getMapWidth() {
