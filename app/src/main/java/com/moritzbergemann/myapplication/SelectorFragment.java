@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.moritzbergemann.myapplication.mapactions.BuildStructure;
 import com.moritzbergemann.myapplication.mapactions.DemolishStructure;
-import com.moritzbergemann.myapplication.mapactions.GetDetails;
+import com.moritzbergemann.myapplication.mapactions.GetStructureDetails;
 import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.Structure;
 import com.moritzbergemann.myapplication.model.StructureData;
@@ -87,7 +87,7 @@ public class SelectorFragment extends Fragment {
             if (requireActivity() instanceof CityActivity) {
                 CityActivity activity = (CityActivity) requireActivity();
                 CityViewModel viewModel = new ViewModelProvider(requireActivity()).get(CityViewModel.class);
-                viewModel.setMapAction(new GetDetails(activity));
+                viewModel.setMapAction(new GetStructureDetails(activity));
             }
         });
     }

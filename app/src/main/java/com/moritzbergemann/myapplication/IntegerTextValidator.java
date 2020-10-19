@@ -17,9 +17,10 @@ public abstract class IntegerTextValidator extends TextValidator {
     }
 
     /**
-     * Performs actual action with integer value (after it is known to be valid)
+     * Performs actual action with integer value (after it is known to be in valid range).
+     * Can still throw exception if the value is invalid for another (contextual) reason.
      */
-    public abstract void useIntegerValue(int value);
+    public abstract void useIntegerValue(int value) throws ValidationException;
 
     @Override
     public void useValue(String textValue) throws ValidationException {

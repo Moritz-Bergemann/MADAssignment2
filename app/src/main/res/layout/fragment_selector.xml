@@ -32,12 +32,13 @@
             android:id="@+id/imageView2"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/bulldozer" />
+            app:srcCompat="@drawable/bulldozer" />
 
         <TextView
             android:id="@+id/textView2"
@@ -74,7 +75,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/questionmark" />
+            app:srcCompat="@drawable/questionmark" />
 
         <TextView
             android:id="@+id/textView"

@@ -132,8 +132,9 @@ public class CityMapFragment extends Fragment {
                 Structure elementStructure = mapElement.getStructure();
                 if (elementStructure != null) {
                     if (mapElement.getSpecialImage() != null) { //If there is a special image to show
-                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), mapElement.getSpecialImage());
-                        mStructureImage.setImageDrawable(bitmapDrawable);
+                        mStructureImage.setImageBitmap(mapElement.getSpecialImage());
+//                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), mapElement.getSpecialImage());
+//                        mStructureImage.setImageDrawable(bitmapDrawable);
                     } else {
                         //Just show the regular image
                         mStructureImage.setVisibility(View.VISIBLE);

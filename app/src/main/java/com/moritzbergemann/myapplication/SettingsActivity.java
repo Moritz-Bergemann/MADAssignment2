@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.Settings;
+import com.moritzbergemann.myapplication.model.ValidationException;
 
 import java.util.Locale;
 
@@ -28,8 +29,13 @@ public class SettingsActivity extends AppCompatActivity {
         mapWidthValue.addTextChangedListener(new IntegerTextValidator(mapWidthValue,
                 Settings.MIN_MAP_WIDTH, Settings.MAX_MAP_WIDTH) {
             @Override
-            public void useIntegerValue(int value) {
-                settings.setMapWidth(value);
+            public void useIntegerValue(int value) throws ValidationException {
+                if (!GameData.get().isGameStarted()) {
+                    settings.setMapWidth(value);
+                } else {
+                    throw new ValidationException("Game has already been started, can no longer " +
+                            "change map width");
+                }
             }
         });
 
@@ -42,8 +48,13 @@ public class SettingsActivity extends AppCompatActivity {
         mapHeightValue.addTextChangedListener(new IntegerTextValidator(mapHeightValue,
                 Settings.MIN_MAP_HEIGHT, Settings.MAX_MAP_HEIGHT) {
             @Override
-            public void useIntegerValue(int value) {
-                settings.setMapHeight(value);
+            public void useIntegerValue(int value) throws ValidationException {
+                if (!GameData.get().isGameStarted()) {
+                    settings.setMapHeight(value);
+                } else {
+                    throw new ValidationException("Game has already been started, can no longer " +
+                            "change map height");
+                }
             }
         });
 
@@ -56,8 +67,14 @@ public class SettingsActivity extends AppCompatActivity {
         initialMoneyValue.addTextChangedListener(new IntegerTextValidator(initialMoneyValue,
                 Settings.MIN_INITIAL_MONEY, Settings.MAX_INITIAL_MONEY) {
             @Override
-            public void useIntegerValue(int value) {
-                settings.setInitialMoney(value);
+            public void useIntegerValue(int value) throws ValidationException {
+                if (!GameData.get().isGameStarted()) {
+                    settings.setInitialMoney(value);
+                } else {
+                    throw new ValidationException("Game has already been started, can no longer " +
+                            "change initial money");
+                }
+
             }
         });
     }

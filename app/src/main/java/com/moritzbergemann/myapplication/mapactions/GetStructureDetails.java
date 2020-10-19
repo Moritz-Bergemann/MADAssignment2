@@ -4,10 +4,10 @@ import com.moritzbergemann.myapplication.CityActivity;
 import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.MapException;
 
-public class GetDetails implements SelectableMapAction {
+public class GetStructureDetails implements SelectableMapAction {
     private CityActivity mCityActivity;
 
-    public GetDetails(CityActivity cityActivity) {
+    public GetStructureDetails(CityActivity cityActivity) {
         mCityActivity = cityActivity;
     }
 
