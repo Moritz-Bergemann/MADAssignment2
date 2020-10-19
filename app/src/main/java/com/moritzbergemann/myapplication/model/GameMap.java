@@ -2,6 +2,9 @@ package com.moritzbergemann.myapplication.model;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.moritzbergemann.myapplication.database.DatabaseSchema;
+import com.moritzbergemann.myapplication.database.MapElementCursor;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +25,35 @@ public class GameMap {
         this.db = db;
     }
 
+    /**
+     * Loads an existing map in from the database. Should only be called if game has already been
+     *  started and map already exists
+     * @param db database to load in from/save to in future
+     * @param width map width
+     * @param height map height
+     * @return Created map
+     */
     public static GameMap loadFromDatabase(SQLiteDatabase db, int width, int height) {
+        GameMap map = new GameMap(db, height, width);
 
+        MapElementCursor cursor = new MapElementCursor(db.query(DatabaseSchema.MapElementTable.NAME,
+                null, null, null, null,
+                null, null, null));
+
+        //Add map elements from database into the map
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                //Add the current map element
+                cursor.addMapElement(map);
+
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return map;
     }
 
     public MapElement getMapElement(int row, int col) {

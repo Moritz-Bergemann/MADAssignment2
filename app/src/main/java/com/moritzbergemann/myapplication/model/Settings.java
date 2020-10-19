@@ -1,5 +1,7 @@
 package com.moritzbergemann.myapplication.model;
 
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -30,18 +32,24 @@ public class Settings {
     private double taxRate = 0.4;
     private int serviceCost = 2;
 
+    private SQLiteDatabase db;
+    private boolean databaseEntryExists = false;
+    public static final int DEFAULT_DATABASE_SETTING_ID = 0;
+
     //Building Costs
     private Map<Structure.Type, Integer> structureCosts;
 
-    public Settings() {
+    public Settings(SQLiteDatabase db) {
         structureCosts = new HashMap<>();
         structureCosts.put(Structure.Type.RESIDENTIAL, 100);
         structureCosts.put(Structure.Type.COMMERCIAL, 500);
         structureCosts.put(Structure.Type.ROAD, 20);
+
+        this.db = db;
     }
 
     public static Settings loadFromDatabase(SQLiteDatabase db) {
-        Settings settings = new Settings();
+        Settings settings = new Settings(db);
 
         CursorWrapper settingsCursor = new CursorWrapper(db.query(DatabaseSchema.SettingsTable.NAME,
                 null, null, null, null, null,
@@ -49,6 +57,9 @@ public class Settings {
 
         try {
             if (settingsCursor.moveToFirst()) {
+                //Confirm database entry exists
+                settings.databaseEntryExists = true;
+
                 settings.mapWidth = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_WIDTH));
                 settings.mapHeight = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT));
                 settings.cityName = settingsCursor.getString(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.CITY_NAME));
@@ -60,10 +71,7 @@ public class Settings {
         return settings;
     }
 
-    public void load(SQLiteDatabase db) {
-
-    }
-
+    //***GETTERS***
     public int getMapWidth() {
         return mapWidth;
     }
@@ -109,17 +117,27 @@ public class Settings {
         return cityName;
     }
 
+    //***SETTERS***
     public void setMapWidth(int mapWidth) {
         this.mapWidth = mapWidth;
+
+        //Save to DB
+        updateSettingsEntry();
     }
 
     public void setMapHeight(int mapHeight) {
         this.mapHeight = mapHeight;
+
+        updateSettingsEntry();
     }
 
     public void setInitialMoney(int initialMoney) {
         this.initialMoney = initialMoney;
+
+        updateSettingsEntry();
     }
+
+    //TODO city name stuff
 
     /**
      * @return Whether all settings required to start the game have been set by the user.
@@ -136,5 +154,40 @@ public class Settings {
         }
 
         return allSet;
+    }
+
+    private void updateSettingsEntry() {
+        if (!databaseEntryExists) {
+            //Check if entry exists (in case it exists form previous session)
+            Cursor checkerCursor = db.query(DatabaseSchema.SettingsTable.NAME, null, //FIXME possibly unnecessary
+                    DatabaseSchema.SettingsTable.Cols.ID + " = ?",
+                    new String[]{String.valueOf(DEFAULT_DATABASE_SETTING_ID)},
+                    null, null, null);
+            if (checkerCursor.getCount() == 0) { //If no database entry exists
+                //Add database entry
+
+                db.insert(DatabaseSchema.SettingsTable.NAME, null, getContentValues());
+            } //If one is already here, no need to do anything
+
+            databaseEntryExists = true;
+        }
+
+        //Update database entry
+        db.update(DatabaseSchema.SettingsTable.NAME, getContentValues(),
+                DatabaseSchema.SettingsTable.Cols.ID + "= ?",
+                new String[]{String.valueOf(DEFAULT_DATABASE_SETTING_ID)});
+    }
+
+    /**
+     * @return A ContentValues object (for inserting into database) containing all editable
+     *  information on this settings object
+     */
+    private ContentValues getContentValues() {
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseSchema.SettingsTable.Cols.MAP_WIDTH, mapWidth);
+        cv.put(DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT, mapHeight);
+        cv.put(DatabaseSchema.SettingsTable.Cols.CITY_NAME, cityName);
+
+        return cv;
     }
 }

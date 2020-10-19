@@ -61,17 +61,12 @@ public class GameData {
             instance = new GameData();
         }
 
-        SQLiteDatabase db = new DatabaseHelper(context.getApplicationContext()).getWritableDatabase();
+        db = new DatabaseHelper(context.getApplicationContext()).getWritableDatabase();
 
         //Load game information into GameData if it exists
         CursorWrapper gameDataCursor = new CursorWrapper(db.query(DatabaseSchema.GamesTable.NAME,
                 null, null, null, null, null,
                 null, null));
-
-        // Set up instance (if not already done)
-        get();
-
-        this.db = db;
 
         try {
             if (gameDataCursor.moveToFirst()) { //If entry in cursor exists
@@ -92,6 +87,11 @@ public class GameData {
 
         //Load in settings from database (map is loaded at construction)
         settings = Settings.loadFromDatabase(db);
+
+        //Load in map if the game has started (otherwise map should still be null)
+        if (gameStarted) {
+            map = GameMap.loadFromDatabase(db, settings.getMapWidth(), settings.getMapHeight());
+        }
     }
 
     public void spendMoney(int cost) throws MoneyException {

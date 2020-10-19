@@ -16,6 +16,9 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        //Load in game data from database
+        GameData.get().loadGame(this);
+
         Button playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener(clickedPlayButton -> {
             if (GameData.get().getSettings().areEssentialSettingsSet()) { //If essential settings have been set and game can start
