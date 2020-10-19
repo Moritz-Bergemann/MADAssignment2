@@ -56,7 +56,11 @@ public class GameData {
     /**
      * Attempts to load game from database - overwrites settings and map if game to load found
      */
-    public static void loadGame(Context context) {
+    public void loadGame(Context context) {
+        if (instance == null) {
+            instance = new GameData();
+        }
+
         SQLiteDatabase db = new DatabaseHelper(context.getApplicationContext()).getWritableDatabase();
 
         //Load game information into GameData if it exists
@@ -64,31 +68,30 @@ public class GameData {
                 null, null, null, null, null,
                 null, null));
 
-        boolean loadingFromDatabase = false;
-
         // Set up instance (if not already done)
         get();
 
-        instance.db = db;
+        this.db = db;
 
         try {
             if (gameDataCursor.moveToFirst()) { //If entry in cursor exists
-                loadingFromDatabase = true;
-
-                instance = new GameData();
-
-                instance.gameTime = gameDataCursor.getInt(
+                gameTime = gameDataCursor.getInt(
                         gameDataCursor.getColumnIndex(DatabaseSchema.GamesTable.Cols.TIME));
-                instance.money = gameDataCursor.getInt(gameDataCursor.getColumnIndex(
+                money = gameDataCursor.getInt(gameDataCursor.getColumnIndex(
                         DatabaseSchema.GamesTable.Cols.MONEY));
+                int gameStartedInt = gameDataCursor.getInt(gameDataCursor.getColumnIndex(DatabaseSchema.GamesTable.Cols.GAME_STARTED));
+                if (gameStartedInt == 0) {
+                    gameStarted = false;
+                } else {
+                    gameStarted = true;
+                }
             }
         } finally {
             gameDataCursor.close();
         }
 
-        //Load in settings & map from database
-        instance.settings = Settings.loadFromDatabase(db);
-        instance.map = GameMap.loadFromDatabase(db);
+        //Load in settings from database (map is loaded at construction)
+        settings = Settings.loadFromDatabase(db);
     }
 
     public void spendMoney(int cost) throws MoneyException {
@@ -174,7 +177,7 @@ public class GameData {
 
     public void startGame() {
         gameStarted = true;
-        map = new GameMap(settings.getMapHeight(), settings.getMapWidth());
+        map = new GameMap(db, settings.getMapHeight(), settings.getMapWidth());
         money = settings.getInitialMoney();
     }
 }

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
 import com.moritzbergemann.myapplication.database.DatabaseSchema.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -21,15 +19,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Games table
         db.execSQL("CREATE TABLE " + GamesTable.NAME + "(" +
                 GamesTable.Cols.ID + " INTEGER, " +
-                GamesTable.Cols.CITY_NAME + " TEXT, " +
                 GamesTable.Cols.MONEY + " INTEGER, " +
-                GamesTable.Cols.TIME + " INTEGER)");
+                GamesTable.Cols.TIME + " INTEGER, " +
+                GamesTable.Cols.GAME_STARTED + " INTEGER)");
 
         //Structures table
         db.execSQL("CREATE TABLE " + SettingsTable.NAME + "(" +
                 MapElementTable.Cols.ID + " INTEGER, " +
-                MapElementTable.Cols.TYPE + " TEXT, " +
-                MapElementTable.Cols.STRUCTURE_RESOURCE_ID + " TEXT, " +
+//                MapElementTable.Cols.TYPE + " TEXT, " +
+                MapElementTable.Cols.STRUCTURE_INDEX + " INTEGER, " +
                 MapElementTable.Cols.IMAGE_BITMAP + " IMAGE, " + //FIXME this probs not right
                 MapElementTable.Cols.ROW + " INTEGER, " +
                 MapElementTable.Cols.COLUMN + " INTEGER)");
@@ -38,7 +36,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + MapElementTable.NAME + "(" +
                 SettingsTable.Cols.ID + " INTEGER, " +
                 SettingsTable.Cols.MAP_HEIGHT + " INTEGER, " +
-                SettingsTable.Cols.MAP_WIDTH+ " INTEGER)");
+                SettingsTable.Cols.MAP_WIDTH+ " INTEGER, " +
+                SettingsTable.Cols.CITY_NAME + " TEXT)");
     }
 
     @Override

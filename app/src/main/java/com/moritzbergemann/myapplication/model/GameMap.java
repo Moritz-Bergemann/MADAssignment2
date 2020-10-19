@@ -1,5 +1,7 @@
 package com.moritzbergemann.myapplication.model;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,12 +10,20 @@ public class GameMap {
     private MapElement[][] map;
     private Map<Structure.Type, Integer> structureAmounts;
 
-    public GameMap(int height, int width) {
+    private SQLiteDatabase db;
+
+    public GameMap(SQLiteDatabase db, int height, int width) {
         map = initialiseMap(height, width);
         structureAmounts = new HashMap<>();
         structureAmounts.put(Structure.Type.RESIDENTIAL, 0);
         structureAmounts.put(Structure.Type.COMMERCIAL, 0);
         structureAmounts.put(Structure.Type.ROAD, 0);
+
+        this.db = db;
+    }
+
+    public static GameMap loadFromDatabase(SQLiteDatabase db, int width, int height) {
+
     }
 
     public MapElement getMapElement(int row, int col) {

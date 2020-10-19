@@ -22,6 +22,9 @@ public class StructureData {
         structureTypes = setupStructureTypes();
     }
 
+    // NOTE - Currently structures are accessed by list element index. For future extensibility
+    //  (i.e. adding more structures) this should be changed to a dictionary.
+
     public List<Structure> getStructureTypes() {
         return structureTypes;
     }
