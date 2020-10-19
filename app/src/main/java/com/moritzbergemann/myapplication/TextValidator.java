@@ -5,43 +5,36 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.moritzbergemann.myapplication.model.ValidationException;
+
 /**
  * The concept for this class was adapted from https://stackoverflow.com/questions/2763022/android-how-can-i-validate-edittext-input/11838715#11838715
  * Class for validating text input into an editable text element.
  */
 public abstract class TextValidator implements TextWatcher {
     private static final String TAG = "TextValidator";
+    private EditText editText;
 
-    /**
-     * Validate the string content of the editable text
-     * @param textValue text to validate
-     * @return True if content is valid, false if not
-     */
-    public abstract boolean validate(String textValue);
+    public TextValidator(EditText editText) {
+        this.editText = editText;
+    }
 
     /**
      * Uses the input value if it has been found to be valid
      * @param textValue the value to use
+     * @throws ValidationException if the input value is not valid
      */
-    public abstract void useValue(String textValue);
-
-    /**
-     * Resets the text field if the input value has been found to be invalid.
-     */
-    public abstract void resetValue(Editable editable);
+    public abstract void useValue(String textValue) throws ValidationException;
 
     @Override
     public void afterTextChanged(Editable editable) {
         String textValue = editable.toString();
         Log.v(TAG, "AfterTextChange called");
-        if (validate(textValue)) {
-            Log.v(TAG, "Value was valid! Using...");
 
+        try {
             useValue(textValue);
-        } else {
-            resetValue(editable);
-
-            Log.v(TAG, "Value was invalid! Resetting text...");
+        } catch (ValidationException v) {
+            editText.setError(v.getMessage());
         }
     }
 

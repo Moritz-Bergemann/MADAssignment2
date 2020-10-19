@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Observer;
 
 public class GameData {
     private static final String TAG = "GameData";
@@ -28,17 +27,19 @@ public class GameData {
     private int money;
     private int latestIncome;
     private int gameTime;
+    private boolean gameStarted;
     List<UIUpdateObserver> uiUpdateObservers;
     private MutableLiveData<Boolean> gameLost;
     private GameMap map;
 
     private GameData() {
         settings = new Settings();
-        money = settings.getInitialMoney();
+        money = -1;
         latestIncome = 0;
         gameTime = 0;
-        map = new GameMap(settings.getMapHeight(), settings.getMapWidth());
+        map = null;
         uiUpdateObservers = new LinkedList<>();
+        gameStarted = false;
         gameLost = new MutableLiveData<>(false);
     }
 
@@ -117,5 +118,15 @@ public class GameData {
 
     public int getLatestIncome() {
         return latestIncome;
+    }
+
+    public boolean isGameStarted() {
+        return gameStarted;
+    }
+
+    public void startGame() {
+        gameStarted = true;
+        map = new GameMap(settings.getMapHeight(), settings.getMapWidth());
+        money = settings.getInitialMoney();
     }
 }

@@ -13,12 +13,12 @@ public class Settings {
     public static final int MAX_INITIAL_MONEY = 99999999;
 
     //Map Settings
-    private int mapWidth = 50;
-    private int mapHeight = 10;
+    private int mapWidth = -1;
+    private int mapHeight = -1;
 
     //Game Settings
-    private String cityName = "Perth";
-    private int initialMoney = 1000;
+    private String cityName = "Perth"; //TODO make setting for this
+    private int initialMoney = -1;
     private int familySize = 4;
     private int shopSize = 6;
     private int salary = 10;
@@ -90,5 +90,22 @@ public class Settings {
 
     public void setInitialMoney(int initialMoney) {
         this.initialMoney = initialMoney;
+    }
+
+    /**
+     * @return Whether all settings required to start the game have been set by the user.
+     */
+    public boolean areEssentialSettingsSet() {
+        boolean allSet = false;
+
+        if (mapHeight != -1) {
+            if (mapWidth != -1) {
+                if (initialMoney != -1) {
+                    allSet = true;
+                }
+            }
+        }
+
+        return allSet;
     }
 }

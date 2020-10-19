@@ -5,12 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.moritzbergemann.myapplication.model.GameData;
-import com.moritzbergemann.myapplication.model.IntegerTextValidator;
 import com.moritzbergemann.myapplication.model.Settings;
 
 import java.util.Locale;
@@ -28,15 +25,11 @@ public class SettingsActivity extends AppCompatActivity {
         if (settings.getMapWidth() != -1) {
             mapWidthValue.setText(String.format(Locale.US, "%d", settings.getMapWidth()));
         }
-        mapWidthValue.addTextChangedListener(new IntegerTextValidator(Settings.MIN_MAP_WIDTH, Settings.MAX_MAP_WIDTH) {
+        mapWidthValue.addTextChangedListener(new IntegerTextValidator(mapWidthValue,
+                Settings.MIN_MAP_WIDTH, Settings.MAX_MAP_WIDTH) {
             @Override
-            public void setNewValue(int newValue) {
-                settings.setMapWidth(newValue);
-            }
-
-            @Override
-            public int getOriginalValue() {
-                return settings.getMapWidth();
+            public void useIntegerValue(int value) {
+                settings.setMapWidth(value);
             }
         });
 
@@ -46,15 +39,11 @@ public class SettingsActivity extends AppCompatActivity {
             mapHeightValue.setText(String.format(Locale.US, "%d", settings.getMapHeight()));
         }
 
-        mapHeightValue.addTextChangedListener(new IntegerTextValidator(Settings.MIN_MAP_HEIGHT, Settings.MAX_MAP_HEIGHT) {
+        mapHeightValue.addTextChangedListener(new IntegerTextValidator(mapHeightValue,
+                Settings.MIN_MAP_HEIGHT, Settings.MAX_MAP_HEIGHT) {
             @Override
-            public void setNewValue(int newValue) {
-                settings.setMapHeight(newValue);
-            }
-
-            @Override
-            public int getOriginalValue() {
-                return settings.getMapHeight();
+            public void useIntegerValue(int value) {
+                settings.setMapHeight(value);
             }
         });
 
@@ -64,15 +53,11 @@ public class SettingsActivity extends AppCompatActivity {
             initialMoneyValue.setText(String.format(Locale.US, "%d", settings.getInitialMoney()));
         }
 
-        initialMoneyValue.addTextChangedListener(new IntegerTextValidator(Settings.MIN_INITIAL_MONEY, Settings.MAX_INITIAL_MONEY) {
+        initialMoneyValue.addTextChangedListener(new IntegerTextValidator(initialMoneyValue,
+                Settings.MIN_INITIAL_MONEY, Settings.MAX_INITIAL_MONEY) {
             @Override
-            public void setNewValue(int newValue) {
-                settings.setInitialMoney(newValue);
-            }
-
-            @Override
-            public int getOriginalValue() {
-                return settings.getInitialMoney();
+            public void useIntegerValue(int value) {
+                settings.setInitialMoney(value);
             }
         });
     }
