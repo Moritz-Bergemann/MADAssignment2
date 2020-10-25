@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.moritzbergemann.myapplication.database.DatabaseSchema;
 
@@ -11,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Settings {
+    private static final String TAG = "Settings";
+
     //GLOBAL CONSTANTS
     public static final int MIN_MAP_WIDTH = 1;
     public static final int MAX_MAP_WIDTH = 500;
@@ -51,9 +54,27 @@ public class Settings {
     public static Settings loadFromDatabase(SQLiteDatabase db) {
         Settings settings = new Settings(db);
 
+        CursorWrapper testBoy = new CursorWrapper(db.query(DatabaseSchema.SettingsTable.NAME,
+                null, null, null, null,
+                null, null, null));
+
+        try {
+            if (testBoy.moveToFirst()) {
+                while (!testBoy.isAfterLast()) { //For each element in cursor
+                    int id = testBoy.getInt(testBoy.getColumnIndex(DatabaseSchema.SettingsTable.Cols.ID));
+
+                    Log.v(TAG, String.format("Found settings entry with ID %d", id));
+                    testBoy.moveToNext(); //Move to next element within cursor
+                }
+            }
+        } finally {
+            testBoy.close();
+        }
+
         CursorWrapper settingsCursor = new CursorWrapper(db.query(DatabaseSchema.SettingsTable.NAME,
-                null, null, null, null, null,
-                null, null));
+                null, DatabaseSchema.SettingsTable.Cols.ID + " = ?",
+                new String[]{String.valueOf(DEFAULT_DATABASE_SETTING_ID)}, null,
+                null, null, null));
 
         try {
             if (settingsCursor.moveToFirst()) {
@@ -62,6 +83,7 @@ public class Settings {
 
                 settings.mapWidth = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_WIDTH));
                 settings.mapHeight = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT));
+                settings.initialMoney = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.INITIAL_MONEY));
                 settings.cityName = settingsCursor.getString(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.CITY_NAME));
             }
         } finally {
@@ -137,7 +159,13 @@ public class Settings {
         updateSettingsEntry();
     }
 
-    //TODO city name stuff
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+
+        updateSettingsEntry();
+    }
+
+    //TODO set city name
 
     /**
      * @return Whether all settings required to start the game have been set by the user.
@@ -173,9 +201,10 @@ public class Settings {
         }
 
         //Update database entry
-        db.update(DatabaseSchema.SettingsTable.NAME, getContentValues(),
-                DatabaseSchema.SettingsTable.Cols.ID + "= ?",
+        int rowsAffected = db.update(DatabaseSchema.SettingsTable.NAME, getContentValues(),
+                DatabaseSchema.SettingsTable.Cols.ID + " = ?",
                 new String[]{String.valueOf(DEFAULT_DATABASE_SETTING_ID)});
+        Log.v(TAG, String.format("Updated settings database - %d rows affected", rowsAffected));
     }
 
     /**
@@ -184,8 +213,10 @@ public class Settings {
      */
     private ContentValues getContentValues() {
         ContentValues cv = new ContentValues();
+        cv.put(DatabaseSchema.SettingsTable.Cols.ID, DEFAULT_DATABASE_SETTING_ID);
         cv.put(DatabaseSchema.SettingsTable.Cols.MAP_WIDTH, mapWidth);
         cv.put(DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT, mapHeight);
+        cv.put(DatabaseSchema.SettingsTable.Cols.INITIAL_MONEY, initialMoney);
         cv.put(DatabaseSchema.SettingsTable.Cols.CITY_NAME, cityName);
 
         return cv;

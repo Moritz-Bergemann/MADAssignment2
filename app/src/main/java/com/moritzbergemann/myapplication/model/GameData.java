@@ -41,7 +41,7 @@ public class GameData {
     private SQLiteDatabase db;
 
     private GameData() {
-        settings = new Settings();
+        settings = new Settings(db);
         money = -1;
         latestIncome = 0;
         gameTime = 0;

@@ -7,6 +7,7 @@ public class DatabaseSchema {
         public static class Cols {
             public static final String ID = "setting_id";
             public static final String GAME = "game"; //FIXME FKs not implemented, see if you need them later
+            public static final String INITIAL_MONEY = "initial_money";
             public static final String MAP_WIDTH = "map_width";
             public static final String MAP_HEIGHT = "map_height";
             public static final String CITY_NAME = "city_name";

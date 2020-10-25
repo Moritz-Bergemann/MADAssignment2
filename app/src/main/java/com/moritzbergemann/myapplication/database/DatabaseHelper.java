@@ -24,7 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 GamesTable.Cols.GAME_STARTED + " INTEGER)");
 
         //Structures table
-        db.execSQL("CREATE TABLE " + SettingsTable.NAME + "(" +
+        db.execSQL("CREATE TABLE " + MapElementTable.NAME + "(" +
                 MapElementTable.Cols.ID + " INTEGER, " +
 //                MapElementTable.Cols.TYPE + " TEXT, " +
                 MapElementTable.Cols.STRUCTURE_INDEX + " INTEGER, " +
@@ -33,10 +33,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 MapElementTable.Cols.COLUMN + " INTEGER)");
 
         //Settings table
-        db.execSQL("CREATE TABLE " + MapElementTable.NAME + "(" +
+        db.execSQL("CREATE TABLE " + SettingsTable.NAME + "(" +
                 SettingsTable.Cols.ID + " INTEGER, " +
+                SettingsTable.Cols.MAP_WIDTH + " INTEGER, " +
                 SettingsTable.Cols.MAP_HEIGHT + " INTEGER, " +
-                SettingsTable.Cols.MAP_WIDTH+ " INTEGER, " +
+                SettingsTable.Cols.INITIAL_MONEY + " INTEGER, " +
                 SettingsTable.Cols.CITY_NAME + " TEXT)");
     }
 

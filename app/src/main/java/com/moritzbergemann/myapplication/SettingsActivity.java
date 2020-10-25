@@ -77,6 +77,22 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
+        EditText cityNameValue = findViewById(R.id.cityNameValue);
+        if (settings.getCityName() != null) {
+            cityNameValue.setText(settings.getCityName());
+        }
+
+        cityNameValue.addTextChangedListener(new TextValidator(cityNameValue) {
+            @Override
+            public void useValue(String textValue) throws ValidationException {
+                if (textValue.length() > 0) {
+                    settings.setCityName(textValue);
+                } else {
+                    throw new ValidationException("City name cannot be empty");
+                }
+            }
+        });
     }
 
     public static Intent makeIntent(Activity callingActivity) {
