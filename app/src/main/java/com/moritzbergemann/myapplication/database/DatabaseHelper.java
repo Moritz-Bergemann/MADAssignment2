@@ -18,19 +18,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //Games table
         db.execSQL("CREATE TABLE " + GamesTable.NAME + "(" +
-                GamesTable.Cols.ID + " INTEGER, " +
+                GamesTable.Cols.ID + " INTEGER PRIMARY KEY, " +
                 GamesTable.Cols.MONEY + " INTEGER, " +
                 GamesTable.Cols.TIME + " INTEGER, " +
                 GamesTable.Cols.GAME_STARTED + " INTEGER)");
 
-        //Structures table
+        //Map element table
         db.execSQL("CREATE TABLE " + MapElementTable.NAME + "(" +
-                MapElementTable.Cols.ID + " INTEGER, " +
-//                MapElementTable.Cols.TYPE + " TEXT, " +
+                MapElementTable.Cols.GAME_ID + " INTEGER, " +
                 MapElementTable.Cols.STRUCTURE_INDEX + " INTEGER, " +
-                MapElementTable.Cols.IMAGE_BITMAP + " IMAGE, " + //FIXME this probs not right
+                MapElementTable.Cols.IMAGE_BITMAP + " BLOB, " + //FIXME this probs not right
                 MapElementTable.Cols.ROW + " INTEGER, " +
-                MapElementTable.Cols.COLUMN + " INTEGER)");
+                MapElementTable.Cols.COLUMN + " INTEGER," +
+                "PRIMARY KEY (" + MapElementTable.Cols.GAME_ID + ", " + MapElementTable.Cols.ROW + ", " + MapElementTable.Cols.COLUMN + "))"); //Concatenated primary key of game ID, row & column position
 
         //Settings table
         db.execSQL("CREATE TABLE " + SettingsTable.NAME + "(" +

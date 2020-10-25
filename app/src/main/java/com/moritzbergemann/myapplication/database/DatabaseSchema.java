@@ -29,9 +29,7 @@ public class DatabaseSchema {
         public static final String NAME = "map_elements";
 
         public static class Cols {
-            public static final String ID = "structure_ID";
-//            public static final String GAME = "game_id"; //FIXME FKs not implemented, see if you need them later
-//            public static final String TYPE = "type";
+            public static final String GAME_ID = "game_id";
             public static final String STRUCTURE_INDEX = "structure_index";
             public static final String OWNER_NAME = "owner_name";
             public static final String IMAGE_BITMAP = "image_bitmap";

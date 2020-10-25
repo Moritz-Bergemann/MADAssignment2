@@ -1,5 +1,6 @@
 package com.moritzbergemann.myapplication.model;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.moritzbergemann.myapplication.database.DatabaseSchema;
@@ -14,6 +15,7 @@ public class GameMap {
     private Map<Structure.Type, Integer> structureAmounts;
 
     private SQLiteDatabase db;
+    private static final int DEFAULT_GAME_MAP_ID = 0;
 
     public GameMap(SQLiteDatabase db, int height, int width) {
         map = initialiseMap(height, width);
@@ -157,5 +159,21 @@ public class GameMap {
 
     public int getStructureAmount(Structure.Type type) {
         return structureAmounts.get(type);
+    }
+
+    private void addDatabaseMapElement(MapElement mapElement) {
+        ContentValues cv =  mapElement.getContentValues();
+    }
+
+    private void removeDatabaseMapElement() {
+
+    }
+
+    /**
+     * Updates a map element in the database when it is not created or destroyed, but changed (e.g.
+     *  adding a name or bitmap image)
+     */
+    private void updateDatabaseMapElement() {
+
     }
 }

@@ -29,6 +29,7 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
     private TextView mMoneyValue;
     private TextView mPopulationValue;
     private TextView mMoneyPerTurnValue;
+    private TextView mTimeValue;
 
     public HeaderBarFragment() {
         // Required empty public constructor
@@ -72,6 +73,9 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
         mMoneyPerTurnValue = view.findViewById(R.id.moneyPerTurnValue);
         mMoneyPerTurnValue.setText(String.format(Locale.US, "%d", GameData.get().getMoneyPerTurn()));
 
+        mTimeValue = view.findViewById(R.id.timeValue);
+        mTimeValue.setText(String.format(Locale.US, "%d", GameData.get().getGameTime()));
+
         Button timeStepButton = view.findViewById(R.id.timeStepButton);
         timeStepButton.setOnClickListener(clickedTimeStepButton -> {
             GameData.get().timeStep();
@@ -103,5 +107,6 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
         mMoneyValue.setText(String.format(Locale.US, "%d", GameData.get().getMoney()));
         mPopulationValue.setText(String.format(Locale.US, "%d", GameData.get().getPopulation()));
         mMoneyPerTurnValue.setText(String.format(Locale.US, "%d", GameData.get().getMoneyPerTurn()));
+        mTimeValue.setText(String.format(Locale.US, "%d", GameData.get().getGameTime()));
     }
 }

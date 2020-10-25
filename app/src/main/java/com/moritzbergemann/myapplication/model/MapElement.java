@@ -1,8 +1,15 @@
 package com.moritzbergemann.myapplication.model;
 
+import android.content.ContentValues;
 import android.graphics.Bitmap;
+import android.provider.ContactsContract;
 
 import com.moritzbergemann.myapplication.R;
+import com.moritzbergemann.myapplication.database.DatabaseSchema.MapElementTable;
+
+import java.io.ByteArrayOutputStream;
+
+//Parts of this file consist of externally obtained code.
 
 public class MapElement {
     private static int DEFAULT_BACKGROUND_IMAGE_RESOURCE = R.drawable.ic_grass_background;
@@ -68,5 +75,30 @@ public class MapElement {
 
     public Bitmap getSpecialImage() {
         return specialImage;
+    }
+
+    /**
+     * @return A ContentValues object for storing a map element in a database
+     */
+    public ContentValues getContentValues(int gameId) {
+        ContentValues cv = new ContentValues();
+
+        cv.put(MapElementTable.Cols.GAME_ID, gameId);
+        cv.put(MapElementTable.Cols.ROW, rowPos);
+        cv.put(MapElementTable.Cols.COLUMN, colPos);
+        cv.put(MapElementTable.Cols.STRUCTURE_INDEX,  /*TODO*/);
+        cv.put(MapElementTable.Cols.OWNER_NAME, ownerName);
+
+        //Add special image (if it exists)
+        if (specialImage != null) {
+            // Externally obtained code: retrieved from https://stackoverflow.com/a/17191158
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            specialImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            cv.put(MapElementTable.Cols.IMAGE_BITMAP, byteArray);
+        }
+
+        return cv;
     }
 }

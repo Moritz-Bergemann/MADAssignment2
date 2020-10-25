@@ -36,7 +36,7 @@ public class Settings {
     private int serviceCost = 2;
 
     private SQLiteDatabase db;
-    private boolean databaseEntryExists = false;
+    private boolean checkedDatabaseEntryExists = false;
     public static final int DEFAULT_DATABASE_SETTING_ID = 0;
 
     //Building Costs
@@ -79,7 +79,7 @@ public class Settings {
         try {
             if (settingsCursor.moveToFirst()) {
                 //Confirm database entry exists
-                settings.databaseEntryExists = true;
+                settings.checkedDatabaseEntryExists = true;
 
                 settings.mapWidth = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_WIDTH));
                 settings.mapHeight = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT));
@@ -144,25 +144,25 @@ public class Settings {
         this.mapWidth = mapWidth;
 
         //Save to DB
-        updateSettingsEntry();
+        updateDatabaseEntry();
     }
 
     public void setMapHeight(int mapHeight) {
         this.mapHeight = mapHeight;
 
-        updateSettingsEntry();
+        updateDatabaseEntry();
     }
 
     public void setInitialMoney(int initialMoney) {
         this.initialMoney = initialMoney;
 
-        updateSettingsEntry();
+        updateDatabaseEntry();
     }
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
 
-        updateSettingsEntry();
+        updateDatabaseEntry();
     }
 
     //TODO set city name
@@ -184,8 +184,8 @@ public class Settings {
         return allSet;
     }
 
-    private void updateSettingsEntry() {
-        if (!databaseEntryExists) {
+    private void updateDatabaseEntry() {
+        if (!checkedDatabaseEntryExists) {
             //Check if entry exists (in case it exists form previous session)
             Cursor checkerCursor = db.query(DatabaseSchema.SettingsTable.NAME, null, //FIXME possibly unnecessary
                     DatabaseSchema.SettingsTable.Cols.ID + " = ?",
@@ -195,12 +195,12 @@ public class Settings {
                 //Add database entry
 
                 db.insert(DatabaseSchema.SettingsTable.NAME, null, getContentValues());
-            } //If one is already here, no need to do anything
+            } //No else - if one is already here, no need to do anything
 
-            databaseEntryExists = true;
+            checkedDatabaseEntryExists = true;
         }
 
-        //Update database entry
+        //Update the database entry (now that it definitely exists)
         int rowsAffected = db.update(DatabaseSchema.SettingsTable.NAME, getContentValues(),
                 DatabaseSchema.SettingsTable.Cols.ID + " = ?",
                 new String[]{String.valueOf(DEFAULT_DATABASE_SETTING_ID)});

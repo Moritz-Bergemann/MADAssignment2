@@ -1,5 +1,7 @@
 package com.moritzbergemann.myapplication.model;
 
+import androidx.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +32,20 @@ public class Structure {
 
     public Structure clone() {
         return new Structure(this);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        boolean equal = false;
+
+        if (obj instanceof Structure) {
+            Structure structure = (Structure) obj;
+            if (structure.imageId == this.imageId && structure.type.equals(this.type)) {
+                equal = true;
+            }
+        }
+
+        return equal;
     }
 
     public int getImageId() {

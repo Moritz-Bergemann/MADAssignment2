@@ -1,8 +1,11 @@
 package com.moritzbergemann.myapplication.model;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -39,6 +42,8 @@ public class GameData {
     private GameMap map;
 
     private SQLiteDatabase db;
+    private boolean checkedDatabaseEntryExists = false;
+    public static final int DEFAULT_DATABASE_GAME_DATA_ID = 0;
 
     private GameData() {
         settings = new Settings(db);
@@ -65,8 +70,9 @@ public class GameData {
 
         //Load game information into GameData if it exists
         CursorWrapper gameDataCursor = new CursorWrapper(db.query(DatabaseSchema.GamesTable.NAME,
-                null, null, null, null, null,
-                null, null));
+                null, DatabaseSchema.GamesTable.Cols.ID + " = ?",
+                new String[]{String.valueOf(DEFAULT_DATABASE_GAME_DATA_ID)},
+                null, null, null, null));
 
         try {
             if (gameDataCursor.moveToFirst()) { //If entry in cursor exists
@@ -101,6 +107,8 @@ public class GameData {
         } else {
             money = newMoney;
         }
+
+        updateDatabaseEntry();
     }
 
     public int getGameTime() {
@@ -119,6 +127,8 @@ public class GameData {
         }
 
         notifyUIUpdate();
+
+        updateDatabaseEntry();
     }
 
     public Settings getSettings() {
@@ -179,5 +189,46 @@ public class GameData {
         gameStarted = true;
         map = new GameMap(db, settings.getMapHeight(), settings.getMapWidth());
         money = settings.getInitialMoney();
+
+        updateDatabaseEntry();
+    }
+
+    private void updateDatabaseEntry() {
+        if (!checkedDatabaseEntryExists) { //If we haven't already checked that the entry exists
+            //Check if entry exists (in case it exists form previous session)
+            Cursor checkerCursor = db.query(DatabaseSchema.GamesTable.NAME, null,
+                    DatabaseSchema.GamesTable.Cols.ID + " = ?",
+                    new String[]{String.valueOf(DEFAULT_DATABASE_GAME_DATA_ID)},
+                    null, null, null);
+            if (checkerCursor.getCount() == 0) { //If no database entry exists
+                //Add database entry
+
+                db.insert(DatabaseSchema.GamesTable.NAME, null, getContentValues());
+            } //No else - if one is already here, no need to do anything
+        }
+
+        //Update the database entry (now that it definitely exists)
+        db.update(DatabaseSchema.GamesTable.NAME, getContentValues(),
+                DatabaseSchema.GamesTable.Cols.ID + " = ?",
+                new String[]{String.valueOf(DEFAULT_DATABASE_GAME_DATA_ID)});
+    }
+
+    private ContentValues getContentValues() {
+        ContentValues cv = new ContentValues();
+
+        cv.put(DatabaseSchema.GamesTable.Cols.ID, DEFAULT_DATABASE_GAME_DATA_ID);
+        cv.put(DatabaseSchema.GamesTable.Cols.MONEY, money);
+        cv.put(DatabaseSchema.GamesTable.Cols.TIME, gameTime);
+
+        int gameStartedInt;
+        if (gameStarted) {
+            gameStartedInt = 1;
+        } else {
+            gameStartedInt = 0;
+        }
+        cv.put(DatabaseSchema.GamesTable.Cols.GAME_STARTED, gameStartedInt);
+
+
+        return cv;
     }
 }
