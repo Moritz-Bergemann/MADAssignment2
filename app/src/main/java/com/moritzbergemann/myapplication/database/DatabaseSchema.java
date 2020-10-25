@@ -30,7 +30,7 @@ public class DatabaseSchema {
 
         public static class Cols {
             public static final String GAME_ID = "game_id";
-            public static final String STRUCTURE_INDEX = "structure_index";
+            public static final String STRUCTURE_TYPE_ID = "structure_type_id";
             public static final String OWNER_NAME = "owner_name";
             public static final String IMAGE_BITMAP = "image_bitmap";
             public static final String ROW = "element_row";

@@ -26,10 +26,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //Map element table
         db.execSQL("CREATE TABLE " + MapElementTable.NAME + "(" +
                 MapElementTable.Cols.GAME_ID + " INTEGER, " +
-                MapElementTable.Cols.STRUCTURE_INDEX + " INTEGER, " +
+                MapElementTable.Cols.STRUCTURE_TYPE_ID + " TEXT, " +
                 MapElementTable.Cols.IMAGE_BITMAP + " BLOB, " + //FIXME this probs not right
                 MapElementTable.Cols.ROW + " INTEGER, " +
-                MapElementTable.Cols.COLUMN + " INTEGER," +
+                MapElementTable.Cols.COLUMN + " INTEGER, " +
+                MapElementTable.Cols.OWNER_NAME + " TEXT, " +
                 "PRIMARY KEY (" + MapElementTable.Cols.GAME_ID + ", " + MapElementTable.Cols.ROW + ", " + MapElementTable.Cols.COLUMN + "))"); //Concatenated primary key of game ID, row & column position
 
         //Settings table

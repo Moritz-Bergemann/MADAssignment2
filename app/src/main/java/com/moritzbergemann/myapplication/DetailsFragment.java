@@ -93,8 +93,10 @@ public class DetailsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                mMapElement.setOwnerName(editable.toString());
-                //TODO DB stuff
+                //Update the element's owner name (not done directly to allow database management
+                //  etc)
+                GameData.get().getMap().setElementOwnerName(editable.toString(),
+                        mMapElement.getRowPos(), mMapElement.getColPos());
             }
         });
 
@@ -127,7 +129,8 @@ public class DetailsFragment extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_THUMBNAIL) { //When thumbnail photo taken
                 Bitmap thumbnailPhoto = (Bitmap) data.getExtras().get("data");
-                mMapElement.setSpecialImage(thumbnailPhoto);
+                GameData.get().getMap().setElementSpecialImage(thumbnailPhoto,
+                        mMapElement.getRowPos(), mMapElement.getColPos());
 
                 //Let everything that cares know this map element has had a new image added to it
                 CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);

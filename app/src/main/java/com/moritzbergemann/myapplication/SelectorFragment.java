@@ -1,10 +1,12 @@
 package com.moritzbergemann.myapplication;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -25,8 +27,11 @@ import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.Structure;
 import com.moritzbergemann.myapplication.model.StructureData;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +66,7 @@ public class SelectorFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_selector, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -70,7 +76,11 @@ public class SelectorFragment extends Fragment {
         mSelectorRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.HORIZONTAL, false));
 
-        StructureAdapter adapter = new StructureAdapter(StructureData.get().getStructureTypes(), getActivity());
+        //Getting unique identifiers of structures as list of strings (sorted alphabetically)
+        List<String> structureIdList = new LinkedList<>(StructureData.get().getStructureTypes().keySet());
+        structureIdList.sort(String.CASE_INSENSITIVE_ORDER);
+
+        StructureAdapter adapter = new StructureAdapter(structureIdList, getActivity());
 
         mSelectorRecyclerView.setAdapter(adapter);
 
@@ -93,16 +103,16 @@ public class SelectorFragment extends Fragment {
     }
 
     /**
-     * RecyclerView adapter class for structures scrollbar. Stores a bunch of structures and updates
-     *  as needed
+     * RecyclerView adapter class for structures scrollbar. Stores a bunch of structures (by their
+     *  unique ID) and updates as needed
      */
     private class StructureAdapter extends RecyclerView.Adapter<StructureAdapter.StructureViewHolder> {
-        private List<Structure> mStructures;
+        private List<String> mStructureIds;
         private Activity mActivity;
 
-        public StructureAdapter(List<Structure> structures, Activity activity) { //FIXME should this just call getInstance() straight up?
+        public StructureAdapter(List<String> structureIds, Activity activity) { //FIXME should this just call getInstance() straight up?
             super();
-            mStructures = structures;
+            mStructureIds = structureIds;
             mActivity = activity;
         }
 
@@ -120,12 +130,12 @@ public class SelectorFragment extends Fragment {
         public void onBindViewHolder(@NonNull StructureViewHolder holder, int position) {
             Log.v(TAG, String.format("ViewHolder '%s' bound with element at position '%d'", holder.toString(), position));
 
-            holder.bind(mStructures.get(position));
+            holder.bind(Objects.requireNonNull(StructureData.get().getStructureTypes().get(mStructureIds.get(position))));
         }
 
         @Override
         public int getItemCount() {
-            return mStructures.size();
+            return mStructureIds.size();
         }
 
 

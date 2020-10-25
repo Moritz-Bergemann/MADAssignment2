@@ -2,12 +2,16 @@ package com.moritzbergemann.myapplication.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.moritzbergemann.myapplication.model.GameMap;
 import com.moritzbergemann.myapplication.database.DatabaseSchema.MapElementTable;
 import com.moritzbergemann.myapplication.model.MapException;
 import com.moritzbergemann.myapplication.model.Structure;
 import com.moritzbergemann.myapplication.model.StructureData;
+
+import java.io.ByteArrayInputStream;
 
 public class MapElementCursor extends CursorWrapper {
     public MapElementCursor(Cursor cursor) {
@@ -23,15 +27,29 @@ public class MapElementCursor extends CursorWrapper {
         int rowPos = getInt(getColumnIndex(MapElementTable.Cols.ROW));
         int colPos = getInt(getColumnIndex(MapElementTable.Cols.COLUMN));
 
-        int structureIndex = getInt(getColumnIndex(MapElementTable.Cols.STRUCTURE_INDEX));
-//        byte[] customImageBlob = getBlob(getColumnIndex(MapElementTable.Cols.IMAGE_BITMAP)); //TODO
+        String structureTypeId = getString(getColumnIndex(MapElementTable.Cols.STRUCTURE_TYPE_ID));
         String ownerName = getString(getColumnIndex(MapElementTable.Cols.OWNER_NAME));
 
-        //Adding info to map
-        Structure structure = StructureData.get().getStructureTypes().get(structureIndex);
+        byte[] customImageBlob = getBlob(getColumnIndex(MapElementTable.Cols.IMAGE_BITMAP)); //TODO
 
+        //Processing info
+        Bitmap specialImage = null;
+        if (customImageBlob != null) {
+            ByteArrayInputStream imageStream = new ByteArrayInputStream(customImageBlob);
+            specialImage = BitmapFactory.decodeStream(imageStream);
+        }
+        Structure structure = StructureData.get().getStructureTypes().get(structureTypeId);
+
+        //Adding info to map
         try {
-            map.addStructure(structure, rowPos, colPos);
+            //Add structure to map (to ensure it gets counted)
+            map.addStructureFromDatabase(structure, rowPos, colPos);
+
+            map.getMapElement(rowPos, colPos).setOwnerName(ownerName);
+
+            if (specialImage != null) {
+                map.getMapElement(rowPos, colPos).setSpecialImage(specialImage);
+            }
         } catch (MapException m) {  //If structure cannot be added (means something DB-related
                                     // messed up)
             throw new IllegalArgumentException("Could not add structure from database - " +

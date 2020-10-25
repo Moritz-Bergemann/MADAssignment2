@@ -78,6 +78,7 @@ public class MapElement {
     }
 
     /**
+     * @param gameId the ID of the game this map element belongs to
      * @return A ContentValues object for storing a map element in a database
      */
     public ContentValues getContentValues(int gameId) {
@@ -86,7 +87,7 @@ public class MapElement {
         cv.put(MapElementTable.Cols.GAME_ID, gameId);
         cv.put(MapElementTable.Cols.ROW, rowPos);
         cv.put(MapElementTable.Cols.COLUMN, colPos);
-        cv.put(MapElementTable.Cols.STRUCTURE_INDEX,  /*TODO*/);
+        cv.put(MapElementTable.Cols.STRUCTURE_TYPE_ID, structure.getId());
         cv.put(MapElementTable.Cols.OWNER_NAME, ownerName);
 
         //Add special image (if it exists)
@@ -97,6 +98,8 @@ public class MapElement {
             byte[] byteArray = stream.toByteArray();
 
             cv.put(MapElementTable.Cols.IMAGE_BITMAP, byteArray);
+        } else {
+            cv.put(MapElementTable.Cols.IMAGE_BITMAP, (byte[])null);
         }
 
         return cv;

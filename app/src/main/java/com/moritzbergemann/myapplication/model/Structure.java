@@ -17,10 +17,12 @@ public class Structure {
         ROAD
     }
 
+    private String id; //Unique identifier for this type of structure
     private int imageId;
     private Type type;
 
-    public Structure(int imageId, Type type) {
+    public Structure(String id, int imageId, Type type) {
+        this.id = id;
         this.imageId = imageId;
         this.type = type;
     }
@@ -32,6 +34,10 @@ public class Structure {
 
     public Structure clone() {
         return new Structure(this);
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override

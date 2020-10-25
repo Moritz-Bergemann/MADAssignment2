@@ -2,8 +2,10 @@ package com.moritzbergemann.myapplication.model;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 
-import com.moritzbergemann.myapplication.database.DatabaseSchema;
+import com.moritzbergemann.myapplication.BuildConfig;
+import com.moritzbergemann.myapplication.database.DatabaseSchema.MapElementTable;
 import com.moritzbergemann.myapplication.database.MapElementCursor;
 
 import java.util.HashMap;
@@ -38,8 +40,8 @@ public class GameMap {
     public static GameMap loadFromDatabase(SQLiteDatabase db, int width, int height) {
         GameMap map = new GameMap(db, height, width);
 
-        MapElementCursor cursor = new MapElementCursor(db.query(DatabaseSchema.MapElementTable.NAME,
-                null, null, null, null,
+        MapElementCursor cursor = new MapElementCursor(db.query(MapElementTable.NAME,
+                null, MapElementTable.Cols.GAME_ID + " = ?", new String[]{String.valueOf(GameData.DEFAULT_DATABASE_GAME_DATA_ID)} , null,
                 null, null, null));
 
         //Add map elements from database into the map
@@ -62,6 +64,13 @@ public class GameMap {
         return map[row][col];
     }
 
+    /**
+     * Adds a structure to the map at a given location
+     * @param structure The structure to add
+     * @param row row position
+     * @param col column position
+     * @throws MapException if game rules prevent the structure being built
+     */
     public void addStructure(Structure structure, int row, int col) throws MapException {
         //Throw exception if there is already a structure in the place structure is to be added
         if (map[row][col].getStructure() != null) {
@@ -79,8 +88,19 @@ public class GameMap {
         // Count structure
         structureAmounts.put(structure.getType(), structureAmounts.get(structure.getType()) + 1);
 
-        //TODO add shizzle to the database
+        //Add the map element to the database as having a structure
+        addDatabaseMapElement(map[row][col]);
     }
+
+    /** Adds a structure from the database. Does NOT attempt to store the structure in the database.
+     * Also performs no additional validation to ensure accuracy between database and game representation.
+     */
+    public void addStructureFromDatabase(Structure structure, int rowPos, int colPos) throws MapException {
+        map[rowPos][colPos].setStructure(structure);
+
+        structureAmounts.put(structure.getType(), structureAmounts.get(structure.getType()) + 1);
+    }
+
 
     public void demolishStructure(int row, int col) throws MapException {
         Structure structure = map[row][col].getStructure();
@@ -93,6 +113,9 @@ public class GameMap {
 
             //Remove 1 from structure count
             structureAmounts.put(structure.getType(), structureAmounts.get(structure.getType()) - 1);
+
+            //Remove from the database
+            removeDatabaseMapElement(map[row][col]);
         }
     }
 
@@ -162,18 +185,71 @@ public class GameMap {
     }
 
     private void addDatabaseMapElement(MapElement mapElement) {
-        ContentValues cv =  mapElement.getContentValues();
+        ContentValues cv = mapElement.getContentValues(GameData.DEFAULT_DATABASE_GAME_DATA_ID);
+
+        long result = db.insert(MapElementTable.NAME, null, cv);
+
+        if (BuildConfig.DEBUG && result == -1) {
+            throw new AssertionError("Database map element insert failed");
+        }
     }
 
-    private void removeDatabaseMapElement() {
+    private void removeDatabaseMapElement(MapElement mapElement) {
+        String whereClause = MapElementTable.Cols.GAME_ID + " = ? AND " +
+                MapElementTable.Cols.ROW + " = ? AND " +
+                MapElementTable.Cols.COLUMN + " = ?";
 
+        String[] whereArgs = new String[]{
+                String.valueOf(GameData.DEFAULT_DATABASE_GAME_DATA_ID),
+                String.valueOf(mapElement.getRowPos()),
+                String.valueOf(mapElement.getColPos())
+        };
+
+
+        long result = db.delete(MapElementTable.NAME, whereClause, whereArgs);
+
+        if (BuildConfig.DEBUG && result == -1) {
+            throw new AssertionError("Database map element delete failed");
+        }
     }
 
     /**
      * Updates a map element in the database when it is not created or destroyed, but changed (e.g.
      *  adding a name or bitmap image)
      */
-    private void updateDatabaseMapElement() {
+    private void updateDatabaseMapElement(MapElement mapElement) {
+        ContentValues cv = mapElement.getContentValues(GameData.DEFAULT_DATABASE_GAME_DATA_ID);
 
+        //Make where clause for finding this specific map element
+        String whereClause = MapElementTable.Cols.GAME_ID + " = ? AND " +
+                MapElementTable.Cols.ROW + " = ? AND " +
+                MapElementTable.Cols.COLUMN + " = ?";
+
+        String[] whereArgs = new String[]{
+                String.valueOf(GameData.DEFAULT_DATABASE_GAME_DATA_ID),
+                String.valueOf(mapElement.getRowPos()),
+                String.valueOf(mapElement.getColPos())
+        };
+
+
+        int affectedRows = db.update(MapElementTable.NAME, cv, whereClause, whereArgs);
+
+        if (BuildConfig.DEBUG && affectedRows == 0) {
+            throw new AssertionError("Database map element update failed");
+        }
+    }
+
+    public void setElementOwnerName(String ownerName, int row, int col) {
+        map[row][col].setOwnerName(ownerName);
+
+        //Update map element's database entry with new information
+        updateDatabaseMapElement(map[row][col]);
+    }
+
+    public void setElementSpecialImage(Bitmap specialImage, int row, int col) {
+        map[row][col].setSpecialImage(specialImage);
+
+        //Update map element's database entry with new information
+        updateDatabaseMapElement(map[row][col]);
     }
 }
