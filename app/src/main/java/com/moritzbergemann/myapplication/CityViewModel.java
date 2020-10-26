@@ -1,7 +1,5 @@
 package com.moritzbergemann.myapplication;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.moritzbergemann.myapplication.mapactions.SelectableMapAction;
@@ -26,16 +24,5 @@ public class CityViewModel extends ViewModel {
 
     public void setMapElementForDetails(MapElement mapElementForDetails) {
         mMapElementForDetails = mapElementForDetails;
-    }
-
-    //Stores the latest map element that has had its image updated
-    MutableLiveData<MapElement> mMapElementWithImageUpdated = new MutableLiveData<>(); //FIXME figure out if you need this
-
-    public LiveData<MapElement> getMapElementWithImageUpdated() {
-        return mMapElementWithImageUpdated;
-    }
-
-    public void setMapElementWithImageUpdated(MapElement element) {
-        mMapElementWithImageUpdated.postValue(element);
     }
 }

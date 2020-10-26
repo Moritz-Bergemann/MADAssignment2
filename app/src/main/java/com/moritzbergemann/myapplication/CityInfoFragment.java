@@ -1,9 +1,13 @@
 package com.moritzbergemann.myapplication;
 
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,6 +20,8 @@ import android.widget.TextView;
 import com.moritzbergemann.myapplication.model.GameData;
 import com.moritzbergemann.myapplication.model.Settings;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Locale;
 
 /**
@@ -24,6 +30,8 @@ import java.util.Locale;
  * create an instance of this fragment.
  */
 public class CityInfoFragment extends DialogFragment {
+    private TextView mTemperatureValue;
+
 
     public CityInfoFragment() {
         // Required empty public constructor
@@ -73,7 +81,47 @@ public class CityInfoFragment extends DialogFragment {
         TextView employmentRateValue = view.findViewById(R.id.employmentRateValue);
         employmentRateValue.setText(String.format(Locale.US, "%f", gd.getEmploymentRate()));
 
-        TextView temperatureValue = view.findViewById(R.id.temperatureValue);
-//        populationValue.setText(); //TODO
+
+        //***GET CURRENT TEMPERATURE***
+        mTemperatureValue = view.findViewById(R.id.temperatureValue);
+
+        URL requestUrl = Weather.makeWeatherAPIRequestUrl(settings.getCityName());
+        new GetTemperaturesTask().execute(requestUrl);
+    }
+
+    private class GetTemperaturesTask extends AsyncTask<URL, String, String> {
+        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+        @Override
+        protected String doInBackground(URL... params) {
+            String temperatureString = "NULL";
+
+            if (params.length == 0) {
+                throw new IllegalArgumentException("At least one url param required");
+            }
+
+            publishProgress("Loading...");
+
+            //DO DOWNLOAD & WHATNOT HERE
+            for (URL url : params) {
+                try {
+                    double temperature = Weather.getTemperature(url);
+                    temperatureString = String.format(Locale.US, "%.2f", temperature);
+                } catch (WeatherException w) {
+                    temperatureString = "Failed: " + w.getMessage();
+                }
+            }
+
+            publishProgress("Done!");
+
+            return temperatureString;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            mTemperatureValue.setText(result);
+        }
+
     }
 }

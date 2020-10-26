@@ -114,12 +114,6 @@ public class DetailsFragment extends Fragment {
             Intent thumbnailPhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(thumbnailPhotoIntent, REQUEST_THUMBNAIL);
         });
-
-        //TEMP TODO remove this
-        ImageView test = view.findViewById(R.id.testTest);
-        if (mMapElement.getSpecialImage() != null) {
-            test.setImageBitmap(mMapElement.getSpecialImage());
-        }
     }
 
     @Override
@@ -131,10 +125,6 @@ public class DetailsFragment extends Fragment {
                 Bitmap thumbnailPhoto = (Bitmap) data.getExtras().get("data");
                 GameData.get().getMap().setElementSpecialImage(thumbnailPhoto,
                         mMapElement.getRowPos(), mMapElement.getColPos());
-
-                //Let everything that cares know this map element has had a new image added to it
-                CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);
-                viewModel.setMapElementWithImageUpdated(mMapElement);
             }
         }
     }

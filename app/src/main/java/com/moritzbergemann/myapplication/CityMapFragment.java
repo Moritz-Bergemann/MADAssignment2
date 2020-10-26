@@ -68,9 +68,6 @@ public class CityMapFragment extends Fragment {
         mMapRecyclerView.setAdapter(cityMapAdapter);
 
         CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);
-        viewModel.getMapElementWithImageUpdated().observe(getViewLifecycleOwner(), mapElement -> {
-            mMapRecyclerView.getAdapter().notifyItemChanged(mapElement.getColPos() * GameData.get().getMap().getMapHeight() + mapElement.getRowPos());
-        });
     }
 
     private class CityMapAdapter extends RecyclerView.Adapter<CityMapAdapter.MapElementViewHolder> {
