@@ -68,8 +68,8 @@ public class CityMapFragment extends Fragment {
         mMapRecyclerView.setAdapter(cityMapAdapter);
 
         CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);
-        viewModel.getMapElementWithImageUpdated().observe(getViewLifecycleOwner(), mapElement -> { //FIXME wtf is this? What does it do?
-//            mMapRecyclerView.getAdapter().notifyItemChanged();
+        viewModel.getMapElementWithImageUpdated().observe(getViewLifecycleOwner(), mapElement -> {
+            mMapRecyclerView.getAdapter().notifyItemChanged(mapElement.getColPos() * GameData.get().getMap().getMapHeight() + mapElement.getRowPos());
         });
     }
 
@@ -129,13 +129,12 @@ public class CityMapFragment extends Fragment {
                 mBackgroundImage.setImageResource(mapElement.getBackgroundImageResource());
                 Structure elementStructure = mapElement.getStructure();
                 if (elementStructure != null) {
+                    mStructureImage.setVisibility(View.VISIBLE);
+
                     if (mapElement.getSpecialImage() != null) { //If there is a special image to show
                         mStructureImage.setImageBitmap(mapElement.getSpecialImage());
-//                        BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), mapElement.getSpecialImage()); //TODO remove this test code
-//                        mStructureImage.setImageDrawable(bitmapDrawable);
                     } else {
                         //Just show the regular image
-                        mStructureImage.setVisibility(View.VISIBLE);
                         mStructureImage.setImageResource(elementStructure.getImageId());
                     }
                 } else {
