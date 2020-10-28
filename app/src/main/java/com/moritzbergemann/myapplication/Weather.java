@@ -17,14 +17,14 @@ import java.util.Locale;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.JSONObject;K
 
 /**
  * Class managing the retrieval of weather information for the current city
  */
 public class Weather {
     private static final String OPENWEATHER_API_KEY = "6050a27153d737f61f3421582edf4e68";
-    private static final String OPENWEATHER_API_CALL_LINK = "api.openweathermap.org/data/2.5/weather";
+    private static final String OPENWEATHER_API_CALL_LINK = "https://api.openweathermap.org/data/2.5/weather";
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
