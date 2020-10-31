@@ -42,10 +42,14 @@
 
         <TextView
             android:id="@+id/temperatureValue"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="24dp"
+            android:gravity="right"
             app:layout_constraintEnd_toEndOf="@+id/employmentRateValue"
+            app:layout_constraintStart_toEndOf="@+id/temperatureLabel"
             app:layout_constraintTop_toBottomOf="@+id/employmentRateValue"
             tools:text="TEMP" />
 

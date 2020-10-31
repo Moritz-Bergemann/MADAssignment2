@@ -1,23 +1,19 @@
 package com.moritzbergemann.myapplication;
 
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
-
-import org.apache.commons.io.IOUtils;
-import org.json.JSONException;
-import org.json.JSONObject;K
 
 /**
  * Class managing the retrieval of weather information for the current city
@@ -34,9 +30,13 @@ public class Weather {
         try {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             try {
-                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                    throw new WeatherException(String.format("Bad API response %d",
-                            connection.getResponseCode()));
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) { //If connection failed or city could not be found
+                    if (!connection.getResponseMessage().equals("")) {
+                        throw new WeatherException(connection.getResponseMessage());
+                    } else {
+                        throw new WeatherException(String.format("Bad response '%d'",
+                                connection.getResponseCode()));
+                    }
                 }
 
                 //Get data from API request
@@ -46,9 +46,9 @@ public class Weather {
 
                 // Try to get the temperature
                 try {
-                    JSONObject jTemperature = jBase.getJSONObject("temp");
-                    temperature = jTemperature.getDouble("temp");
-                } catch (JSONException js1) { //If there was no
+                    JSONObject jMain = jBase.getJSONObject("main");
+                    temperature = jMain.getDouble("temp");
+                } catch (JSONException js1) { //If there was no 'main' or 'temp' key
                     try {
                         String errorMessage = jBase.getString("message");
                         throw new WeatherException(errorMessage);

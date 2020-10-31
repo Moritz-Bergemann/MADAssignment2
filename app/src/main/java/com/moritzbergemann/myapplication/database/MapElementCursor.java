@@ -55,6 +55,5 @@ public class MapElementCursor extends CursorWrapper {
             throw new IllegalArgumentException("Could not add structure from database - " +
                     m.getMessage());
         }
-
     }
 }

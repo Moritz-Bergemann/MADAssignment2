@@ -89,6 +89,11 @@ public class CityInfoFragment extends DialogFragment {
         new GetTemperaturesTask().execute(requestUrl);
     }
 
+    /**
+     * Asynchronous task for displaying temperature data. This implementation only affects the value
+     *  of 'mTemperatureValue'. Sets the text to 'loading' when not done and displays temperature or
+     *  error once done
+     */
     private class GetTemperaturesTask extends AsyncTask<URL, String, String> {
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @Override
@@ -105,7 +110,7 @@ public class CityInfoFragment extends DialogFragment {
             for (URL url : params) {
                 try {
                     double temperature = Weather.getTemperature(url);
-                    temperatureString = String.format(Locale.US, "%.2f", temperature);
+                    temperatureString = String.format(Locale.US, "%.2f°C", temperature);
                 } catch (WeatherException w) {
                     temperatureString = "Failed: " + w.getMessage();
                 }
@@ -123,5 +128,13 @@ public class CityInfoFragment extends DialogFragment {
             mTemperatureValue.setText(result);
         }
 
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+
+            for (String value : values) {
+                mTemperatureValue.setText(value);
+            }
+        }
     }
 }
