@@ -7,7 +7,6 @@
     <string name="moritzBergemann">Moritz Bergemann</string>
     <string name="play">Play</string>
     <string name="title">City Builder</string>
-    <string name="settings">Settings</string>
     <string name="cityNameLabel">City Name:</string>
     <string name="initialMoneyLabel">Initial Money:</string>
     <string name="settings">Settings</string>
@@ -19,8 +18,6 @@
     <string name="employmentRateLabel">Employment Rate:</string>
     <string name="temperatureLabel">Current Temperature:</string>
     <string name="moneyLabel">Money:</string>
-    <string name="populationLabel">Population:</string>
-    <string name="cityNamePreface">City Of</string>
     <string name="rowLabel">Row:</string>
     <string name="columnLabel">Column:</string>
     <string name="chooseImage">Choose Image</string>

@@ -11,7 +11,7 @@
         android:layout_width="167dp"
         android:layout_height="137dp"
         android:scaleType="centerInside"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintBottom_toTopOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/titleImage1"
@@ -33,10 +33,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/play"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/settingsButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleImage2" />
+        app:layout_constraintTop_toBottomOf="@+id/devName" />
 
     <Button
         android:id="@+id/settingsButton"
@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/settings"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/playButton"
         app:layout_constraintStart_toStartOf="@+id/playButton"
         app:layout_constraintTop_toBottomOf="@+id/playButton" />
@@ -52,7 +53,7 @@
         android:id="@+id/titleImage1"
         android:layout_width="82dp"
         android:layout_height="85dp"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
+        app:layout_constraintBottom_toTopOf="@+id/title"
         app:layout_constraintEnd_toStartOf="@+id/titleImage2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,11 +64,12 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="@string/title"
         android:textSize="30sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/playButton"
         app:layout_constraintEnd_toEndOf="@+id/titleImage2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/titleImage1"
         app:layout_constraintTop_toBottomOf="@+id/titleImage2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

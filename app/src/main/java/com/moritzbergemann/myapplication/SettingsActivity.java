@@ -1,5 +1,6 @@
 package com.moritzbergemann.myapplication;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -23,6 +24,18 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+    }
+
+    public static Intent makeIntent(Activity callingActivity) {
+        return new Intent(callingActivity, SettingsActivity.class);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        //All TextWatchers are placed in onPostCreate so that 'changing' (automatic maintaining) of
+        //  EditText contents on a screen rotate do not trigger them
 
         Settings settings = GameData.get().getSettings();
 
@@ -117,10 +130,6 @@ public class SettingsActivity extends AppCompatActivity {
                     .setNegativeButton(R.string.cancel, null)
                     .create().show();
         });
-    }
-
-    public static Intent makeIntent(Activity callingActivity) {
-        return new Intent(callingActivity, SettingsActivity.class);
     }
 
     /**Ends this activity and returns to the caller.
