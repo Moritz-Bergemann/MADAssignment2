@@ -10,8 +10,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "database.db";
 
+    private Context mContext;
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
+
+        //Save the context for my own custom database operations
+        mContext = context;
     }
 
     @Override
@@ -45,5 +50,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         // No :)
+    }
+
+    /**
+     * Permanently deletes the database.
+     */
+    public void deleteDatabase() {
+        mContext.deleteDatabase(DATABASE_NAME);
     }
 }

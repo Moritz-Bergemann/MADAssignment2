@@ -66,8 +66,6 @@ public class CityMapFragment extends Fragment {
 
         CityMapAdapter cityMapAdapter = new CityMapAdapter(GameData.get().getMap(), getActivity());
         mMapRecyclerView.setAdapter(cityMapAdapter);
-
-        CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);
     }
 
     private class CityMapAdapter extends RecyclerView.Adapter<CityMapAdapter.MapElementViewHolder> {
@@ -141,7 +139,7 @@ public class CityMapFragment extends Fragment {
                 mMapElement = mapElement;
 
                 itemView.setOnClickListener(clickedElement -> {
-                    CityViewModel viewModel = new ViewModelProvider(getActivity()).get(CityViewModel.class);
+                    CityViewModel viewModel = new ViewModelProvider(requireActivity()).get(CityViewModel.class);
                     SelectableMapAction mapAction = viewModel.getMapAction();
 
                     if (mapAction != null) {

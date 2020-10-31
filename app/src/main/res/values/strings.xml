@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MAD Assignment 2</string>
+    <string name="resetGameDialogTitle">Reset Game</string>
+    <string name="resetGameDialogMessage">WARNING: Doing this will permanently wipe all of your progress. Are you sure you want to do this?</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="moritzBergemann">Moritz Bergemann</string>
+    <string name="play">Play</string>
 </resources>

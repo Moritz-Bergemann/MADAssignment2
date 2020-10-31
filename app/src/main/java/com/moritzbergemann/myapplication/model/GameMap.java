@@ -17,7 +17,6 @@ public class GameMap {
     private Map<Structure.Type, Integer> structureAmounts;
 
     private SQLiteDatabase db;
-    private static final int DEFAULT_GAME_MAP_ID = 0;
 
     public GameMap(SQLiteDatabase db, int height, int width) {
         map = initialiseMap(height, width);

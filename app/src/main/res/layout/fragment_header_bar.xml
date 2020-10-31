@@ -55,14 +55,14 @@
         android:text="Population:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/populationValue"
-        app:layout_constraintStart_toEndOf="@+id/cityInfobutton"
+        app:layout_constraintStart_toEndOf="@+id/cityInfoButton"
         app:layout_constraintTop_toBottomOf="@+id/cityName" />
 
     <TextView
         android:id="@+id/moneyValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/cityInfobutton"
+        app:layout_constraintBottom_toTopOf="@+id/cityInfoButton"
         app:layout_constraintEnd_toStartOf="@+id/cityName"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/moneyPreface"
@@ -75,12 +75,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="$"
-        app:layout_constraintBottom_toTopOf="@+id/cityInfobutton"
+        app:layout_constraintBottom_toTopOf="@+id/cityInfoButton"
         app:layout_constraintEnd_toStartOf="@+id/moneyValue"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/cityInfobutton"
+        android:id="@+id/cityInfoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="City Info"

@@ -3,8 +3,10 @@ package com.moritzbergemann.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.moritzbergemann.myapplication.model.GameData;
@@ -93,10 +95,31 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        //*** RESET BUTTON SETUP ***
+        Button resetButton = findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(clickedResetButton -> {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.resetGameDialogTitle)
+                    .setMessage(R.string.resetGameDialogMessage)
+                    .setPositiveButton(R.string.confirm, (dialogInterface, i) -> {
+                        //Reset EVERYTHING
+                        GameData.resetAll(SettingsActivity.this.getApplicationContext());
+                        finishActivity();
+                    })
+                    .setNegativeButton(R.string.cancel, null)
+                    .create().show();
+        });
     }
 
     public static Intent makeIntent(Activity callingActivity) {
-        Intent intent = new Intent(callingActivity, SettingsActivity.class);
-        return intent;
+        return new Intent(callingActivity, SettingsActivity.class);
+    }
+
+    /**Ends this activity and returns to the caller.
+     */
+    private void finishActivity() {
+        finish();
     }
 }

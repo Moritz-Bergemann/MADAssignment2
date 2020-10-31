@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -19,9 +18,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * MAIN TRACKING LOCATIOn
+ * MAIN TRACKING LOCATION
  * POTENTIAL TODOS:
- * TODO add reset button
  * TODO fix up string literals
  * TODO go over assignment spec and make sure I have everything
  */
@@ -67,6 +65,20 @@ public class GameData {
     }
 
     /**
+     * Reset the entire app to its initial state. Includes wiping the database.
+     */
+    public static void resetAll(Context context) {
+        //Reset GameData itself to a new instance
+        instance = new GameData();
+
+        //Wipe the database
+        new DatabaseHelper(context).deleteDatabase();
+
+        //Reload/initialise everything
+        GameData.get().loadGame(context);
+    }
+
+    /**
      * Attempts to load game from database - overwrites settings and map if game to load found
      */
     public void loadGame(Context context) {
@@ -89,11 +101,7 @@ public class GameData {
                 money = gameDataCursor.getInt(gameDataCursor.getColumnIndex(
                         DatabaseSchema.GamesTable.Cols.MONEY));
                 int gameStartedInt = gameDataCursor.getInt(gameDataCursor.getColumnIndex(DatabaseSchema.GamesTable.Cols.GAME_STARTED));
-                if (gameStartedInt == 0) {
-                    gameStarted = false;
-                } else {
-                    gameStarted = true;
-                }
+                gameStarted = gameStartedInt != 0;
             }
         } finally {
             gameDataCursor.close();

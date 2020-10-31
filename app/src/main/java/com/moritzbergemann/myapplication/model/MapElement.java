@@ -2,7 +2,6 @@ package com.moritzbergemann.myapplication.model;
 
 import android.content.ContentValues;
 import android.graphics.Bitmap;
-import android.provider.ContactsContract;
 
 import com.moritzbergemann.myapplication.R;
 import com.moritzbergemann.myapplication.database.DatabaseSchema.MapElementTable;

@@ -1,6 +1,5 @@
 package com.moritzbergemann.myapplication;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -81,15 +80,15 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
             GameData.get().timeStep();
         });
 
-        Button cityInfoButton = view.findViewById(R.id.cityInfobutton);
+        Button cityInfoButton = view.findViewById(R.id.cityInfoButton);
         cityInfoButton.setOnClickListener(view1 -> {
             CityInfoFragment cityInfoFragment = CityInfoFragment.newInstance();
             cityInfoFragment.show(getParentFragmentManager().beginTransaction(), "cityInfoDialog");
         });
 
         //Show the game over message if the game has been lost
-        GameData.get().getGameLost().observe(getViewLifecycleOwner(), ganeLostUpdate -> {
-            if (ganeLostUpdate) {
+        GameData.get().getGameLost().observe(getViewLifecycleOwner(), gameLostUpdate -> {
+            if (gameLostUpdate) {
                 TextView gameLostMessage = view.findViewById(R.id.gameLostMessage);
                 gameLostMessage.setVisibility(View.VISIBLE);
             }

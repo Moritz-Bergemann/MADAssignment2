@@ -3,8 +3,6 @@ package com.moritzbergemann.myapplication.model;
 import com.moritzbergemann.myapplication.R;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 public class StructureData {
@@ -33,8 +31,6 @@ public class StructureData {
 
     private static Map<String, Structure> setupStructureTypes() {
         Map<String, Structure> map = new HashMap<>();
-
-        Settings settings = GameData.get().getSettings();
 
         map.put("residential1", new Structure("residential1", R.drawable.ic_residential1, Structure.Type.RESIDENTIAL));
         map.put("residential2", new Structure("residential2", R.drawable.ic_residential2, Structure.Type.RESIDENTIAL));

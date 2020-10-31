@@ -28,10 +28,12 @@ public class Structure {
     }
 
     public Structure(Structure structure) {
+        this.id = structure.id;
         this.imageId = structure.imageId;
         this.type = structure.type;
     }
 
+    @Override
     public Structure clone() {
         return new Structure(this);
     }

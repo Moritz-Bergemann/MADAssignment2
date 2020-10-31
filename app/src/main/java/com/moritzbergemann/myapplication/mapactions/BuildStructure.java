@@ -1,7 +1,6 @@
 package com.moritzbergemann.myapplication.mapactions;
 
 import com.moritzbergemann.myapplication.model.GameData;
-import com.moritzbergemann.myapplication.model.GameMap;
 import com.moritzbergemann.myapplication.model.MapException;
 import com.moritzbergemann.myapplication.model.MoneyException;
 import com.moritzbergemann.myapplication.model.Structure;
