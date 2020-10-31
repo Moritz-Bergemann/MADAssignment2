@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="City Name:"
+        android:text="@string/cityNameLabel"
         app:layout_constraintEnd_toEndOf="@+id/initialMoneyLabel"
         app:layout_constraintTop_toBottomOf="@+id/initialMoneyLabel" />
 
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Initial Money:"
+        android:text="@string/initialMoneyLabel"
         app:layout_constraintEnd_toEndOf="@+id/mapHeightLabel"
         app:layout_constraintTop_toBottomOf="@+id/mapHeightLabel" />
 
@@ -49,7 +49,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Map Width:"
+        android:text="@string/mapWidthLabel"
         app:layout_constraintEnd_toStartOf="@+id/mapWidthValue"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Map Height:"
+        android:text="@string/mapHeightLabel"
         app:layout_constraintEnd_toEndOf="@+id/mapWidthLabel"
         app:layout_constraintTop_toBottomOf="@+id/mapWidthLabel" />
 
@@ -102,7 +102,7 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$"
+        android:text="@string/moneySign"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/initialMoneyValue"
         app:layout_constraintEnd_toStartOf="@+id/initialMoneyValue"
@@ -113,7 +113,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Reset Game"
+        android:text="@string/resetGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cityNameValue" />

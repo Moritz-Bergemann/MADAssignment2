@@ -196,11 +196,16 @@ public class Settings {
                     DatabaseSchema.SettingsTable.Cols.ID + " = ?",
                     new String[]{String.valueOf(DEFAULT_DATABASE_SETTING_ID)},
                     null, null, null);
-            if (checkerCursor.getCount() == 0) { //If no database entry exists
-                //Add database entry
 
-                db.insert(DatabaseSchema.SettingsTable.NAME, null, getContentValues());
-            } //No else - if one is already here, no need to do anything
+            try {
+                if (checkerCursor.getCount() == 0) { //If no database entry exists
+                    //Add database entry
+
+                    db.insert(DatabaseSchema.SettingsTable.NAME, null, getContentValues());
+                } //No else - if one is already here, no need to do anything
+            } finally {
+                checkerCursor.close();
+            }
 
             checkedDatabaseEntryExists = true;
         }

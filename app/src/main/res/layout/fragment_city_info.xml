@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Recent Income:"
+            android:text="@string/latestIncomeLabel"
             app:layout_constraintEnd_toEndOf="@+id/moneyLabel"
             app:layout_constraintTop_toBottomOf="@+id/moneyLabel" />
 
@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Employment Rate:"
+            android:text="@string/employmentRateLabel"
             app:layout_constraintEnd_toEndOf="@+id/latestIncomeLabel"
             app:layout_constraintTop_toBottomOf="@+id/latestIncomeLabel" />
 
@@ -47,7 +47,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="24dp"
-            android:gravity="right"
+            android:gravity="end"
             app:layout_constraintEnd_toEndOf="@+id/employmentRateValue"
             app:layout_constraintStart_toEndOf="@+id/temperatureLabel"
             app:layout_constraintTop_toBottomOf="@+id/employmentRateValue"
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Current Temperature:"
+            android:text="@string/temperatureLabel"
             app:layout_constraintEnd_toEndOf="@+id/employmentRateLabel"
             app:layout_constraintTop_toBottomOf="@+id/employmentRateLabel" />
 
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Money:"
+            android:text="@string/moneyLabel"
             app:layout_constraintEnd_toEndOf="@+id/populationLabel"
             app:layout_constraintTop_toBottomOf="@+id/populationLabel" />
 
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Population:"
+            android:text="@string/populationLabel"
             app:layout_constraintEnd_toStartOf="@+id/populationValue"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="City Of"
+            android:text="@string/cityNamePreface"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/cityNameValue"
@@ -139,7 +139,7 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$"
+            android:text="@string/moneySign"
             app:layout_constraintBottom_toBottomOf="@+id/moneyValue"
             app:layout_constraintEnd_toStartOf="@+id/moneyValue"
             app:layout_constraintTop_toTopOf="@+id/moneyValue" />
@@ -148,7 +148,7 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$"
+            android:text="@string/moneySign"
             app:layout_constraintBottom_toBottomOf="@+id/latestIncomeValue"
             app:layout_constraintEnd_toStartOf="@+id/latestIncomeValue"
             app:layout_constraintTop_toTopOf="@+id/latestIncomeValue" />

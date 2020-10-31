@@ -163,13 +163,13 @@ public class SelectorFragment extends Fragment {
                 mImage.setImageResource(structure.getImageId());
                 switch (structure.getType()) {
                     case RESIDENTIAL:
-                        mType.setText("Residential");
+                        mType.setText(R.string.residential);
                         break;
                     case COMMERCIAL:
-                        mType.setText("Commercial");
+                        mType.setText(R.string.commercial);
                         break;
                     case ROAD:
-                        mType.setText("Road");
+                        mType.setText(R.string.road);
                         break;
                     default:
                         throw new IllegalArgumentException("Bad type");

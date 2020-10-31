@@ -25,7 +25,7 @@
         app:layout_constraintEnd_toStartOf="@+id/rowValue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/structureName"
-        android:text="Row:" />
+        android:text="@string/rowLabel" />
 
     <TextView
         android:id="@+id/rowValue"
@@ -48,7 +48,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="@+id/rowLabel"
         app:layout_constraintTop_toBottomOf="@+id/rowLabel"
-        android:text="Column:" />
+        android:text="@string/columnLabel" />
 
     <EditText
         android:id="@+id/structureName"
@@ -79,7 +79,7 @@
         android:id="@+id/chooseImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Image"
+        android:text="@string/chooseImage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

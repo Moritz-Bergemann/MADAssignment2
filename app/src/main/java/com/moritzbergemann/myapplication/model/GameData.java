@@ -28,7 +28,7 @@ import java.util.Locale;
 /**
  * Singleton class for controlling primary game state.
  * Contains game settings and map as objects.
- * Also contains various utility functions for interacting with the hgame state
+ * Also contains various utility functions for interacting with the game state
  */
 public class GameData {
     private static final String TAG = "GameData";
@@ -231,11 +231,16 @@ public class GameData {
                     DatabaseSchema.GamesTable.Cols.ID + " = ?",
                     new String[]{String.valueOf(DEFAULT_DATABASE_GAME_DATA_ID)},
                     null, null, null);
-            if (checkerCursor.getCount() == 0) { //If no database entry exists
-                //Add database entry
 
-                db.insert(DatabaseSchema.GamesTable.NAME, null, getContentValues());
-            } //No else - if one is already here, no need to do anything
+            try {
+                if (checkerCursor.getCount() == 0) { //If no database entry exists
+                    //Add database entry
+
+                    db.insert(DatabaseSchema.GamesTable.NAME, null, getContentValues());
+                } //No else - if one is already here, no need to do anything
+            } finally {
+                checkerCursor.close();
+            }
         }
 
         //Update the database entry (now that it definitely exists)

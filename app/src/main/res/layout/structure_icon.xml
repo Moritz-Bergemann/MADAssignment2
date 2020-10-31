@@ -31,7 +31,7 @@
         android:id="@+id/costLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cost:"
+        android:text="@string/costLabel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/costValue"
         app:layout_constraintHorizontal_bias="0.5"
