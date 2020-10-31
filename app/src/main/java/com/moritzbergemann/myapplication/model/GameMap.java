@@ -107,20 +107,78 @@ public class GameMap {
 
         //If there is a structure at the specified position
         if (structure != null) {
-            //TODO don't allow demolishing of a road if it would cause adjacent buildings to be road-less
+            if (validateStructureDemolishing(row, col)) {
+                map[row][col].removeStructure();
 
-            map[row][col].removeStructure();
+                //Remove 1 from structure count
+                structureAmounts.put(structure.getType(), structureAmounts.get(structure.getType()) - 1);
 
-            //Remove 1 from structure count
-            structureAmounts.put(structure.getType(), structureAmounts.get(structure.getType()) - 1);
-
-            //Remove from the database
-            removeDatabaseMapElement(map[row][col]);
+                //Remove from the database
+                removeDatabaseMapElement(map[row][col]);
+            } else {
+                throw new MapException("Cannot demolish this structure!");
+            }
         }
     }
 
+    /**
+     * Validate the demolishing of a structure at the given row and column. Assumes the position
+     *  to contain a structure.
+     * @param row row position to demolish at
+     * @param col column position to demolish at
+     * @return true if the demolishing is valid, false if it is not.
+     * @throws IllegalArgumentException if the position does not contain a structure.
+     */
+    public boolean validateStructureDemolishing(int row, int col) {
+        if (map[row][col].getStructure() == null) {
+            throw new IllegalArgumentException("Structure to demolish does not exist");
+        }
+
+        boolean demolishValid = true;
+
+        //If structure is a industrial or commercial, it can be demolished no worries
+
+        //If structure is a road, check there are no buildings around it that would be made
+        //  road-less without it
+        if (map[row][col].getStructure().getType() == Structure.Type.ROAD) {
+            //Save road to demolish
+            Structure roadToDemolish = map[row][col].getStructure();
+
+            //TEMPORARILY remove the structure from the map (for testing if everything is still
+            //  valid afterwards)
+            map[row][col].setStructure(null);
+
+            //For each map element surrounding the road...
+            int[] rowValues = new int[]{row + 1, row - 1, row, row};
+            int[] colValues = new int[]{col, col, col + 1, col - 1};
+            for (int ii = 0; ii < 4; ii++) {
+                try {
+                    MapElement curMapElement = map[rowValues[ii]][colValues[ii]];
+                    //If the map element contains a commercial or residential building...
+                    if (curMapElement.getStructure() != null) {
+                        if (curMapElement.getStructure().getType() == Structure.Type.RESIDENTIAL ||
+                                curMapElement.getStructure().getType() == Structure.Type.COMMERCIAL) {
+                            //Validate the structure's position without the road
+                            //If the structure is not valid without the road
+                            if (!validateStructurePosition(curMapElement.getStructure(), rowValues[ii], colValues[ii])) {
+                                //Demolishing is not valid
+                                demolishValid = false;
+                                break; //Don't waste time
+                            }
+                        }
+                    }
+                } catch (IndexOutOfBoundsException i) { /* Do nothing, just keep going */ }
+            }
+
+            //Put the structure back into its spot
+            map[row][col].setStructure(roadToDemolish);
+        }
+
+        return demolishValid;
+    }
+
     private boolean validateStructurePosition(Structure structure, int row, int col) {
-        boolean validPosition = true;   //Position is valid by default (unless some rule invalidates
+        boolean positionValid = true;   //Position is valid by default (unless some rule invalidates
                                         // it)
 
         //Assert row and column called are within map boundaries
@@ -131,7 +189,7 @@ public class GameMap {
         //** RULE FORCING RESIDENTIAL & COMMERCIAL TO BE NEXT TO ROAD **
         if (structure.getType() == Structure.Type.RESIDENTIAL ||
                 structure.getType() == Structure.Type.COMMERCIAL) {
-            validPosition = false;
+            positionValid = false;
 
             //Check if at least one of surrounding map elements contains a road-type structure
             int[] rowValues = new int[]{row + 1, row - 1, row, row};
@@ -144,7 +202,7 @@ public class GameMap {
 
                     if (checkStructure != null) {
                         if (checkElement.getStructure().getType() == Structure.Type.ROAD) {
-                            validPosition = true;
+                            positionValid = true;
                             break;
                         }
                     }
@@ -154,7 +212,7 @@ public class GameMap {
             }
         }
 
-        return validPosition;
+        return positionValid;
     }
 
     public int getMapHeight() {

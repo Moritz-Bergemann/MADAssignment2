@@ -30,7 +30,7 @@ public class MapElementCursor extends CursorWrapper {
         String structureTypeId = getString(getColumnIndex(MapElementTable.Cols.STRUCTURE_TYPE_ID));
         String ownerName = getString(getColumnIndex(MapElementTable.Cols.OWNER_NAME));
 
-        byte[] customImageBlob = getBlob(getColumnIndex(MapElementTable.Cols.IMAGE_BITMAP)); //TODO
+        byte[] customImageBlob = getBlob(getColumnIndex(MapElementTable.Cols.IMAGE_BITMAP));
 
         //Processing info
         Bitmap specialImage = null;

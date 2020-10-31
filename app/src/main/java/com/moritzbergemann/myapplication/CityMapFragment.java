@@ -156,7 +156,7 @@ public class CityMapFragment extends Fragment {
                         CityMapAdapter.this.notifyItemChanged(getAdapterPosition());
 
                         //Notify the rest of the UI something might have changed
-                        GameData.get().notifyUIUpdate(); //FIXME is this the right place for this?
+                        GameData.get().notifyUIUpdate();
                     }
                 });
             }

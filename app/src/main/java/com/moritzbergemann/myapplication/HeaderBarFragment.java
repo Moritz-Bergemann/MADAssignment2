@@ -71,7 +71,7 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
         mPopulationValue.setText(String.format(Locale.US, "%d", GameData.get().getPopulation()));
 
         mMoneyPerTurnValue = view.findViewById(R.id.moneyPerTurnValue);
-        mMoneyPerTurnValue.setText(String.format(Locale.US, "%d", GameData.get().getMoneyPerTurn()));
+        mMoneyPerTurnValue.setText(String.format(Locale.US, "%d", GameData.get().getLatestIncome()));
 
         mTimeValue = view.findViewById(R.id.timeValue);
         mTimeValue.setText(String.format(Locale.US, "%d", GameData.get().getGameTime()));
@@ -106,7 +106,7 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
         mCityName.setText(String.format(Locale.US, "%s", GameData.get().getSettings().getCityName()));
         mMoneyValue.setText(String.format(Locale.US, "%d", GameData.get().getMoney()));
         mPopulationValue.setText(String.format(Locale.US, "%d", GameData.get().getPopulation()));
-        mMoneyPerTurnValue.setText(String.format(Locale.US, "%d", GameData.get().getMoneyPerTurn()));
+        mMoneyPerTurnValue.setText(String.format(Locale.US, "%d", GameData.get().getLatestIncome()));
         mTimeValue.setText(String.format(Locale.US, "%d", GameData.get().getGameTime()));
     }
 }

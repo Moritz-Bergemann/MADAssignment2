@@ -110,7 +110,7 @@ public class SelectorFragment extends Fragment {
         private List<String> mStructureIds;
         private Activity mActivity;
 
-        public StructureAdapter(List<String> structureIds, Activity activity) { //FIXME should this just call getInstance() straight up?
+        public StructureAdapter(List<String> structureIds, Activity activity) {
             super();
             mStructureIds = structureIds;
             mActivity = activity;

@@ -30,6 +30,14 @@ public class BuildStructure implements SelectableMapAction {
             throw new MapException("Cannot afford this structure!");
         }
 
-        GameData.get().getMap().addStructure(structure, row, col);
+        try {
+            GameData.get().getMap().addStructure(structure, row, col);
+        } catch (MapException m) {
+            //Undo spending
+            GameData.get().gainMoney(GameData.get().getSettings().getStructureCost(structure.getType()));
+
+            //Re-throw exception
+            throw m;
+        }
     }
 }

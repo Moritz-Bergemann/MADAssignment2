@@ -99,6 +99,4 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(callingActivity, SettingsActivity.class);
         return intent;
     }
-
-    //TODO settings have to be adjusted before starting the game (and/or NOT be adjustable once the game has started, maybe move that into settings object?)
 }

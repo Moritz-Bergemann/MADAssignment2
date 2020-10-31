@@ -18,6 +18,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * MAIN TRACKING LOCATIOn
+ * POTENTIAL TODOS:
+ * TODO add reset button
+ * TODO fix up string literals
+ * TODO go over assignment spec and make sure I have everything
+ */
+
 public class GameData {
     private static final String TAG = "GameData";
 
@@ -109,6 +117,10 @@ public class GameData {
         }
 
         updateDatabaseEntry();
+    }
+
+    public void gainMoney(int money) {
+        this.money += money;
     }
 
     public int getGameTime() {

@@ -34,10 +34,16 @@ public class MapElement {
         return structure;
     }
 
+    /**
+     * Setter for structure. Does NOT perform validation, database saves etc
+     */
     public void setStructure(Structure structure) {
         this.structure = structure;
     }
 
+    /**
+     * Setter for special image. Does NOT perform database saves etc
+     */
     public void setSpecialImage(Bitmap specialImage) {
         this.specialImage = specialImage;
     }

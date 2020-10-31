@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + MapElementTable.NAME + "(" +
                 MapElementTable.Cols.GAME_ID + " INTEGER, " +
                 MapElementTable.Cols.STRUCTURE_TYPE_ID + " TEXT, " +
-                MapElementTable.Cols.IMAGE_BITMAP + " BLOB, " + //FIXME this probs not right
+                MapElementTable.Cols.IMAGE_BITMAP + " BLOB, " +
                 MapElementTable.Cols.ROW + " INTEGER, " +
                 MapElementTable.Cols.COLUMN + " INTEGER, " +
                 MapElementTable.Cols.OWNER_NAME + " TEXT, " +

@@ -60,7 +60,7 @@ public class CityActivity extends AppCompatActivity {
         CityViewModel viewModel = new ViewModelProvider(this).get(CityViewModel.class);
         viewModel.setMapElementForDetails(GameData.get().getMap().getMapElement(row, col));
 
-        //Replace city map with details TODO make this a show/hide deal
+        //Replace city map with details
         getSupportFragmentManager().beginTransaction().replace(R.id.mapContainer, DetailsFragment.newInstance()).commit();
     }
 

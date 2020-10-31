@@ -27,7 +27,7 @@ public class Settings {
     private int mapHeight = -1;
 
     //Game Settings
-    private String cityName = "Perth"; //TODO make setting for this
+    private String cityName = "Perth";
     private int initialMoney = -1;
     private int familySize = 4;
     private int shopSize = 6;
@@ -165,8 +165,6 @@ public class Settings {
         updateDatabaseEntry();
     }
 
-    //TODO set city name
-
     /**
      * @return Whether all settings required to start the game have been set by the user.
      */
@@ -187,7 +185,7 @@ public class Settings {
     private void updateDatabaseEntry() {
         if (!checkedDatabaseEntryExists) {
             //Check if entry exists (in case it exists form previous session)
-            Cursor checkerCursor = db.query(DatabaseSchema.SettingsTable.NAME, null, //FIXME possibly unnecessary
+            Cursor checkerCursor = db.query(DatabaseSchema.SettingsTable.NAME, null,
                     DatabaseSchema.SettingsTable.Cols.ID + " = ?",
                     new String[]{String.valueOf(DEFAULT_DATABASE_SETTING_ID)},
                     null, null, null);
