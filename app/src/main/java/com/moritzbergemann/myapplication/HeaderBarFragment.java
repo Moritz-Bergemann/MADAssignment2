@@ -18,9 +18,8 @@ import com.moritzbergemann.myapplication.model.UIUpdateObserver;
 import java.util.Locale;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link HeaderBarFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment for header bar in city view - displays relevant information such as city name, money,
+ *  population, and options for more info.
  */
 public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
 

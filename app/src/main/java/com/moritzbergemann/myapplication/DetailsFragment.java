@@ -27,9 +27,8 @@ import com.moritzbergemann.myapplication.model.Structure;
 import java.util.Locale;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link DetailsFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment displaying additional details on a map element. Also allows for the setting of custom
+ *  names and images.
  */
 public class DetailsFragment extends Fragment {
     private static final int REQUEST_THUMBNAIL = 1;

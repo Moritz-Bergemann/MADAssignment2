@@ -8,8 +8,10 @@ import android.widget.Toast;
 
 import com.moritzbergemann.myapplication.model.GameData;
 
+/**
+ * Activity for Game's main menu.
+ */
 public class MenuActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

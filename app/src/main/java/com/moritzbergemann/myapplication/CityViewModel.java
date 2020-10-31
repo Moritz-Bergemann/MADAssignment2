@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModel;
 import com.moritzbergemann.myapplication.mapactions.SelectableMapAction;
 import com.moritzbergemann.myapplication.model.MapElement;
 
+/**
+ * ViewModel for city view.
+ */
 public class CityViewModel extends ViewModel {
+    //Stores the Map Action that the player currently has selected
     SelectableMapAction mMapAction = null;
 
     public SelectableMapAction getMapAction() {
@@ -16,6 +20,7 @@ public class CityViewModel extends ViewModel {
         mMapAction = mapAction;
     }
 
+    //Stores the map element currently having its details viewed
     MapElement mMapElementForDetails = null;
 
     public MapElement getMapElementForDetails() {

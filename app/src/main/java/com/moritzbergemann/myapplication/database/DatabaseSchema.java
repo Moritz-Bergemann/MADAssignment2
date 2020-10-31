@@ -28,7 +28,8 @@ public class DatabaseSchema {
         public static final String NAME = "map_elements";
 
         public static class Cols {
-            public static final String GAME_ID = "game_id"; //NOTE: This is not a foreign key as there is only one game, but could easily be updated to become one in the future
+            public static final String GAME_ID = "game_id"; //NOTE: This is not a foreign key as there is only one game,
+                                                            // but could easily be updated to become one in the future
             public static final String STRUCTURE_TYPE_ID = "structure_type_id";
             public static final String OWNER_NAME = "owner_name";
             public static final String IMAGE_BITMAP = "image_bitmap";

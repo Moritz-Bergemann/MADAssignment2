@@ -11,6 +11,9 @@ import com.moritzbergemann.myapplication.database.DatabaseSchema;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class representing game settings. Setters and getters exist for settings that may be changed.
+ */
 public class Settings {
     private static final String TAG = "Settings";
 
@@ -81,10 +84,14 @@ public class Settings {
                 //Confirm database entry exists
                 settings.checkedDatabaseEntryExists = true;
 
-                settings.mapWidth = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_WIDTH));
-                settings.mapHeight = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT));
-                settings.initialMoney = settingsCursor.getInt(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.INITIAL_MONEY));
-                settings.cityName = settingsCursor.getString(settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.CITY_NAME));
+                settings.mapWidth = settingsCursor.getInt(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.MAP_WIDTH));
+                settings.mapHeight = settingsCursor.getInt(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT));
+                settings.initialMoney = settingsCursor.getInt(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.INITIAL_MONEY));
+                settings.cityName = settingsCursor.getString(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.CITY_NAME));
             }
         } finally {
             settingsCursor.close();

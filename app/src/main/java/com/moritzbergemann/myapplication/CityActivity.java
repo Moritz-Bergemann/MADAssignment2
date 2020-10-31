@@ -51,6 +51,11 @@ public class CityActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Replace map with building inspection view
+     * @param row of building to inspect
+     * @param col of building to inspect
+     */
     public void inspectBuilding(int row, int col) {
         CityViewModel viewModel = new ViewModelProvider(this).get(CityViewModel.class);
         viewModel.setMapElementForDetails(GameData.get().getMap().getMapElement(row, col));
@@ -69,6 +74,9 @@ public class CityActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Go back to map view from building inspection view
+     */
     public void cancelInspectBuilding() {
         CityViewModel viewModel = new ViewModelProvider(this).get(CityViewModel.class);
 

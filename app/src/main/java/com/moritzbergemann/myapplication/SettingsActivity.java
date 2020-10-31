@@ -15,8 +15,10 @@ import com.moritzbergemann.myapplication.model.ValidationException;
 
 import java.util.Locale;
 
+/**
+ * Activity for changing game settings. Also contains a button for resetting the game.
+ */
 public class SettingsActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +91,11 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void useValue(String textValue) throws ValidationException {
                 if (textValue.length() > 0) {
-                    settings.setCityName(textValue);
+                    if (textValue.length() <= 15) {
+                        settings.setCityName(textValue);
+                    } else {
+                        throw new ValidationException("City name cannot be more than 15 characters");
+                    }
                 } else {
                     throw new ValidationException("City name cannot be empty");
                 }

@@ -22,8 +22,14 @@ import java.util.Locale;
  * POTENTIAL TODOS:
  * TODO fix up string literals
  * TODO go over assignment spec and make sure I have everything
+ * TODO change the logo
  */
 
+/**
+ * Singleton class for controlling primary game state.
+ * Contains game settings and map as objects.
+ * Also contains various utility functions for interacting with the hgame state
+ */
 public class GameData {
     private static final String TAG = "GameData";
 
@@ -38,17 +44,19 @@ public class GameData {
     }
 
     // FIELDS
-    private Settings settings;
-    private int money;
-    private int latestIncome;
-    private int gameTime;
-    private boolean gameStarted;
-    List<UIUpdateObserver> uiUpdateObservers;
+    private Settings settings; //Game settings
+    private int money; //Player's current money
+    private int latestIncome; //Latest income (0 by default)
+    private int gameTime; //Game time in time steps
+    private boolean gameStarted; //Whether or not the game has started (used to control what settings
+                                    // can be set
+    List<UIUpdateObserver> uiUpdateObservers; //Observers for changes to game data
     private MutableLiveData<Boolean> gameLost;
-    private GameMap map;
+    private GameMap map; //Game map
 
     private SQLiteDatabase db;
-    private boolean checkedDatabaseEntryExists = false;
+    private boolean checkedDatabaseEntryExists = false; //If it is known an entry exists in the
+                                                        // database for the game
     public static final int DEFAULT_DATABASE_GAME_DATA_ID = 0;
 
     private GameData() {
@@ -62,20 +70,6 @@ public class GameData {
         gameLost = new MutableLiveData<>(false);
 
         db = null;
-    }
-
-    /**
-     * Reset the entire app to its initial state. Includes wiping the database.
-     */
-    public static void resetAll(Context context) {
-        //Reset GameData itself to a new instance
-        instance = new GameData();
-
-        //Wipe the database
-        new DatabaseHelper(context).deleteDatabase();
-
-        //Reload/initialise everything
-        GameData.get().loadGame(context);
     }
 
     /**
@@ -114,6 +108,20 @@ public class GameData {
         if (gameStarted) {
             map = GameMap.loadFromDatabase(db, settings.getMapWidth(), settings.getMapHeight());
         }
+    }
+
+    /**
+     * Reset the entire app to its initial state. Includes wiping the database.
+     */
+    public static void resetAll(Context context) {
+        //Reset GameData itself to a new instance
+        instance = new GameData();
+
+        //Wipe the database
+        new DatabaseHelper(context).deleteDatabase();
+
+        //Reload/initialise everything
+        GameData.get().loadGame(context);
     }
 
     public void spendMoney(int cost) throws MoneyException {
@@ -213,6 +221,9 @@ public class GameData {
         updateDatabaseEntry();
     }
 
+    /**
+     * Updates the GameData entry in the database
+     */
     private void updateDatabaseEntry() {
         if (!checkedDatabaseEntryExists) { //If we haven't already checked that the entry exists
             //Check if entry exists (in case it exists form previous session)

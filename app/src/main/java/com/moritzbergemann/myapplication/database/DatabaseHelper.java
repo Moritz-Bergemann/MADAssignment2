@@ -36,7 +36,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 MapElementTable.Cols.ROW + " INTEGER, " +
                 MapElementTable.Cols.COLUMN + " INTEGER, " +
                 MapElementTable.Cols.OWNER_NAME + " TEXT, " +
-                "PRIMARY KEY (" + MapElementTable.Cols.GAME_ID + ", " + MapElementTable.Cols.ROW + ", " + MapElementTable.Cols.COLUMN + "))"); //Concatenated primary key of game ID, row & column position
+                //Concatenated primary key of game ID, row & column position
+                "PRIMARY KEY (" + MapElementTable.Cols.GAME_ID + ", " +
+                MapElementTable.Cols.ROW + ", " + MapElementTable.Cols.COLUMN + "))");
 
         //Settings table
         db.execSQL("CREATE TABLE " + SettingsTable.NAME + "(" +

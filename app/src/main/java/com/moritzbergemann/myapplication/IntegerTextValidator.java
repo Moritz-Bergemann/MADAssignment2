@@ -6,6 +6,10 @@ import com.moritzbergemann.myapplication.model.ValidationException;
 
 import java.util.Locale;
 
+/**
+ * Text validator class specifically for integers - performs automated checks for if input value
+ *  is between defined min and max values.
+ */
 public abstract class IntegerTextValidator extends TextValidator {
     private int minValue;
     private int maxValue;

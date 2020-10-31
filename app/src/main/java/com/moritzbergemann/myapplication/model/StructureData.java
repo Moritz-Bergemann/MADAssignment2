@@ -5,6 +5,9 @@ import com.moritzbergemann.myapplication.R;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Tracks all structures in the game via a hard-coded map.
+ */
 public class StructureData {
     private static StructureData instance = null;
 

@@ -22,13 +22,10 @@ import java.net.URL;
 import java.util.Locale;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link CityInfoFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment displaying information on the city.
  */
 public class CityInfoFragment extends DialogFragment {
     private TextView mTemperatureValue;
-
 
     public CityInfoFragment() {
         // Required empty public constructor

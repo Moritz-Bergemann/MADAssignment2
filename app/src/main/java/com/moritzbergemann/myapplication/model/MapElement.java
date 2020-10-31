@@ -10,12 +10,15 @@ import java.io.ByteArrayOutputStream;
 
 //Parts of this file consist of externally obtained code.
 
+/**
+ * Class representing a single map 'element' (space on the map grid).
+ */
 public class MapElement {
     private static int DEFAULT_BACKGROUND_IMAGE_RESOURCE = R.drawable.ic_grass_background;
 
     private Structure structure;
     private Bitmap specialImage;
-    private String ownerName;
+    private String ownerName; //Name given to this map element by user
     private int backgroundImageResource;
     private int rowPos;
     private int colPos;
@@ -60,7 +63,8 @@ public class MapElement {
     }
 
     /**
-     * Remove the structure currently here from this map element
+     * Remove the structure currently here from this map element. This also removes the special
+     * image and name.
      */
     public void removeStructure() {
         if (structure != null) {
