@@ -54,25 +54,13 @@ public class Settings {
         this.db = db;
     }
 
+    /**
+     * Attempts to load an existing Settings object from the Settings table in the database.
+     * @param db Database to load information from
+     * @return The loaded settings object
+     */
     public static Settings loadFromDatabase(SQLiteDatabase db) {
         Settings settings = new Settings(db);
-
-        CursorWrapper testBoy = new CursorWrapper(db.query(DatabaseSchema.SettingsTable.NAME,
-                null, null, null, null,
-                null, null, null));
-
-        try {
-            if (testBoy.moveToFirst()) {
-                while (!testBoy.isAfterLast()) { //For each element in cursor
-                    int id = testBoy.getInt(testBoy.getColumnIndex(DatabaseSchema.SettingsTable.Cols.ID));
-
-                    Log.v(TAG, String.format("Found settings entry with ID %d", id));
-                    testBoy.moveToNext(); //Move to next element within cursor
-                }
-            }
-        } finally {
-            testBoy.close();
-        }
 
         CursorWrapper settingsCursor = new CursorWrapper(db.query(DatabaseSchema.SettingsTable.NAME,
                 null, DatabaseSchema.SettingsTable.Cols.ID + " = ?",
@@ -170,6 +158,26 @@ public class Settings {
         this.cityName = cityName;
 
         updateDatabaseEntry();
+    }
+
+    public void setFamilySize(int familySize) {
+        this.familySize = familySize;
+    }
+
+    public void setShopSize(int shopSize) {
+        this.shopSize = shopSize;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public void setTaxRate(double taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public void setServiceCost(int serviceCost) {
+        this.serviceCost = serviceCost;
     }
 
     /**

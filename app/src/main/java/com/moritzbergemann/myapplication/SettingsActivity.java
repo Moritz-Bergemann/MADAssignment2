@@ -115,6 +115,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        EditText familySizeValue
+
 
         //*** RESET BUTTON SETUP ***
         Button resetButton = findViewById(R.id.resetButton);

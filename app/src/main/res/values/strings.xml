@@ -34,4 +34,5 @@
     <string name="residential">Residential</string>
     <string name="commercial">Commercial</string>
     <string name="road">Road</string>
+    <string name="continueGameDialogTitle">Continue Game</string>
 </resources>
