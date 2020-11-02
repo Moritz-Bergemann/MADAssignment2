@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Residential Cost:"
+            android:text="@string/residentialCostLabel"
             app:layout_constraintEnd_toEndOf="@+id/roadCostLabel"
             app:layout_constraintTop_toBottomOf="@+id/roadCostLabel" />
 
@@ -95,7 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Commerical Cost:"
+            android:text="@string/commercialCostLabel"
             app:layout_constraintEnd_toEndOf="@+id/residentialCostLabel"
             app:layout_constraintTop_toBottomOf="@+id/residentialCostLabel" />
 
@@ -104,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Road Cost:"
+            android:text="@string/roadCostLabel"
             app:layout_constraintEnd_toEndOf="@+id/serviceCostLabel"
             app:layout_constraintTop_toBottomOf="@+id/serviceCostLabel" />
 
@@ -112,7 +112,7 @@
             android:id="@+id/shopSizeValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/shopSizeLabel"
             app:layout_constraintStart_toStartOf="@+id/cityNameValue"
             app:layout_constraintTop_toTopOf="@+id/shopSizeLabel"
@@ -122,7 +122,7 @@
             android:id="@+id/salaryValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/salaryLabel"
             app:layout_constraintStart_toStartOf="@+id/shopSizeValue"
             app:layout_constraintTop_toTopOf="@+id/salaryLabel"
@@ -153,7 +153,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Salary:"
+            android:text="@string/salaryLabel"
             app:layout_constraintEnd_toEndOf="@+id/shopSizeLabel"
             app:layout_constraintTop_toBottomOf="@+id/shopSizeLabel" />
 
@@ -162,7 +162,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Tax Rate:"
+            android:text="@string/taxRateLabel"
             app:layout_constraintEnd_toEndOf="@+id/salaryLabel"
             app:layout_constraintTop_toBottomOf="@+id/salaryLabel" />
 
@@ -171,7 +171,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Service Cost:"
+            android:text="@string/serviceCostLabel"
             app:layout_constraintEnd_toEndOf="@+id/taxRateLabel"
             app:layout_constraintTop_toBottomOf="@+id/taxRateLabel" />
 
@@ -180,7 +180,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Shop Size:"
+            android:text="@string/shopSizeLabel"
             app:layout_constraintEnd_toEndOf="@+id/familySizeLabel"
             app:layout_constraintTop_toBottomOf="@+id/familySizeLabel" />
 
@@ -189,7 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="Family Size:"
+            android:text="@string/familySizeLabel"
             app:layout_constraintEnd_toEndOf="@+id/cityNameSettingLabel2"
             app:layout_constraintTop_toBottomOf="@+id/cityNameSettingLabel2" />
 
@@ -216,7 +216,7 @@
             android:id="@+id/familySizeValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:inputType="number"
             app:layout_constraintBottom_toBottomOf="@+id/familySizeLabel"
             app:layout_constraintStart_toStartOf="@+id/cityNameValue"
             app:layout_constraintTop_toTopOf="@+id/familySizeLabel"

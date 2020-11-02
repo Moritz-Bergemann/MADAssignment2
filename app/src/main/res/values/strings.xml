@@ -35,4 +35,12 @@
     <string name="commercial">Commercial</string>
     <string name="road">Road</string>
     <string name="continueGameDialogTitle">Continue Game</string>
+    <string name="residentialCostLabel">Residential Cost:</string>
+    <string name="commercialCostLabel">Commerical Cost:</string>
+    <string name="roadCostLabel">Road Cost:</string>
+    <string name="salaryLabel">Salary:</string>
+    <string name="taxRateLabel">Tax Rate:</string>
+    <string name="serviceCostLabel">Service Cost:</string>
+    <string name="shopSizeLabel">Shop Size:</string>
+    <string name="familySizeLabel">Family Size:</string>
 </resources>
