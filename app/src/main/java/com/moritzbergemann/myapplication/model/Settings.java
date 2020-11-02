@@ -22,8 +22,20 @@ public class Settings {
     public static final int MAX_MAP_WIDTH = 500;
     public static final int MIN_MAP_HEIGHT = 1;
     public static final int MAX_MAP_HEIGHT = 25;
-    public static final int MIN_INITIAL_MONEY = 620;
+    public static final int MIN_INITIAL_MONEY = 0;
     public static final int MAX_INITIAL_MONEY = 99999999;
+    public static final int MIN_FAMILY_SIZE = 1;
+    public static final int MAX_FAMILY_SIZE = 20;
+    public static final int MIN_SHOP_SIZE = 2;
+    public static final int MAX_SHOP_SIZE = 100;
+    public static final int MIN_SALARY = 0;
+    public static final int MAX_SALARY = 100;
+    public static final double MIN_TAX_RATE = 0.0;
+    public static final double MAX_TAX_RATE = 1.0;
+    public static final int MIN_SERVICE_COST = 1;
+    public static final int MAX_SERVICE_COST = 20;
+    public static final int MIN_STRUCTURE_COST = 0;
+    public static final int MAX_STRUCTURE_COST = 99999;
 
     //Map Settings
     private int mapWidth = -1;
@@ -72,6 +84,7 @@ public class Settings {
                 //Confirm database entry exists
                 settings.checkedDatabaseEntryExists = true;
 
+                //Setting individual settings
                 settings.mapWidth = settingsCursor.getInt(settingsCursor.getColumnIndex(
                         DatabaseSchema.SettingsTable.Cols.MAP_WIDTH));
                 settings.mapHeight = settingsCursor.getInt(settingsCursor.getColumnIndex(
@@ -80,6 +93,25 @@ public class Settings {
                         DatabaseSchema.SettingsTable.Cols.INITIAL_MONEY));
                 settings.cityName = settingsCursor.getString(settingsCursor.getColumnIndex(
                         DatabaseSchema.SettingsTable.Cols.CITY_NAME));
+                settings.familySize = settingsCursor.getInt(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.FAMILY_SIZE));
+                settings.shopSize = settingsCursor.getInt(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.SHOP_SIZE));
+                settings.salary = settingsCursor.getInt(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.SALARY));
+                settings.taxRate = settingsCursor.getInt(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.TAX_RATE));
+                settings.serviceCost = settingsCursor.getInt(settingsCursor.getColumnIndex(
+                        DatabaseSchema.SettingsTable.Cols.SERVICE_COST));
+
+                //Setting structure costs
+                settings.structureCosts = new HashMap<>();
+                settings.structureCosts.put(Structure.Type.ROAD, settingsCursor.getInt(
+                        settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.ROAD_COST)));
+                settings.structureCosts.put(Structure.Type.RESIDENTIAL, settingsCursor.getInt(
+                        settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.RESIDENTIAL_COST)));
+                settings.structureCosts.put(Structure.Type.COMMERCIAL, settingsCursor.getInt(
+                        settingsCursor.getColumnIndex(DatabaseSchema.SettingsTable.Cols.COMMERCIAL_COST)));
             }
         } finally {
             settingsCursor.close();
@@ -162,22 +194,38 @@ public class Settings {
 
     public void setFamilySize(int familySize) {
         this.familySize = familySize;
+
+        updateDatabaseEntry();
     }
 
     public void setShopSize(int shopSize) {
         this.shopSize = shopSize;
+
+        updateDatabaseEntry();
     }
 
     public void setSalary(int salary) {
         this.salary = salary;
+
+        updateDatabaseEntry();
     }
 
     public void setTaxRate(double taxRate) {
         this.taxRate = taxRate;
+
+        updateDatabaseEntry();
     }
 
     public void setServiceCost(int serviceCost) {
         this.serviceCost = serviceCost;
+
+        updateDatabaseEntry();
+    }
+
+    public void setStructureCost(Structure.Type type, int cost) {
+        structureCosts.put(type, cost);
+
+        updateDatabaseEntry();
     }
 
     /**
@@ -236,6 +284,14 @@ public class Settings {
         cv.put(DatabaseSchema.SettingsTable.Cols.MAP_HEIGHT, mapHeight);
         cv.put(DatabaseSchema.SettingsTable.Cols.INITIAL_MONEY, initialMoney);
         cv.put(DatabaseSchema.SettingsTable.Cols.CITY_NAME, cityName);
+        cv.put(DatabaseSchema.SettingsTable.Cols.FAMILY_SIZE, familySize);
+        cv.put(DatabaseSchema.SettingsTable.Cols.SHOP_SIZE, shopSize);
+        cv.put(DatabaseSchema.SettingsTable.Cols.SALARY, salary);
+        cv.put(DatabaseSchema.SettingsTable.Cols.TAX_RATE, taxRate);
+        cv.put(DatabaseSchema.SettingsTable.Cols.SERVICE_COST, serviceCost);
+        cv.put(DatabaseSchema.SettingsTable.Cols.ROAD_COST, structureCosts.get(Structure.Type.ROAD));
+        cv.put(DatabaseSchema.SettingsTable.Cols.RESIDENTIAL_COST, structureCosts.get(Structure.Type.RESIDENTIAL));
+        cv.put(DatabaseSchema.SettingsTable.Cols.COMMERCIAL_COST, structureCosts.get(Structure.Type.COMMERCIAL));
 
         return cv;
     }

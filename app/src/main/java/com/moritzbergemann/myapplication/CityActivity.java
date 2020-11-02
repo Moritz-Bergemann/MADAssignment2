@@ -45,7 +45,7 @@ public class CityActivity extends AppCompatActivity {
                         .setTitle("Game Over!")
                         .setMessage("You have run out of money and lost the game! You can keep " +
                                 "seeing your city running if you'd like.")
-                        .setNeutralButton("This is so sad", null)
+                        .setNeutralButton("I am devastated :(", null)
                         .show();
             }
         });

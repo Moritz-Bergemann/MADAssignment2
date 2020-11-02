@@ -1,225 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    tools:context=".SettingsActivity">
-
-    <EditText
-        android:id="@+id/shopSizeValue"
-        android:layout_width="wrap_content"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/shopSizeLabel"
-        app:layout_constraintStart_toStartOf="@+id/cityNameValue"
-        app:layout_constraintTop_toTopOf="@+id/shopSizeLabel"
-        tools:text="SHOP SIZE" />
+        android:padding="24dp"
+        tools:context=".SettingsActivity">
 
-    <EditText
-        android:id="@+id/salaryValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/salaryLabel"
-        app:layout_constraintStart_toStartOf="@+id/shopSizeValue"
-        app:layout_constraintTop_toTopOf="@+id/salaryLabel"
-        tools:text="SALARY" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moneySign"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/serviceCostValue"
+            app:layout_constraintEnd_toStartOf="@+id/serviceCostValue"
+            app:layout_constraintTop_toTopOf="@+id/serviceCostValue" />
 
-    <EditText
-        android:id="@+id/taxRateValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="@+id/taxRateLabel"
-        app:layout_constraintStart_toStartOf="@+id/salaryValue"
-        app:layout_constraintTop_toTopOf="@+id/taxRateLabel"
-        tools:text="TAX RATE" />
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moneySign"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/residentialCostValue"
+            app:layout_constraintEnd_toStartOf="@+id/residentialCostValue"
+            app:layout_constraintTop_toTopOf="@+id/residentialCostValue" />
 
-    <EditText
-        android:id="@+id/ServiceCostValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/setServiceCost"
-        app:layout_constraintStart_toStartOf="@+id/taxRateValue"
-        app:layout_constraintTop_toTopOf="@+id/setServiceCost"
-        tools:text="SERVICE COST" />
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moneySign"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/commercialCostValue"
+            app:layout_constraintEnd_toStartOf="@+id/commercialCostValue"
+            app:layout_constraintTop_toTopOf="@+id/commercialCostValue" />
 
-    <TextView
-        android:id="@+id/salaryLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Salary:"
-        app:layout_constraintEnd_toEndOf="@+id/shopSizeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/shopSizeLabel" />
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moneySign"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/roadCostValue"
+            app:layout_constraintEnd_toStartOf="@+id/roadCostValue"
+            app:layout_constraintTop_toTopOf="@+id/roadCostValue" />
 
-    <TextView
-        android:id="@+id/taxRateLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Tax Rate:"
-        app:layout_constraintEnd_toEndOf="@+id/salaryLabel"
-        app:layout_constraintTop_toBottomOf="@+id/salaryLabel" />
+        <EditText
+            android:id="@+id/roadCostValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="@+id/roadCostLabel"
+            app:layout_constraintStart_toStartOf="@+id/serviceCostValue"
+            app:layout_constraintTop_toTopOf="@+id/roadCostLabel"
+            tools:text="ROAD COST" />
 
-    <TextView
-        android:id="@+id/setServiceCost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Service Cost:"
-        app:layout_constraintEnd_toEndOf="@+id/taxRateLabel"
-        app:layout_constraintTop_toBottomOf="@+id/taxRateLabel" />
+        <EditText
+            android:id="@+id/residentialCostValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="@+id/residentialCostLabel"
+            app:layout_constraintStart_toStartOf="@+id/roadCostValue"
+            app:layout_constraintTop_toTopOf="@+id/residentialCostLabel"
+            tools:text="RESIDENTIAL COST" />
 
-    <TextView
-        android:id="@+id/shopSizeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Shop Size:"
-        app:layout_constraintEnd_toEndOf="@+id/familySizeLabel"
-        app:layout_constraintTop_toBottomOf="@+id/familySizeLabel" />
+        <EditText
+            android:id="@+id/commercialCostValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="@+id/commercialCostLabel"
+            app:layout_constraintStart_toStartOf="@+id/residentialCostValue"
+            app:layout_constraintTop_toTopOf="@+id/commercialCostLabel"
+            tools:text="COMMERCIAL COST" />
 
-    <TextView
-        android:id="@+id/familySizeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:text="Family Size:"
-        app:layout_constraintEnd_toEndOf="@+id/cityNameSettingLabel2"
-        app:layout_constraintTop_toBottomOf="@+id/cityNameSettingLabel2" />
+        <TextView
+            android:id="@+id/residentialCostLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Residential Cost:"
+            app:layout_constraintEnd_toEndOf="@+id/roadCostLabel"
+            app:layout_constraintTop_toBottomOf="@+id/roadCostLabel" />
 
-    <TextView
-        android:id="@+id/cityNameSettingLabel2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="@+id/initialMoneyLabel"
-        app:layout_constraintTop_toBottomOf="@+id/initialMoneyLabel" />
+        <TextView
+            android:id="@+id/commercialCostLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Commerical Cost:"
+            app:layout_constraintEnd_toEndOf="@+id/residentialCostLabel"
+            app:layout_constraintTop_toBottomOf="@+id/residentialCostLabel" />
 
-    <EditText
-        android:id="@+id/cityNameValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/cityNameSettingLabel"
-        app:layout_constraintStart_toStartOf="@+id/initialMoneyValue"
-        app:layout_constraintTop_toTopOf="@+id/cityNameSettingLabel"
-        tools:text="CITY NAME" />
+        <TextView
+            android:id="@+id/roadCostLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Road Cost:"
+            app:layout_constraintEnd_toEndOf="@+id/serviceCostLabel"
+            app:layout_constraintTop_toBottomOf="@+id/serviceCostLabel" />
 
-    <EditText
-        android:id="@+id/familySizeValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/familySizeLabel"
-        app:layout_constraintStart_toStartOf="@+id/cityNameValue"
-        app:layout_constraintTop_toTopOf="@+id/familySizeLabel"
-        tools:text="FAMILY SIZE" />
+        <EditText
+            android:id="@+id/shopSizeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="@+id/shopSizeLabel"
+            app:layout_constraintStart_toStartOf="@+id/cityNameValue"
+            app:layout_constraintTop_toTopOf="@+id/shopSizeLabel"
+            tools:text="SHOP SIZE" />
 
-    <TextView
-        android:id="@+id/cityNameSettingLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/cityNameLabel"
-        app:layout_constraintEnd_toEndOf="@+id/initialMoneyLabel"
-        app:layout_constraintTop_toBottomOf="@+id/initialMoneyLabel" />
+        <EditText
+            android:id="@+id/salaryValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="@+id/salaryLabel"
+            app:layout_constraintStart_toStartOf="@+id/shopSizeValue"
+            app:layout_constraintTop_toTopOf="@+id/salaryLabel"
+            tools:text="SALARY" />
 
-    <TextView
-        android:id="@+id/initialMoneyLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/initialMoneyLabel"
-        app:layout_constraintEnd_toEndOf="@+id/mapHeightLabel"
-        app:layout_constraintTop_toBottomOf="@+id/mapHeightLabel" />
+        <EditText
+            android:id="@+id/taxRateValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toBottomOf="@+id/taxRateLabel"
+            app:layout_constraintStart_toStartOf="@+id/salaryValue"
+            app:layout_constraintTop_toTopOf="@+id/taxRateLabel"
+            tools:text="TAX RATE" />
 
-    <EditText
-        android:id="@+id/initialMoneyValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/initialMoneyLabel"
-        app:layout_constraintStart_toStartOf="@+id/mapHeightValue"
-        app:layout_constraintTop_toTopOf="@+id/initialMoneyLabel"
-        tools:text="MONEY" />
+        <EditText
+            android:id="@+id/serviceCostValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="@+id/serviceCostLabel"
+            app:layout_constraintStart_toStartOf="@+id/taxRateValue"
+            app:layout_constraintTop_toTopOf="@+id/serviceCostLabel"
+            tools:text="SERVICE COST" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/settings"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/salaryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Salary:"
+            app:layout_constraintEnd_toEndOf="@+id/shopSizeLabel"
+            app:layout_constraintTop_toBottomOf="@+id/shopSizeLabel" />
 
-    <TextView
-        android:id="@+id/mapWidthLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/mapWidthLabel"
-        app:layout_constraintEnd_toStartOf="@+id/mapWidthValue"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        <TextView
+            android:id="@+id/taxRateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Tax Rate:"
+            app:layout_constraintEnd_toEndOf="@+id/salaryLabel"
+            app:layout_constraintTop_toBottomOf="@+id/salaryLabel" />
 
-    <EditText
-        android:id="@+id/mapWidthValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/mapWidthLabel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/mapWidthLabel"
-        app:layout_constraintTop_toTopOf="@+id/mapWidthLabel"
-        tools:text="WIDTH" />
+        <TextView
+            android:id="@+id/serviceCostLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Service Cost:"
+            app:layout_constraintEnd_toEndOf="@+id/taxRateLabel"
+            app:layout_constraintTop_toBottomOf="@+id/taxRateLabel" />
 
-    <TextView
-        android:id="@+id/mapHeightLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/mapHeightLabel"
-        app:layout_constraintEnd_toEndOf="@+id/mapWidthLabel"
-        app:layout_constraintTop_toBottomOf="@+id/mapWidthLabel" />
+        <TextView
+            android:id="@+id/shopSizeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Shop Size:"
+            app:layout_constraintEnd_toEndOf="@+id/familySizeLabel"
+            app:layout_constraintTop_toBottomOf="@+id/familySizeLabel" />
 
-    <EditText
-        android:id="@+id/mapHeightValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="@+id/mapHeightLabel"
-        app:layout_constraintStart_toStartOf="@+id/mapWidthValue"
-        app:layout_constraintTop_toTopOf="@+id/mapHeightLabel"
-        tools:text="HEIGHT" />
+        <TextView
+            android:id="@+id/familySizeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Family Size:"
+            app:layout_constraintEnd_toEndOf="@+id/cityNameSettingLabel2"
+            app:layout_constraintTop_toBottomOf="@+id/cityNameSettingLabel2" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/moneySign"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/initialMoneyValue"
-        app:layout_constraintEnd_toStartOf="@+id/initialMoneyValue"
-        app:layout_constraintTop_toTopOf="@+id/initialMoneyValue" />
+        <TextView
+            android:id="@+id/cityNameSettingLabel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text=""
+            app:layout_constraintEnd_toEndOf="@+id/initialMoneyLabel"
+            app:layout_constraintTop_toBottomOf="@+id/initialMoneyLabel" />
 
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/resetGame"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="568dp" />
+        <EditText
+            android:id="@+id/cityNameValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="@+id/cityNameSettingLabel"
+            app:layout_constraintStart_toStartOf="@+id/initialMoneyValue"
+            app:layout_constraintTop_toTopOf="@+id/cityNameSettingLabel"
+            tools:text="CITY NAME" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <EditText
+            android:id="@+id/familySizeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="@+id/familySizeLabel"
+            app:layout_constraintStart_toStartOf="@+id/cityNameValue"
+            app:layout_constraintTop_toTopOf="@+id/familySizeLabel"
+            tools:text="FAMILY SIZE" />
+
+        <TextView
+            android:id="@+id/cityNameSettingLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/cityNameLabel"
+            app:layout_constraintEnd_toEndOf="@+id/initialMoneyLabel"
+            app:layout_constraintTop_toBottomOf="@+id/initialMoneyLabel" />
+
+        <TextView
+            android:id="@+id/initialMoneyLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/initialMoneyLabel"
+            app:layout_constraintEnd_toEndOf="@+id/mapHeightLabel"
+            app:layout_constraintTop_toBottomOf="@+id/mapHeightLabel" />
+
+        <EditText
+            android:id="@+id/initialMoneyValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="@+id/initialMoneyLabel"
+            app:layout_constraintStart_toStartOf="@+id/mapHeightValue"
+            app:layout_constraintTop_toTopOf="@+id/initialMoneyLabel"
+            tools:text="MONEY" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/mapWidthLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/mapWidthLabel"
+            app:layout_constraintEnd_toStartOf="@+id/mapWidthValue"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <EditText
+            android:id="@+id/mapWidthValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="@+id/mapWidthLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/mapWidthLabel"
+            app:layout_constraintTop_toTopOf="@+id/mapWidthLabel"
+            tools:text="WIDTH" />
+
+        <TextView
+            android:id="@+id/mapHeightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/mapHeightLabel"
+            app:layout_constraintEnd_toEndOf="@+id/mapWidthLabel"
+            app:layout_constraintTop_toBottomOf="@+id/mapWidthLabel" />
+
+        <EditText
+            android:id="@+id/mapHeightValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            app:layout_constraintBottom_toBottomOf="@+id/mapHeightLabel"
+            app:layout_constraintStart_toStartOf="@+id/mapWidthValue"
+            app:layout_constraintTop_toTopOf="@+id/mapHeightLabel"
+            tools:text="HEIGHT" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moneySign"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/initialMoneyValue"
+            app:layout_constraintEnd_toStartOf="@+id/initialMoneyValue"
+            app:layout_constraintTop_toTopOf="@+id/initialMoneyValue" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/moneySign"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/salaryValue"
+            app:layout_constraintEnd_toStartOf="@+id/salaryValue"
+            app:layout_constraintTop_toTopOf="@+id/salaryValue" />
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/resetGame"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/commercialCostValue" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

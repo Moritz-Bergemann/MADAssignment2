@@ -86,9 +86,12 @@ public class HeaderBarFragment extends Fragment implements UIUpdateObserver {
         });
 
         //Show the game over message if the game has been lost
+        TextView gameLostMessage = view.findViewById(R.id.gameLostMessage);
+        if (GameData.get().getGameLost().getValue()) { //If game already lost
+            gameLostMessage.setVisibility(View.VISIBLE);
+        }
         GameData.get().getGameLost().observe(getViewLifecycleOwner(), gameLostUpdate -> {
             if (gameLostUpdate) {
-                TextView gameLostMessage = view.findViewById(R.id.gameLostMessage);
                 gameLostMessage.setVisibility(View.VISIBLE);
             }
         });

@@ -10,6 +10,14 @@ public class DatabaseSchema {
             public static final String MAP_WIDTH = "map_width";
             public static final String MAP_HEIGHT = "map_height";
             public static final String CITY_NAME = "city_name";
+            public static final String FAMILY_SIZE = "family_size";
+            public static final String SHOP_SIZE = "shop_size";
+            public static final String SALARY = "salary";
+            public static final String TAX_RATE = "tax_rate";
+            public static final String SERVICE_COST = "service_cost";
+            public static final String ROAD_COST = "road_cost";
+            public static final String RESIDENTIAL_COST = "residential_cost";
+            public static final String COMMERCIAL_COST = "commercial_cost";
         }
     }
 

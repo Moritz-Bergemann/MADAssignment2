@@ -46,7 +46,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 SettingsTable.Cols.MAP_WIDTH + " INTEGER, " +
                 SettingsTable.Cols.MAP_HEIGHT + " INTEGER, " +
                 SettingsTable.Cols.INITIAL_MONEY + " INTEGER, " +
-                SettingsTable.Cols.CITY_NAME + " TEXT)");
+                SettingsTable.Cols.CITY_NAME + " TEXT, " +
+                SettingsTable.Cols.FAMILY_SIZE + " INTEGER, " +
+                SettingsTable.Cols.SHOP_SIZE + " INTEGER, " +
+                SettingsTable.Cols.SALARY + " INTEGER, " +
+                SettingsTable.Cols.TAX_RATE + " REAL, " +
+                SettingsTable.Cols.SERVICE_COST + " INTEGER, " +
+                SettingsTable.Cols.ROAD_COST + " INTEGER, " +
+                SettingsTable.Cols.RESIDENTIAL_COST + " INTEGER, " +
+                SettingsTable.Cols.COMMERCIAL_COST + " INTEGER)");
     }
 
     @Override

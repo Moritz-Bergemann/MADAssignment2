@@ -19,10 +19,7 @@ import java.util.Locale;
 
 /**
  * MAIN TRACKING LOCATION
- * POTENTIAL TODOS:
- * TODO fix up string literals
  * TODO go over assignment spec and make sure I have everything
- * TODO change the logo
  */
 
 /**
@@ -108,6 +105,11 @@ public class GameData {
         if (gameStarted) {
             map = GameMap.loadFromDatabase(db, settings.getMapWidth(), settings.getMapHeight());
         }
+
+        //Check if game has already been lost
+        if (money < 0) {
+            gameLost.postValue(true);
+        }
     }
 
     /**
@@ -150,7 +152,7 @@ public class GameData {
         money += getMoneyPerTurn();
 
         //Loss condition check
-        if (money < 0) {
+        if (money < 0 && !(gameLost.getValue())) {
             gameLost.postValue(true);
         }
 
