@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import java.util.Locale;
  */
 public class CityInfoFragment extends DialogFragment {
     private TextView mTemperatureValue;
+
+    private static final int WEATHER_UPDATE_DELAY = 1000 * 10;
 
     public CityInfoFragment() {
         // Required empty public constructor
@@ -79,8 +82,21 @@ public class CityInfoFragment extends DialogFragment {
         //***GET CURRENT TEMPERATURE***
         mTemperatureValue = view.findViewById(R.id.temperatureValue);
 
-        URL requestUrl = Weather.makeWeatherAPIRequestUrl(settings.getCityName());
-        new GetTemperaturesTask().execute(requestUrl);
+        //Perform weather info refresh periodically
+        Handler temperatureUpdateHandler = new Handler();
+        Runnable runnableCode = new Runnable() {
+            @Override
+            public void run() {
+                URL requestUrl = Weather.makeWeatherAPIRequestUrl(settings.getCityName());
+                new GetTemperaturesTask().execute(requestUrl);
+
+                //Repeat the action after interval
+                temperatureUpdateHandler.postDelayed(this, WEATHER_UPDATE_DELAY);
+            }
+        };
+
+        //Initiate the first refresh
+        temperatureUpdateHandler.post(runnableCode);
     }
 
     /**

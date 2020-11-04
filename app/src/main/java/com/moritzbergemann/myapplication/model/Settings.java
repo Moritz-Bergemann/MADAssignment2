@@ -43,7 +43,7 @@ public class Settings {
 
     //Game Settings
     private String cityName = "Perth";
-    private int initialMoney = -1;
+    private int initialMoney = 1000;
     private int familySize = 4;
     private int shopSize = 6;
     private int salary = 10;

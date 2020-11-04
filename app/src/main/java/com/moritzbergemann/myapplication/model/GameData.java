@@ -18,11 +18,6 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * MAIN TRACKING LOCATION
- * TODO go over assignment spec and make sure I have everything
- */
-
-/**
  * Singleton class for controlling primary game state.
  * Contains game settings and map as objects.
  * Also contains various utility functions for interacting with the game state
@@ -58,7 +53,7 @@ public class GameData {
 
     private GameData() {
         settings = new Settings(db);
-        money = -1;
+        money = 0;
         latestIncome = 0;
         gameTime = 0;
         map = null;
