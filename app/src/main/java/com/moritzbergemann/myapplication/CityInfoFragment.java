@@ -76,7 +76,7 @@ public class CityInfoFragment extends DialogFragment {
         latestIncomeValue.setText(String.format(Locale.US, "%d", gd.getLatestIncome()));
 
         TextView employmentRateValue = view.findViewById(R.id.employmentRateValue);
-        employmentRateValue.setText(String.format(Locale.US, "%f", gd.getEmploymentRate()));
+        employmentRateValue.setText(String.format(Locale.US, "%.2f%%", gd.getEmploymentRate() * 100.0));
 
 
         //***GET CURRENT TEMPERATURE***
