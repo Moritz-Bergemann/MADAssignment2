@@ -44,10 +44,12 @@
         android:id="@+id/populationValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/populationLabel"
         app:layout_constraintEnd_toStartOf="@+id/timeStepButton"
-        app:layout_constraintStart_toEndOf="@id/populationLabel"
-        app:layout_constraintTop_toBottomOf="@+id/cityName"
+        app:layout_constraintStart_toEndOf="@+id/populationLabel"
+        app:layout_constraintTop_toTopOf="@+id/populationLabel"
         tools:text="POP HERE" />
 
     <TextView
@@ -55,16 +57,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/populationLabel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/populationValue"
-        app:layout_constraintStart_toEndOf="@+id/cityInfoButton"
+        app:layout_constraintEnd_toEndOf="@+id/cityName"
+        app:layout_constraintStart_toStartOf="@+id/cityName"
         app:layout_constraintTop_toBottomOf="@+id/cityName" />
 
     <TextView
         android:id="@+id/moneyValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/cityInfoButton"
+        app:layout_constraintBottom_toTopOf="@+id/employmentRateLabel"
         app:layout_constraintEnd_toStartOf="@+id/cityName"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/moneyPreface"
@@ -74,22 +75,12 @@
 
     <TextView
         android:id="@+id/moneyPreface"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="21dp"
         android:text="@string/moneySign"
-        app:layout_constraintBottom_toTopOf="@+id/cityInfoButton"
+        app:layout_constraintBottom_toBottomOf="@+id/moneyValue"
         app:layout_constraintEnd_toStartOf="@+id/moneyValue"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/cityInfoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cityInfo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cityName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/moneyPerTurnValue" />
+        app:layout_constraintTop_toTopOf="@+id/moneyValue" />
 
     <TextView
         android:id="@+id/moneyPerTurnValue"
@@ -104,10 +95,10 @@
         android:id="@+id/moneyPerTurnPreface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:text="@string/plusMoneySign"
+        app:layout_constraintBottom_toBottomOf="@+id/moneyPerTurnValue"
         app:layout_constraintEnd_toStartOf="@+id/moneyPerTurnValue"
-        app:layout_constraintTop_toBottomOf="@+id/moneyPreface" />
+        app:layout_constraintTop_toTopOf="@+id/moneyPerTurnValue" />
 
     <TextView
         android:id="@+id/gameLostMessage"
@@ -140,4 +131,46 @@
         app:layout_constraintStart_toStartOf="@+id/timeLabel"
         app:layout_constraintTop_toBottomOf="@+id/timeLabel"
         tools:text="TIME" />
+
+    <TextView
+        android:id="@+id/employmentRateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/employmentRateLabelShort"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cityName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moneyPerTurnValue" />
+
+    <TextView
+        android:id="@+id/employmentRateValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/employmentRateLabel"
+        app:layout_constraintStart_toEndOf="@+id/employmentRateLabel"
+        app:layout_constraintTop_toTopOf="@+id/employmentRateLabel"
+        tools:text="EMP" />
+
+    <TextView
+        android:id="@+id/temperatureLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/temperatureLabelShort"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/employmentRateLabel"
+        app:layout_constraintTop_toBottomOf="@+id/employmentRateLabel" />
+
+    <TextView
+        android:id="@+id/temperatureValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/temperatureLabel"
+        app:layout_constraintEnd_toEndOf="@+id/employmentRateValue"
+        app:layout_constraintStart_toEndOf="@+id/temperatureLabel"
+        app:layout_constraintTop_toTopOf="@+id/temperatureLabel"
+        tools:text="TEMP" />
 </androidx.constraintlayout.widget.ConstraintLayout>

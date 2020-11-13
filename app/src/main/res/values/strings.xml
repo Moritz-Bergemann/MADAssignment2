@@ -43,4 +43,6 @@
     <string name="serviceCostLabel">Service Cost:</string>
     <string name="shopSizeLabel">Shop Size:</string>
     <string name="familySizeLabel">Family Size:</string>
+    <string name="employmentRateLabelShort">Employment:</string>
+    <string name="temperatureLabelShort">Temp:</string>
 </resources>
